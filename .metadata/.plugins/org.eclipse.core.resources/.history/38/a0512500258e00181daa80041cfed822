@@ -1,0 +1,171 @@
+grammar org.xtext.example.go.Go with org.eclipse.xtext.common.Terminals
+
+generate go "http://www.xtext.org/example/go/Go"
+
+Model:
+	greetings+=Greeting*
+;
+	
+Greeting:
+	Statement | FuncDecl
+;
+
+ForStmt:
+	"for" (Exp | ForClause) Block
+;
+
+ForClause:
+	Decl? ";" Exp? ";" Statement?
+;
+
+FunctionType:
+	"func" Signature
+;
+
+FuncDecl:
+	"func" ID Signature Block?
+;
+
+Signature:
+	Parameters Result?
+;
+
+Result:
+	Parameters | TYPE 
+;
+
+Parameters:
+	"(" (ParameterList ","?)? ")"
+; 
+
+ParameterList:
+	ParameterDecl ("," ParameterDecl)*
+;
+
+ParameterDecl:
+	IdList? "..."? TYPE
+;
+
+SwitchStmt:
+	"switch" Anderson ID? "{" ("case" Exp SwitchCase*  ("default" SwitchCase* )?) "}"
+;
+
+SwitchCase:
+	":" (Statement ";"? )*
+;
+
+IfStmt:
+	"if" Anderson  Exp Block ("else" (IfStmt | Block))?
+;
+
+Anderson:
+	((Assig | Decl | Exp) ";")?
+;
+
+Block:
+	"{" (Statement ";"? )* "}"
+;
+
+SimpleStmt:
+	Decl | Assig | Exp
+;
+
+Statement:
+	SimpleStmt | IfStmt | SwitchStmt | ReturnStmt
+;
+
+ReturnStmt:
+	"return" Exp
+;
+
+Decl:
+	("var" | "const") IdList TYPE ("=" ExpList)? | ShortVarDecl 
+;
+
+ShortVarDecl:
+	IdList ":=" ExpList
+;
+
+Assig :
+	IdList "=" ExpList	
+;
+
+IdList:
+	ID ("," ID)*	
+;
+
+ExpList:
+	Exp ("," Exp)*
+;
+
+Exp: 
+	ExpAux | BooleanExp ExpJoin? | AritExp ExpJoin? | STRING | RelExp | ID ExpJoin?
+;
+
+ExpAux:
+	"!"? "(" Exp ")" (ExpJoin)? 
+;
+
+ExpJoin:
+	(OP_REL | OP_UNARY | OP_SUM | OP_MULT | "&&" | "||") Exp
+;
+
+RelExp:
+	NumberLiteral (OP_REL | OP_UNARY) NumberLiteral | BooleanLiteral OP_UNARY BooleanLiteral
+;
+
+BooleanExp:
+	 Or	
+;
+
+Or:
+	"!"? And ('||' And)*
+;
+
+And:
+	BooleanLiteral ('&&' BooleanLiteral)*
+;
+
+BooleanLiteral:
+	BOOL
+;
+
+AritExp:
+	Addition	
+;
+
+Addition:
+	(OP_SUM? Multiplication)+
+;
+
+Multiplication:
+	NumberLiteral (OP_MULT? NumberLiteral)*
+;
+
+NumberLiteral:
+	INT
+;
+
+terminal TYPE:
+	"string" | "int" | "bool"
+;
+
+terminal OP_SUM:
+	('+'|'-')
+;
+
+terminal OP_MULT:
+	('*'|'/')
+;
+
+terminal OP_REL:
+	"<=" | ">=" | "<" | ">"	
+;
+
+terminal OP_UNARY:
+	"==" | "!="	
+;
+
+terminal BOOL:
+	"true" | "false"
+;

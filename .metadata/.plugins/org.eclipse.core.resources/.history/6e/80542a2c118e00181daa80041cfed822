@@ -1,0 +1,109 @@
+grammar org.xtext.example.go.Go with org.eclipse.xtext.common.Terminals
+
+generate go "http://www.xtext.org/example/go/Go"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	IfStmt;
+
+IfStmt:
+	"if" Exp Block  
+;
+
+Block:
+	"{" (Statement ";")* "}"
+;
+
+Statement:
+	Decl | Attr | IfStmt
+;
+
+Decl:
+	("var" | "const") IdList TYPE ("=" ExpList)?
+;
+
+Attr:
+	IdList "=" ExpList	
+;
+
+IdList:
+	ID ("," ID)*	
+;
+
+ExpList:
+	Exp ("," Exp)*
+;
+
+Exp: 
+	ExpAux | BooleanExp ExpJoin? | AritExp ExpJoin? | STRING | RelExp 
+;
+
+ExpAux:
+	"!"? "(" Exp ")" (ExpJoin)? 
+;
+
+ExpJoin:
+	(OP_REL | OP_UNARY | OP_SUM | OP_MULT | "&&" | "||") Exp
+;
+
+RelExp:
+	NumberLiteral (OP_REL | OP_UNARY) NumberLiteral | BooleanLiteral OP_UNARY BooleanLiteral
+;
+
+BooleanExp:
+	 Or	
+;
+
+Or:
+	"!"? And ('||' And)*
+;
+
+And:
+	BooleanLiteral ('&&' BooleanLiteral)*
+;
+
+BooleanLiteral:
+	BOOL | ID
+;
+
+AritExp:
+	Addition	
+;
+
+Addition:
+	(OP_SUM? Multiplication)+
+;
+
+Multiplication:
+	NumberLiteral (OP_MULT? NumberLiteral)*
+;
+
+NumberLiteral:
+	INT | ID
+;
+
+terminal TYPE:
+	"string" | "int" | "bool"
+;
+
+terminal OP_SUM:
+	('+'|'-')
+;
+
+terminal OP_MULT:
+	('*'|'/')
+;
+
+terminal OP_REL:
+	"<=" | ">=" | "<" | ">"	
+;
+
+terminal OP_UNARY:
+	"==" | "!="	
+;
+
+terminal BOOL:
+	"true" | "false"
+;

@@ -1,0 +1,71 @@
+grammar org.xtext.example.go.Go with org.eclipse.xtext.common.Terminals
+
+generate go "http://www.xtext.org/example/go/Go"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	"Hello" Attr ";";
+
+Attr:
+	ID "=" Exp	
+;
+
+Exp: 
+	ExpAux | Or ExpAux? | Addition ExpAux? | STRING
+;
+
+ExpAux:
+	"!"? "(" Exp ")" ExpAux? 
+;
+
+BooleanExp:
+	 Or	
+;
+
+Or:
+	And ('||' And)*
+;
+
+And:
+	PrimaryBool ('&&' PrimaryBool)*
+;
+
+PrimaryBool:
+	BooleanLiteral
+;
+
+BooleanLiteral:
+	BOOL
+;
+
+AritExp:
+	Addition	
+;
+
+Addition:
+	(('+'|'-')? Multiplication)+
+;
+
+Multiplication:
+	PrimaryArit (('*'|'/') PrimaryArit)*
+;
+
+PrimaryArit:
+	NumberLiteral
+;
+
+NumberLiteral:
+	INT
+;
+
+terminal OP_REL:
+	"==" | "!=" | "<=" | ">=" | "<" | ">"	
+;
+
+
+terminal BOOL:
+	"true" | "false"
+;
+
