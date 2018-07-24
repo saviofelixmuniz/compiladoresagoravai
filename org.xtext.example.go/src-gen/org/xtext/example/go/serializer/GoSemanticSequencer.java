@@ -11,9 +11,22 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
+import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
+import org.xtext.example.go.go.Anderson;
+import org.xtext.example.go.go.Assig;
+import org.xtext.example.go.go.Block;
+import org.xtext.example.go.go.ForClause;
+import org.xtext.example.go.go.ForStmt;
+import org.xtext.example.go.go.FuncDecl;
 import org.xtext.example.go.go.GoPackage;
 import org.xtext.example.go.go.Model;
+import org.xtext.example.go.go.SimpleStmt;
+import org.xtext.example.go.go.SourceFile;
+import org.xtext.example.go.go.Statement;
+import org.xtext.example.go.go.SwitchCase;
+import org.xtext.example.go.go.TopLevelDecl;
 import org.xtext.example.go.services.GoGrammarAccess;
 
 @SuppressWarnings("all")
@@ -30,13 +43,204 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == GoPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case GoPackage.ANDERSON:
+				if (rule == grammarAccess.getAndersonRule()) {
+					sequence_Anderson(context, (Anderson) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getIfStmtRule()
+						|| rule == grammarAccess.getStatementRule()) {
+					sequence_Anderson_IfStmt(context, (Anderson) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSwitchStmtRule()) {
+					sequence_Anderson_SwitchStmt(context, (Anderson) semanticObject); 
+					return; 
+				}
+				else break;
+			case GoPackage.ASSIG:
+				sequence_Assig(context, (Assig) semanticObject); 
+				return; 
+			case GoPackage.BLOCK:
+				sequence_Block(context, (Block) semanticObject); 
+				return; 
+			case GoPackage.FOR_CLAUSE:
+				if (rule == grammarAccess.getForStmtRule()
+						|| rule == grammarAccess.getStatementRule()) {
+					sequence_Assig_ForClause_ForStmt(context, (ForClause) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getForClauseRule()) {
+					sequence_Assig_ForClause_SimpleStmt(context, (ForClause) semanticObject); 
+					return; 
+				}
+				else break;
+			case GoPackage.FOR_STMT:
+				sequence_ForStmt(context, (ForStmt) semanticObject); 
+				return; 
+			case GoPackage.FUNC_DECL:
+				if (rule == grammarAccess.getFuncDeclRule()) {
+					sequence_Block_FuncDecl(context, (FuncDecl) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTopLevelDeclRule()) {
+					sequence_FuncDecl(context, (FuncDecl) semanticObject); 
+					return; 
+				}
+				else break;
 			case GoPackage.MODEL:
 				sequence_Model(context, (Model) semanticObject); 
+				return; 
+			case GoPackage.SIMPLE_STMT:
+				sequence_SimpleStmt(context, (SimpleStmt) semanticObject); 
+				return; 
+			case GoPackage.SOURCE_FILE:
+				sequence_SourceFile(context, (SourceFile) semanticObject); 
+				return; 
+			case GoPackage.STATEMENT:
+				sequence_Statement(context, (Statement) semanticObject); 
+				return; 
+			case GoPackage.SWITCH_CASE:
+				sequence_SwitchCase(context, (SwitchCase) semanticObject); 
+				return; 
+			case GoPackage.TOP_LEVEL_DECL:
+				sequence_TopLevelDecl(context, (TopLevelDecl) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
+	
+	/**
+	 * Contexts:
+	 *     Anderson returns Anderson
+	 *
+	 * Constraint:
+	 *     Assig=Assig?
+	 */
+	protected void sequence_Anderson(ISerializationContext context, Anderson semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     IfStmt returns Anderson
+	 *     Statement returns Anderson
+	 *
+	 * Constraint:
+	 *     (Assig=Assig? Block+=Block (IfStmt=IfStmt | Block+=Block)?)
+	 */
+	protected void sequence_Anderson_IfStmt(ISerializationContext context, Anderson semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SwitchStmt returns Anderson
+	 *
+	 * Constraint:
+	 *     (Assig=Assig? SwitchCase+=SwitchCase* SwitchCase+=SwitchCase*)
+	 */
+	protected void sequence_Anderson_SwitchStmt(ISerializationContext context, Anderson semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns Assig
+	 *     Assig returns Assig
+	 *     SimpleStmt returns Assig
+	 *
+	 * Constraint:
+	 *     (id=ID ((idl=IdList expression=Exp expressionlist=ExpList) | expression=Exp)?)
+	 */
+	protected void sequence_Assig(ISerializationContext context, Assig semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ForStmt returns ForClause
+	 *     Statement returns ForClause
+	 *
+	 * Constraint:
+	 *     ((id=ID ((idl=IdList expression=Exp expressionlist=ExpList) | expression=Exp)?)? Block=Block)
+	 */
+	protected void sequence_Assig_ForClause_ForStmt(ISerializationContext context, ForClause semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ForClause returns ForClause
+	 *
+	 * Constraint:
+	 *     (id=ID ((idl=IdList expression=Exp expressionlist=ExpList) | expression=Exp)?)?
+	 */
+	protected void sequence_Assig_ForClause_SimpleStmt(ISerializationContext context, ForClause semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Block returns Block
+	 *
+	 * Constraint:
+	 *     Statement+=Statement*
+	 */
+	protected void sequence_Block(ISerializationContext context, Block semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     FuncDecl returns FuncDecl
+	 *
+	 * Constraint:
+	 *     Statement+=Statement*
+	 */
+	protected void sequence_Block_FuncDecl(ISerializationContext context, FuncDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ForStmt returns ForStmt
+	 *     Statement returns ForStmt
+	 *
+	 * Constraint:
+	 *     Block=Block
+	 */
+	protected void sequence_ForStmt(ISerializationContext context, ForStmt semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, GoPackage.Literals.FOR_STMT__BLOCK) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, GoPackage.Literals.FOR_STMT__BLOCK));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getForStmtAccess().getBlockBlockParserRuleCall_2_0(), semanticObject.getBlock());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TopLevelDecl returns FuncDecl
+	 *
+	 * Constraint:
+	 *     {FuncDecl}
+	 */
+	protected void sequence_FuncDecl(ISerializationContext context, FuncDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
 	
 	/**
 	 * Contexts:
@@ -46,6 +250,68 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     greetings+=Greeting+
 	 */
 	protected void sequence_Model(ISerializationContext context, Model semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns SimpleStmt
+	 *     SimpleStmt returns SimpleStmt
+	 *
+	 * Constraint:
+	 *     {SimpleStmt}
+	 */
+	protected void sequence_SimpleStmt(ISerializationContext context, SimpleStmt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Greeting returns SourceFile
+	 *     SourceFile returns SourceFile
+	 *
+	 * Constraint:
+	 *     TopLevelDecl+=TopLevelDecl*
+	 */
+	protected void sequence_SourceFile(ISerializationContext context, SourceFile semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns Statement
+	 *
+	 * Constraint:
+	 *     (SwitchStmt=SwitchStmt | ReturnStmt=ReturnStmt)
+	 */
+	protected void sequence_Statement(ISerializationContext context, Statement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SwitchCase returns SwitchCase
+	 *
+	 * Constraint:
+	 *     Statement+=Statement*
+	 */
+	protected void sequence_SwitchCase(ISerializationContext context, SwitchCase semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TopLevelDecl returns TopLevelDecl
+	 *
+	 * Constraint:
+	 *     {TopLevelDecl}
+	 */
+	protected void sequence_TopLevelDecl(ISerializationContext context, TopLevelDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -33,6 +33,132 @@ public interface GoFactory extends EFactory
   Model createModel();
 
   /**
+   * Returns a new object of class '<em>Greeting</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Greeting</em>'.
+   * @generated
+   */
+  Greeting createGreeting();
+
+  /**
+   * Returns a new object of class '<em>Source File</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Source File</em>'.
+   * @generated
+   */
+  SourceFile createSourceFile();
+
+  /**
+   * Returns a new object of class '<em>Top Level Decl</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Top Level Decl</em>'.
+   * @generated
+   */
+  TopLevelDecl createTopLevelDecl();
+
+  /**
+   * Returns a new object of class '<em>For Stmt</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>For Stmt</em>'.
+   * @generated
+   */
+  ForStmt createForStmt();
+
+  /**
+   * Returns a new object of class '<em>For Clause</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>For Clause</em>'.
+   * @generated
+   */
+  ForClause createForClause();
+
+  /**
+   * Returns a new object of class '<em>Func Decl</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Func Decl</em>'.
+   * @generated
+   */
+  FuncDecl createFuncDecl();
+
+  /**
+   * Returns a new object of class '<em>Switch Stmt</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Switch Stmt</em>'.
+   * @generated
+   */
+  SwitchStmt createSwitchStmt();
+
+  /**
+   * Returns a new object of class '<em>Switch Case</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Switch Case</em>'.
+   * @generated
+   */
+  SwitchCase createSwitchCase();
+
+  /**
+   * Returns a new object of class '<em>If Stmt</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>If Stmt</em>'.
+   * @generated
+   */
+  IfStmt createIfStmt();
+
+  /**
+   * Returns a new object of class '<em>Anderson</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Anderson</em>'.
+   * @generated
+   */
+  Anderson createAnderson();
+
+  /**
+   * Returns a new object of class '<em>Block</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Block</em>'.
+   * @generated
+   */
+  Block createBlock();
+
+  /**
+   * Returns a new object of class '<em>Statement</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Statement</em>'.
+   * @generated
+   */
+  Statement createStatement();
+
+  /**
+   * Returns a new object of class '<em>Assig</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Assig</em>'.
+   * @generated
+   */
+  Assig createAssig();
+
+  /**
+   * Returns a new object of class '<em>Simple Stmt</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Simple Stmt</em>'.
+   * @generated
+   */
+  SimpleStmt createSimpleStmt();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

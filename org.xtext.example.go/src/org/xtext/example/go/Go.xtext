@@ -11,12 +11,11 @@ Greeting:
 ;
 
 SourceFile:
-	Package ";"? (ImportDecl ";"?)* (TopLevelDecl ";"?)*
+	{SourceFile} Package ";"? (ImportDecl ";"?)* (TopLevelDecl+=TopLevelDecl ";"?)*
 ;
 
 TopLevelDecl:
-	// TODO: methoddecl
-	Decl | FuncDecl | TypeDef
+	{TopLevelDecl} Decl | FuncDecl | {TopLevelDecl} TypeDef
 ;
 
 ImportDecl:
@@ -32,11 +31,11 @@ Package:
 ;
 
 ForStmt:
-	"for" (Exp RangeClause? | ForClause) Block
+	"for" (Exp RangeClause? | ForClause) Block=Block
 ;
 
 ForClause:
-	(Decl)? ";" Exp? ";" SimpleStmt?
+	{ForClause} (Decl)? ";" Exp? ";" SimpleStmt?
 ;
 
 RangeClause:
@@ -48,7 +47,7 @@ FunctionType:
 ;
 
 FuncDecl:
-	"func" Receiver? ID Signature Block?
+	{FuncDecl} "func" Receiver? ID Signature Block?
 ;
 
 Receiver:
@@ -60,7 +59,7 @@ Signature:
 ;
 
 Result:
-	Parameters | BASIC_TYPES 
+	Parameters | TypeName 
 ;
 
 Parameters:
@@ -76,27 +75,27 @@ ParameterDecl:
 ;
 
 SwitchStmt:
-	"switch" Anderson ID? "{" (("case" Exp SwitchCase)*  ("default" SwitchCase* )?) "}"
+	"switch" Anderson ID? "{" (("case" Exp SwitchCase+=SwitchCase)*  ("default" SwitchCase+=SwitchCase* )?) "}"
 ;
 
 SwitchCase:
-	":" (Statement ";"? )*
+	{SwitchCase} ":" (Statement+=Statement ";"? )*
 ;
 
 IfStmt:
-	"if" Anderson Exp Block ("else" (IfStmt | Block))?
+	"if" Anderson Exp Block+=Block ("else" (IfStmt=IfStmt | Block+=Block))?
 ;
 
 Anderson:
-	((Decl | Assig | Exp) ";")?
+	{Anderson} ((Decl | Assig=Assig | Exp) ";")?
 ;
 
 Block:
-	"{" (Statement ";"? )* "}"
+	{Block} "{" (Statement+=Statement ";"? )* "}"
 ;
 
 Statement:
-	SimpleStmt | IfStmt | SwitchStmt | ReturnStmt | ForStmt
+	SimpleStmt | IfStmt | SwitchStmt=SwitchStmt | {Statement} ReturnStmt=ReturnStmt | ForStmt
 ;
 
 ReturnStmt:
@@ -105,7 +104,7 @@ ReturnStmt:
 
 TypeDef:
 	//TODO: juntar os tipos
-	"type" ID (BASIC_TYPES | ID | Struct)
+	"type" ID TypeName
 ;
 
 Struct:
@@ -113,11 +112,11 @@ Struct:
 ;
 
 FieldDecl:
-	IdList (BASIC_TYPES | ID)
+	IdList TypeName
 ;
 
 Decl:
-	ShortVarDecl | (("var" | "const") ID IdList BASIC_TYPES ("=" Exp ExpList)?)
+	ShortVarDecl | (("var" | "const") ID IdList TypeName ("=" Exp ExpList)?)
 ;
 
 ShortVarDecl:
@@ -125,7 +124,7 @@ ShortVarDecl:
 ;
 
 Assig :
-	ID ((IdList "=" Exp ExpList) | ("++"|"--") | (("+="|"-="|"*="|"/=") Exp))
+	id=ID ((idl=IdList "=" expression=Exp expressionlist=ExpList) | ("++"|"--") | (("+="|"-="|"*="|"/=") expression=Exp))
 ;
 
 IdList:
@@ -141,7 +140,7 @@ Exp:
 ;
 
 SimpleStmt:
-	Decl | Assig | Exp 
+	{SimpleStmt} Decl | Assig | {SimpleStmt} Exp 
 ;
 
 ExpAux:

@@ -66,6 +66,20 @@ public class GoFactoryImpl extends EFactoryImpl implements GoFactory
     switch (eClass.getClassifierID())
     {
       case GoPackage.MODEL: return createModel();
+      case GoPackage.GREETING: return createGreeting();
+      case GoPackage.SOURCE_FILE: return createSourceFile();
+      case GoPackage.TOP_LEVEL_DECL: return createTopLevelDecl();
+      case GoPackage.FOR_STMT: return createForStmt();
+      case GoPackage.FOR_CLAUSE: return createForClause();
+      case GoPackage.FUNC_DECL: return createFuncDecl();
+      case GoPackage.SWITCH_STMT: return createSwitchStmt();
+      case GoPackage.SWITCH_CASE: return createSwitchCase();
+      case GoPackage.IF_STMT: return createIfStmt();
+      case GoPackage.ANDERSON: return createAnderson();
+      case GoPackage.BLOCK: return createBlock();
+      case GoPackage.STATEMENT: return createStatement();
+      case GoPackage.ASSIG: return createAssig();
+      case GoPackage.SIMPLE_STMT: return createSimpleStmt();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -80,6 +94,160 @@ public class GoFactoryImpl extends EFactoryImpl implements GoFactory
   {
     ModelImpl model = new ModelImpl();
     return model;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Greeting createGreeting()
+  {
+    GreetingImpl greeting = new GreetingImpl();
+    return greeting;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SourceFile createSourceFile()
+  {
+    SourceFileImpl sourceFile = new SourceFileImpl();
+    return sourceFile;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TopLevelDecl createTopLevelDecl()
+  {
+    TopLevelDeclImpl topLevelDecl = new TopLevelDeclImpl();
+    return topLevelDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ForStmt createForStmt()
+  {
+    ForStmtImpl forStmt = new ForStmtImpl();
+    return forStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ForClause createForClause()
+  {
+    ForClauseImpl forClause = new ForClauseImpl();
+    return forClause;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FuncDecl createFuncDecl()
+  {
+    FuncDeclImpl funcDecl = new FuncDeclImpl();
+    return funcDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SwitchStmt createSwitchStmt()
+  {
+    SwitchStmtImpl switchStmt = new SwitchStmtImpl();
+    return switchStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SwitchCase createSwitchCase()
+  {
+    SwitchCaseImpl switchCase = new SwitchCaseImpl();
+    return switchCase;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public IfStmt createIfStmt()
+  {
+    IfStmtImpl ifStmt = new IfStmtImpl();
+    return ifStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Anderson createAnderson()
+  {
+    AndersonImpl anderson = new AndersonImpl();
+    return anderson;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Block createBlock()
+  {
+    BlockImpl block = new BlockImpl();
+    return block;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Statement createStatement()
+  {
+    StatementImpl statement = new StatementImpl();
+    return statement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Assig createAssig()
+  {
+    AssigImpl assig = new AssigImpl();
+    return assig;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SimpleStmt createSimpleStmt()
+  {
+    SimpleStmtImpl simpleStmt = new SimpleStmtImpl();
+    return simpleStmt;
   }
 
   /**
