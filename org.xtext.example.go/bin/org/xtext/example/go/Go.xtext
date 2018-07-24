@@ -16,7 +16,7 @@ SourceFile:
 
 TopLevelDecl:
 	// TODO: methoddecl
-	Decl | FuncDecl
+	Decl | FuncDecl | TypeDef
 ;
 
 ImportDecl:
@@ -48,7 +48,11 @@ FunctionType:
 ;
 
 FuncDecl:
-	"func" ID Signature Block?
+	"func" Receiver? ID Signature Block?
+;
+
+Receiver:
+	Parameters
 ;
 
 Signature:
@@ -56,7 +60,7 @@ Signature:
 ;
 
 Result:
-	Parameters | TYPE 
+	Parameters | BASIC_TYPES 
 ;
 
 Parameters:
@@ -68,7 +72,7 @@ ParameterList:
 ;
 
 ParameterDecl:
-	(ID IdList)? "..."? TYPE
+	(ID IdList)? "..."? TypeName
 ;
 
 SwitchStmt:
@@ -99,8 +103,21 @@ ReturnStmt:
 	"return" Exp?
 ;
 
+TypeDef:
+	//TODO: juntar os tipos
+	"type" ID (BASIC_TYPES | ID | Struct)
+;
+
+Struct:
+	"struct" "{" (FieldDecl ";"?)* "}"
+;
+
+FieldDecl:
+	IdList (BASIC_TYPES | ID)
+;
+
 Decl:
-	(("var" | "const") ID IdList TYPE ("=" Exp ExpList)?)
+	(("var" | "const") ID IdList BASIC_TYPES ("=" Exp ExpList)?)
 ;
 
 ShortVarDecl:
@@ -120,7 +137,7 @@ ExpList:
 ;
 
 Exp: 
-	ExpAux | BooleanExp ExpJoin? | AritExp ExpJoin? | STRING | RelExp | ID ExpJoin?
+	ExpAux | BooleanExp ExpJoin? | AritExp ExpJoin? | STRING | RelExp | ID ExpJoin? | Call
 ;
 
 SimpleStmt:
@@ -175,8 +192,16 @@ NumberLiteral:
 	INT
 ;
 
-terminal TYPE:
-	"string" | "int" | "bool"
+TypeName:
+	BASIC_TYPES | QualifiedIdent | ID | Struct
+;
+
+QualifiedIdent:
+	ID "." ID
+;
+
+terminal BASIC_TYPES:
+	"string" | "int" | "bool" 
 ;
 
 terminal OP_SUM:
