@@ -36,7 +36,7 @@ ForStmt:
 ;
 
 ForClause:
-	Decl? ";" Exp? ";" SimpleStmt?
+	(Decl)? ";" Exp? ";" SimpleStmt?
 ;
 
 RangeClause:
@@ -80,24 +80,15 @@ SwitchCase:
 ;
 
 IfStmt:
-	"if" Anderson  Exp Block ("else" (IfStmt | Block))?
+	"if" Anderson Exp Block ("else" (IfStmt | Block))?
 ;
 
 Anderson:
-	((Assig | Decl | Exp) ";")?
+	((Decl | Assig | Exp) ";")?
 ;
 
 Block:
 	"{" (Statement ";"? )* "}"
-;
-
-Call:
-	// TODO: AJEITAR
-	ID ("." ID)* "(" (Exp ExpList)? ")"
-;
-
-SimpleStmt:
-	Decl | Assig | Exp | Call
 ;
 
 Statement:
@@ -109,7 +100,11 @@ ReturnStmt:
 ;
 
 Decl:
-	(("var" | "const") ID IdList TYPE ("=" Exp ExpList)?) 
+	(("var" | "const") ID IdList TYPE ("=" Exp ExpList)?)
+;
+
+ShortVarDecl:
+	ID IdList ":=" ExpList
 ;
 
 Assig :
@@ -128,9 +123,16 @@ Exp:
 	ExpAux | BooleanExp ExpJoin? | AritExp ExpJoin? | STRING | RelExp | ID ExpJoin?
 ;
 
+SimpleStmt:
+	Decl | Assig | Call | Exp 
+;
+
 ExpAux:
-	// TODO: Ajeitar com Call
 	"!"? "(" Exp ")" (ExpJoin)? 
+;
+
+Call:
+	ID ("." ID)* "(" (Exp ExpList)? ")"
 ;
 
 ExpJoin:
