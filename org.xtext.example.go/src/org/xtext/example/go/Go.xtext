@@ -31,7 +31,7 @@ Package:
 ;
 
 ForStmt:
-	"for" (Exp RangeClause? | ForClause) Block=Block
+	"for" (Exp RangeClause? | ForClause?) Block=Block
 ;
 
 ForClause:
@@ -95,7 +95,57 @@ Block:
 ;
 
 Statement:
-	SimpleStmt | IfStmt | SwitchStmt=SwitchStmt | {Statement} ReturnStmt=ReturnStmt | ForStmt
+ 	LabeledStmt=LabeledStmt | SendStmt=SendStmt | SimpleStmt | IfStmt | SwitchStmt=SwitchStmt | ReturnStmt=ReturnStmt | ForStmt | 
+	BreakStmt=BreakStmt | ContinueStmt=ContinueStmt | GotoStmt=GotoStmt | 
+	FalltrhoughStmt=FalltrhoughStmt | DeferStmt=DeferStmt | SelectStmt
+;
+
+SelectStmt:
+	{SelectStmt} "select" "{" CommClause+=CommClause* "}"
+;
+
+CommClause:
+	CommCase ":" StatementList
+;
+
+StatementList:
+	{StatementList} (Statement+=Statement ";"?)*
+;
+
+CommCase:
+	("case" (SendStmt | RecvStmt)) | "default"
+;
+
+RecvStmt:
+	((Exp ExpList "=") | (ID IdList ":="))? Exp
+;
+
+LabeledStmt:
+	ID ":" Statement
+;
+
+SendStmt:
+	Exp "<-" Exp
+;
+
+BreakStmt:
+	"break" ID? ";"?
+;
+
+ContinueStmt:
+	"continue" ID? ";"?
+;
+
+GotoStmt:
+	"goto" ID? ";"?
+;
+
+FalltrhoughStmt:
+	"fallthrough" ";"?
+;
+
+DeferStmt:
+	"defer" Exp ";"?
 ;
 
 ReturnStmt:
@@ -103,7 +153,6 @@ ReturnStmt:
 ;
 
 TypeDef:
-	//TODO: juntar os tipos
 	"type" ID TypeName
 ;
 
@@ -152,7 +201,7 @@ Call:
 ;
 
 ExpJoin:
-	(OP_REL | OP_UNARY | OP_SUM | OP_MULT | "&&" | "||") Exp
+	(OP_UNARY | OP_REL | OP_SUM | OP_MULT | "&&" | "||") Exp
 ;
 
 RelExp:
@@ -172,7 +221,7 @@ And:
 ;
 
 BooleanLiteral:
-	BOOL
+	Bool
 ;
 
 AritExp:
@@ -192,23 +241,28 @@ NumberLiteral:
 ;
 
 TypeName:
-	BASIC_TYPES | QualifiedIdent | ID | Struct
+	BasicTypes | QualifiedIdent | ID | Struct
 ;
 
 QualifiedIdent:
 	ID "." ID
 ;
 
-terminal BASIC_TYPES:
+
+Bool:
+	"true" | "false"
+;
+
+BasicTypes:
 	"string" | "int" | "bool" 
 ;
 
 terminal OP_SUM:
-	('+'|'-')
+	("+" | "-" | "|" | "^")
 ;
 
 terminal OP_MULT:
-	('*'|'/')
+	("*" | "/" | "%" | "<<" | ">>" | "&" | "&^")
 ;
 
 terminal OP_REL:
@@ -216,9 +270,5 @@ terminal OP_REL:
 ;
 
 terminal OP_UNARY:
-	"==" | "!="	
-;
-
-terminal BOOL:
-	"true" | "false"
+	"==" | "!="	| "<-" | "&"
 ;
