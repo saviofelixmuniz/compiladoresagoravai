@@ -856,54 +856,62 @@ public class GoGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class DeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.go.Go.Decl");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Keyword cVarKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
-		private final Keyword cConstKeyword_0_1 = (Keyword)cAlternatives_0.eContents().get(1);
-		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
-		private final RuleCall cIdListParserRuleCall_2 = (RuleCall)cGroup.eContents().get(2);
-		private final RuleCall cBASIC_TYPESTerminalRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cEqualsSignKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final RuleCall cExpParserRuleCall_4_1 = (RuleCall)cGroup_4.eContents().get(1);
-		private final RuleCall cExpListParserRuleCall_4_2 = (RuleCall)cGroup_4.eContents().get(2);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cShortVarDeclParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Alternatives cAlternatives_1_0 = (Alternatives)cGroup_1.eContents().get(0);
+		private final Keyword cVarKeyword_1_0_0 = (Keyword)cAlternatives_1_0.eContents().get(0);
+		private final Keyword cConstKeyword_1_0_1 = (Keyword)cAlternatives_1_0.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		private final RuleCall cIdListParserRuleCall_1_2 = (RuleCall)cGroup_1.eContents().get(2);
+		private final RuleCall cBASIC_TYPESTerminalRuleCall_1_3 = (RuleCall)cGroup_1.eContents().get(3);
+		private final Group cGroup_1_4 = (Group)cGroup_1.eContents().get(4);
+		private final Keyword cEqualsSignKeyword_1_4_0 = (Keyword)cGroup_1_4.eContents().get(0);
+		private final RuleCall cExpParserRuleCall_1_4_1 = (RuleCall)cGroup_1_4.eContents().get(1);
+		private final RuleCall cExpListParserRuleCall_1_4_2 = (RuleCall)cGroup_1_4.eContents().get(2);
 		
 		//Decl:
-		//	("var" | "const") ID IdList BASIC_TYPES ("=" Exp ExpList)?;
+		//	ShortVarDecl | ("var" | "const") ID IdList BASIC_TYPES ("=" Exp ExpList)?;
 		@Override public ParserRule getRule() { return rule; }
 		
+		//ShortVarDecl | ("var" | "const") ID IdList BASIC_TYPES ("=" Exp ExpList)?
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//ShortVarDecl
+		public RuleCall getShortVarDeclParserRuleCall_0() { return cShortVarDeclParserRuleCall_0; }
+		
 		//("var" | "const") ID IdList BASIC_TYPES ("=" Exp ExpList)?
-		public Group getGroup() { return cGroup; }
+		public Group getGroup_1() { return cGroup_1; }
 		
 		//"var" | "const"
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		public Alternatives getAlternatives_1_0() { return cAlternatives_1_0; }
 		
 		//"var"
-		public Keyword getVarKeyword_0_0() { return cVarKeyword_0_0; }
+		public Keyword getVarKeyword_1_0_0() { return cVarKeyword_1_0_0; }
 		
 		//"const"
-		public Keyword getConstKeyword_0_1() { return cConstKeyword_0_1; }
+		public Keyword getConstKeyword_1_0_1() { return cConstKeyword_1_0_1; }
 		
 		//ID
-		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
+		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
 		
 		//IdList
-		public RuleCall getIdListParserRuleCall_2() { return cIdListParserRuleCall_2; }
+		public RuleCall getIdListParserRuleCall_1_2() { return cIdListParserRuleCall_1_2; }
 		
 		//BASIC_TYPES
-		public RuleCall getBASIC_TYPESTerminalRuleCall_3() { return cBASIC_TYPESTerminalRuleCall_3; }
+		public RuleCall getBASIC_TYPESTerminalRuleCall_1_3() { return cBASIC_TYPESTerminalRuleCall_1_3; }
 		
 		//("=" Exp ExpList)?
-		public Group getGroup_4() { return cGroup_4; }
+		public Group getGroup_1_4() { return cGroup_1_4; }
 		
 		//"="
-		public Keyword getEqualsSignKeyword_4_0() { return cEqualsSignKeyword_4_0; }
+		public Keyword getEqualsSignKeyword_1_4_0() { return cEqualsSignKeyword_1_4_0; }
 		
 		//Exp
-		public RuleCall getExpParserRuleCall_4_1() { return cExpParserRuleCall_4_1; }
+		public RuleCall getExpParserRuleCall_1_4_1() { return cExpParserRuleCall_1_4_1; }
 		
 		//ExpList
-		public RuleCall getExpListParserRuleCall_4_2() { return cExpListParserRuleCall_4_2; }
+		public RuleCall getExpListParserRuleCall_1_4_2() { return cExpListParserRuleCall_1_4_2; }
 	}
 	public class ShortVarDeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.go.Go.ShortVarDecl");
@@ -911,13 +919,14 @@ public class GoGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
 		private final RuleCall cIdListParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
 		private final Keyword cColonEqualsSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final RuleCall cExpListParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
+		private final RuleCall cExpParserRuleCall_3 = (RuleCall)cGroup.eContents().get(3);
+		private final RuleCall cExpListParserRuleCall_4 = (RuleCall)cGroup.eContents().get(4);
 		
 		//ShortVarDecl:
-		//	ID IdList ":=" ExpList;
+		//	ID IdList ":=" Exp ExpList;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//ID IdList ":=" ExpList
+		//ID IdList ":=" Exp ExpList
 		public Group getGroup() { return cGroup; }
 		
 		//ID
@@ -929,8 +938,11 @@ public class GoGrammarAccess extends AbstractGrammarElementFinder {
 		//":="
 		public Keyword getColonEqualsSignKeyword_2() { return cColonEqualsSignKeyword_2; }
 		
+		//Exp
+		public RuleCall getExpParserRuleCall_3() { return cExpParserRuleCall_3; }
+		
 		//ExpList
-		public RuleCall getExpListParserRuleCall_3() { return cExpListParserRuleCall_3; }
+		public RuleCall getExpListParserRuleCall_4() { return cExpListParserRuleCall_4; }
 	}
 	public class AssigElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.go.Go.Assig");
@@ -1052,79 +1064,78 @@ public class GoGrammarAccess extends AbstractGrammarElementFinder {
 	public class ExpElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.go.Go.Exp");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cExpAuxParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final RuleCall cBooleanExpParserRuleCall_1_0 = (RuleCall)cGroup_1.eContents().get(0);
-		private final RuleCall cExpJoinParserRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		private final RuleCall cCallParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cExpAuxParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
-		private final RuleCall cAritExpParserRuleCall_2_0 = (RuleCall)cGroup_2.eContents().get(0);
+		private final RuleCall cBooleanExpParserRuleCall_2_0 = (RuleCall)cGroup_2.eContents().get(0);
 		private final RuleCall cExpJoinParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
-		private final RuleCall cSTRINGTerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cRelExpParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
-		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
-		private final RuleCall cIDTerminalRuleCall_5_0 = (RuleCall)cGroup_5.eContents().get(0);
-		private final RuleCall cExpJoinParserRuleCall_5_1 = (RuleCall)cGroup_5.eContents().get(1);
-		private final RuleCall cCallParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
+		private final RuleCall cAritExpParserRuleCall_3_0 = (RuleCall)cGroup_3.eContents().get(0);
+		private final RuleCall cExpJoinParserRuleCall_3_1 = (RuleCall)cGroup_3.eContents().get(1);
+		private final RuleCall cSTRINGTerminalRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cRelExpParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final Group cGroup_6 = (Group)cAlternatives.eContents().get(6);
+		private final RuleCall cIDTerminalRuleCall_6_0 = (RuleCall)cGroup_6.eContents().get(0);
+		private final RuleCall cExpJoinParserRuleCall_6_1 = (RuleCall)cGroup_6.eContents().get(1);
 		
 		//Exp:
-		//	ExpAux | BooleanExp ExpJoin? | AritExp ExpJoin? | STRING | RelExp | ID ExpJoin? | Call;
+		//	Call | ExpAux | BooleanExp ExpJoin? | AritExp ExpJoin? | STRING | RelExp | ID ExpJoin?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//ExpAux | BooleanExp ExpJoin? | AritExp ExpJoin? | STRING | RelExp | ID ExpJoin? | Call
+		//Call | ExpAux | BooleanExp ExpJoin? | AritExp ExpJoin? | STRING | RelExp | ID ExpJoin?
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
+		//Call
+		public RuleCall getCallParserRuleCall_0() { return cCallParserRuleCall_0; }
+		
 		//ExpAux
-		public RuleCall getExpAuxParserRuleCall_0() { return cExpAuxParserRuleCall_0; }
+		public RuleCall getExpAuxParserRuleCall_1() { return cExpAuxParserRuleCall_1; }
 		
 		//BooleanExp ExpJoin?
-		public Group getGroup_1() { return cGroup_1; }
-		
-		//BooleanExp
-		public RuleCall getBooleanExpParserRuleCall_1_0() { return cBooleanExpParserRuleCall_1_0; }
-		
-		//ExpJoin?
-		public RuleCall getExpJoinParserRuleCall_1_1() { return cExpJoinParserRuleCall_1_1; }
-		
-		//AritExp ExpJoin?
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//AritExp
-		public RuleCall getAritExpParserRuleCall_2_0() { return cAritExpParserRuleCall_2_0; }
+		//BooleanExp
+		public RuleCall getBooleanExpParserRuleCall_2_0() { return cBooleanExpParserRuleCall_2_0; }
 		
 		//ExpJoin?
 		public RuleCall getExpJoinParserRuleCall_2_1() { return cExpJoinParserRuleCall_2_1; }
 		
-		//STRING
-		public RuleCall getSTRINGTerminalRuleCall_3() { return cSTRINGTerminalRuleCall_3; }
+		//AritExp ExpJoin?
+		public Group getGroup_3() { return cGroup_3; }
 		
-		//RelExp
-		public RuleCall getRelExpParserRuleCall_4() { return cRelExpParserRuleCall_4; }
-		
-		//ID ExpJoin?
-		public Group getGroup_5() { return cGroup_5; }
-		
-		//ID
-		public RuleCall getIDTerminalRuleCall_5_0() { return cIDTerminalRuleCall_5_0; }
+		//AritExp
+		public RuleCall getAritExpParserRuleCall_3_0() { return cAritExpParserRuleCall_3_0; }
 		
 		//ExpJoin?
-		public RuleCall getExpJoinParserRuleCall_5_1() { return cExpJoinParserRuleCall_5_1; }
+		public RuleCall getExpJoinParserRuleCall_3_1() { return cExpJoinParserRuleCall_3_1; }
 		
-		//Call
-		public RuleCall getCallParserRuleCall_6() { return cCallParserRuleCall_6; }
+		//STRING
+		public RuleCall getSTRINGTerminalRuleCall_4() { return cSTRINGTerminalRuleCall_4; }
+		
+		//RelExp
+		public RuleCall getRelExpParserRuleCall_5() { return cRelExpParserRuleCall_5; }
+		
+		//ID ExpJoin?
+		public Group getGroup_6() { return cGroup_6; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall_6_0() { return cIDTerminalRuleCall_6_0; }
+		
+		//ExpJoin?
+		public RuleCall getExpJoinParserRuleCall_6_1() { return cExpJoinParserRuleCall_6_1; }
 	}
 	public class SimpleStmtElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.go.Go.SimpleStmt");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cDeclParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cAssigParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cCallParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cExpParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cExpParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//SimpleStmt:
-		//	Decl | Assig | Call | Exp;
+		//	Decl | Assig | Exp;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//Decl | Assig | Call | Exp
+		//Decl | Assig | Exp
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//Decl
@@ -1133,11 +1144,8 @@ public class GoGrammarAccess extends AbstractGrammarElementFinder {
 		//Assig
 		public RuleCall getAssigParserRuleCall_1() { return cAssigParserRuleCall_1; }
 		
-		//Call
-		public RuleCall getCallParserRuleCall_2() { return cCallParserRuleCall_2; }
-		
 		//Exp
-		public RuleCall getExpParserRuleCall_3() { return cExpParserRuleCall_3; }
+		public RuleCall getExpParserRuleCall_2() { return cExpParserRuleCall_2; }
 	}
 	public class ExpAuxElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.xtext.example.go.Go.ExpAux");
@@ -1941,7 +1949,7 @@ public class GoGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Decl:
-	//	("var" | "const") ID IdList BASIC_TYPES ("=" Exp ExpList)?;
+	//	ShortVarDecl | ("var" | "const") ID IdList BASIC_TYPES ("=" Exp ExpList)?;
 	public DeclElements getDeclAccess() {
 		return pDecl;
 	}
@@ -1951,7 +1959,7 @@ public class GoGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ShortVarDecl:
-	//	ID IdList ":=" ExpList;
+	//	ID IdList ":=" Exp ExpList;
 	public ShortVarDeclElements getShortVarDeclAccess() {
 		return pShortVarDecl;
 	}
@@ -1991,7 +1999,7 @@ public class GoGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Exp:
-	//	ExpAux | BooleanExp ExpJoin? | AritExp ExpJoin? | STRING | RelExp | ID ExpJoin? | Call;
+	//	Call | ExpAux | BooleanExp ExpJoin? | AritExp ExpJoin? | STRING | RelExp | ID ExpJoin?;
 	public ExpElements getExpAccess() {
 		return pExp;
 	}
@@ -2001,7 +2009,7 @@ public class GoGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SimpleStmt:
-	//	Decl | Assig | Call | Exp;
+	//	Decl | Assig | Exp;
 	public SimpleStmtElements getSimpleStmtAccess() {
 		return pSimpleStmt;
 	}
