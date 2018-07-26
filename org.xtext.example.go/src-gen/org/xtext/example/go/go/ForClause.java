@@ -9,6 +9,12 @@ package org.xtext.example.go.go;
  * A representation of the model object '<em><b>For Clause</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link org.xtext.example.go.go.ForClause#getDecl <em>Decl</em>}</li>
+ * </ul>
  *
  * @see org.xtext.example.go.go.GoPackage#getForClause()
  * @model
@@ -16,4 +22,30 @@ package org.xtext.example.go.go;
  */
 public interface ForClause extends ForStmt
 {
+  /**
+   * Returns the value of the '<em><b>Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Decl</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Decl</em>' containment reference.
+   * @see #setDecl(Decl)
+   * @see org.xtext.example.go.go.GoPackage#getForClause_Decl()
+   * @model containment="true"
+   * @generated
+   */
+  Decl getDecl();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.go.go.ForClause#getDecl <em>Decl</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Decl</em>' containment reference.
+   * @see #getDecl()
+   * @generated
+   */
+  void setDecl(Decl value);
+
 } // ForClause

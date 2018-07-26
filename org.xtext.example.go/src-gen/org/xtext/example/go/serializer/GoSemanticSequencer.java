@@ -17,14 +17,17 @@ import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransi
 import org.xtext.example.go.go.Anderson;
 import org.xtext.example.go.go.Assig;
 import org.xtext.example.go.go.Block;
+import org.xtext.example.go.go.Decl;
 import org.xtext.example.go.go.ForClause;
 import org.xtext.example.go.go.ForStmt;
 import org.xtext.example.go.go.FuncDecl;
 import org.xtext.example.go.go.GoPackage;
 import org.xtext.example.go.go.Model;
+import org.xtext.example.go.go.SelectStmt;
 import org.xtext.example.go.go.SimpleStmt;
 import org.xtext.example.go.go.SourceFile;
 import org.xtext.example.go.go.Statement;
+import org.xtext.example.go.go.StatementList;
 import org.xtext.example.go.go.SwitchCase;
 import org.xtext.example.go.go.TopLevelDecl;
 import org.xtext.example.go.services.GoGrammarAccess;
@@ -49,7 +52,8 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 					return; 
 				}
 				else if (rule == grammarAccess.getIfStmtRule()
-						|| rule == grammarAccess.getStatementRule()) {
+						|| rule == grammarAccess.getStatementRule()
+						|| rule == grammarAccess.getLabeledStmtRule()) {
 					sequence_Anderson_IfStmt(context, (Anderson) semanticObject); 
 					return; 
 				}
@@ -64,9 +68,13 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 			case GoPackage.BLOCK:
 				sequence_Block(context, (Block) semanticObject); 
 				return; 
+			case GoPackage.DECL:
+				sequence_Decl(context, (Decl) semanticObject); 
+				return; 
 			case GoPackage.FOR_CLAUSE:
 				if (rule == grammarAccess.getForStmtRule()
-						|| rule == grammarAccess.getStatementRule()) {
+						|| rule == grammarAccess.getStatementRule()
+						|| rule == grammarAccess.getLabeledStmtRule()) {
 					sequence_Assig_ForClause_ForStmt(context, (ForClause) semanticObject); 
 					return; 
 				}
@@ -79,17 +87,13 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				sequence_ForStmt(context, (ForStmt) semanticObject); 
 				return; 
 			case GoPackage.FUNC_DECL:
-				if (rule == grammarAccess.getFuncDeclRule()) {
-					sequence_Block_FuncDecl(context, (FuncDecl) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getTopLevelDeclRule()) {
-					sequence_FuncDecl(context, (FuncDecl) semanticObject); 
-					return; 
-				}
-				else break;
+				sequence_FuncDecl(context, (FuncDecl) semanticObject); 
+				return; 
 			case GoPackage.MODEL:
 				sequence_Model(context, (Model) semanticObject); 
+				return; 
+			case GoPackage.SELECT_STMT:
+				sequence_SelectStmt(context, (SelectStmt) semanticObject); 
 				return; 
 			case GoPackage.SIMPLE_STMT:
 				sequence_SimpleStmt(context, (SimpleStmt) semanticObject); 
@@ -99,6 +103,9 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 				return; 
 			case GoPackage.STATEMENT:
 				sequence_Statement(context, (Statement) semanticObject); 
+				return; 
+			case GoPackage.STATEMENT_LIST:
+				sequence_StatementList(context, (StatementList) semanticObject); 
 				return; 
 			case GoPackage.SWITCH_CASE:
 				sequence_SwitchCase(context, (SwitchCase) semanticObject); 
@@ -116,7 +123,7 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Anderson returns Anderson
 	 *
 	 * Constraint:
-	 *     Assig=Assig?
+	 *     (decl=Decl | Assig=Assig)?
 	 */
 	protected void sequence_Anderson(ISerializationContext context, Anderson semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -127,9 +134,10 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 * Contexts:
 	 *     IfStmt returns Anderson
 	 *     Statement returns Anderson
+	 *     LabeledStmt returns Anderson
 	 *
 	 * Constraint:
-	 *     (Assig=Assig? Block+=Block (IfStmt=IfStmt | Block+=Block)?)
+	 *     ((decl=Decl | Assig=Assig)? Block+=Block (IfStmt=IfStmt | Block+=Block)?)
 	 */
 	protected void sequence_Anderson_IfStmt(ISerializationContext context, Anderson semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -141,7 +149,7 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     SwitchStmt returns Anderson
 	 *
 	 * Constraint:
-	 *     (Assig=Assig? SwitchCase+=SwitchCase* SwitchCase+=SwitchCase*)
+	 *     ((decl=Decl | Assig=Assig)? SwitchCase+=SwitchCase* SwitchCase+=SwitchCase*)
 	 */
 	protected void sequence_Anderson_SwitchStmt(ISerializationContext context, Anderson semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -151,6 +159,7 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	/**
 	 * Contexts:
 	 *     Statement returns Assig
+	 *     LabeledStmt returns Assig
 	 *     Assig returns Assig
 	 *     SimpleStmt returns Assig
 	 *
@@ -166,9 +175,10 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 * Contexts:
 	 *     ForStmt returns ForClause
 	 *     Statement returns ForClause
+	 *     LabeledStmt returns ForClause
 	 *
 	 * Constraint:
-	 *     ((id=ID ((idl=IdList expression=Exp expressionlist=ExpList) | expression=Exp)?)? Block=Block)
+	 *     (decl=Decl? (id=ID ((idl=IdList expression=Exp expressionlist=ExpList) | expression=Exp)?)? Block=Block)
 	 */
 	protected void sequence_Assig_ForClause_ForStmt(ISerializationContext context, ForClause semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -180,7 +190,7 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     ForClause returns ForClause
 	 *
 	 * Constraint:
-	 *     (id=ID ((idl=IdList expression=Exp expressionlist=ExpList) | expression=Exp)?)?
+	 *     (decl=Decl? ((id=ID ((idl=IdList expression=Exp expressionlist=ExpList) | expression=Exp)?) | decl=Decl)?)
 	 */
 	protected void sequence_Assig_ForClause_SimpleStmt(ISerializationContext context, ForClause semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -201,12 +211,12 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     FuncDecl returns FuncDecl
+	 *     Decl returns Decl
 	 *
 	 * Constraint:
-	 *     Statement+=Statement*
+	 *     (name=ID | (name=ID idList=IdList type=TypeName (exp=Exp explist=ExpList)?))
 	 */
-	protected void sequence_Block_FuncDecl(ISerializationContext context, FuncDecl semanticObject) {
+	protected void sequence_Decl(ISerializationContext context, Decl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -215,6 +225,7 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 * Contexts:
 	 *     ForStmt returns ForStmt
 	 *     Statement returns ForStmt
+	 *     LabeledStmt returns ForStmt
 	 *
 	 * Constraint:
 	 *     Block=Block
@@ -232,10 +243,10 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     TopLevelDecl returns FuncDecl
+	 *     FuncDecl returns FuncDecl
 	 *
 	 * Constraint:
-	 *     {FuncDecl}
+	 *     (receiver=Receiver? name=ID signature=Signature block=Block?)
 	 */
 	protected void sequence_FuncDecl(ISerializationContext context, FuncDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -247,7 +258,7 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     Model returns Model
 	 *
 	 * Constraint:
-	 *     greetings+=Greeting+
+	 *     elements+=SourceFile+
 	 */
 	protected void sequence_Model(ISerializationContext context, Model semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -256,11 +267,26 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
+	 *     Statement returns SelectStmt
+	 *     SelectStmt returns SelectStmt
+	 *     LabeledStmt returns SelectStmt
+	 *
+	 * Constraint:
+	 *     CommClause+=CommClause*
+	 */
+	protected void sequence_SelectStmt(ISerializationContext context, SelectStmt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Statement returns SimpleStmt
+	 *     LabeledStmt returns SimpleStmt
 	 *     SimpleStmt returns SimpleStmt
 	 *
 	 * Constraint:
-	 *     {SimpleStmt}
+	 *     decl=Decl?
 	 */
 	protected void sequence_SimpleStmt(ISerializationContext context, SimpleStmt semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -269,7 +295,6 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     Greeting returns SourceFile
 	 *     SourceFile returns SourceFile
 	 *
 	 * Constraint:
@@ -282,10 +307,34 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	
 	/**
 	 * Contexts:
-	 *     Statement returns Statement
+	 *     CommClause returns StatementList
+	 *     StatementList returns StatementList
 	 *
 	 * Constraint:
-	 *     (SwitchStmt=SwitchStmt | ReturnStmt=ReturnStmt)
+	 *     Statement+=Statement*
+	 */
+	protected void sequence_StatementList(ISerializationContext context, StatementList semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns Statement
+	 *     LabeledStmt returns Statement
+	 *
+	 * Constraint:
+	 *     (
+	 *         LabeledStmt=LabeledStmt | 
+	 *         SendStmt=SendStmt | 
+	 *         SwitchStmt=SwitchStmt | 
+	 *         ReturnStmt=ReturnStmt | 
+	 *         BreakStmt=BreakStmt | 
+	 *         ContinueStmt=ContinueStmt | 
+	 *         GotoStmt=GotoStmt | 
+	 *         FalltrhoughStmt=FalltrhoughStmt | 
+	 *         DeferStmt=DeferStmt
+	 *     )
 	 */
 	protected void sequence_Statement(ISerializationContext context, Statement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -309,7 +358,7 @@ public class GoSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 	 *     TopLevelDecl returns TopLevelDecl
 	 *
 	 * Constraint:
-	 *     {TopLevelDecl}
+	 *     (decl=Decl | func=FuncDecl)?
 	 */
 	protected void sequence_TopLevelDecl(ISerializationContext context, TopLevelDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

@@ -13,17 +13,21 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.xtext.example.go.go.Anderson;
 import org.xtext.example.go.go.Assig;
 import org.xtext.example.go.go.Block;
+import org.xtext.example.go.go.CommClause;
+import org.xtext.example.go.go.Decl;
 import org.xtext.example.go.go.ForClause;
 import org.xtext.example.go.go.ForStmt;
 import org.xtext.example.go.go.FuncDecl;
 import org.xtext.example.go.go.GoFactory;
 import org.xtext.example.go.go.GoPackage;
-import org.xtext.example.go.go.Greeting;
 import org.xtext.example.go.go.IfStmt;
+import org.xtext.example.go.go.LabeledStmt;
 import org.xtext.example.go.go.Model;
+import org.xtext.example.go.go.SelectStmt;
 import org.xtext.example.go.go.SimpleStmt;
 import org.xtext.example.go.go.SourceFile;
 import org.xtext.example.go.go.Statement;
+import org.xtext.example.go.go.StatementList;
 import org.xtext.example.go.go.SwitchCase;
 import org.xtext.example.go.go.SwitchStmt;
 import org.xtext.example.go.go.TopLevelDecl;
@@ -42,13 +46,6 @@ public class GoPackageImpl extends EPackageImpl implements GoPackage
    * @generated
    */
   private EClass modelEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass greetingEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -126,6 +123,41 @@ public class GoPackageImpl extends EPackageImpl implements GoPackage
    * @generated
    */
   private EClass statementEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass selectStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass commClauseEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass statementListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass labeledStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass declEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -219,19 +251,9 @@ public class GoPackageImpl extends EPackageImpl implements GoPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getModel_Greetings()
+  public EReference getModel_Elements()
   {
     return (EReference)modelEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getGreeting()
-  {
-    return greetingEClass;
   }
 
   /**
@@ -269,6 +291,26 @@ public class GoPackageImpl extends EPackageImpl implements GoPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getTopLevelDecl_Decl()
+  {
+    return (EReference)topLevelDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTopLevelDecl_Func()
+  {
+    return (EReference)topLevelDeclEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getForStmt()
   {
     return forStmtEClass;
@@ -299,9 +341,59 @@ public class GoPackageImpl extends EPackageImpl implements GoPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getForClause_Decl()
+  {
+    return (EReference)forClauseEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getFuncDecl()
   {
     return funcDeclEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFuncDecl_Receiver()
+  {
+    return (EAttribute)funcDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFuncDecl_Name()
+  {
+    return (EAttribute)funcDeclEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFuncDecl_Signature()
+  {
+    return (EAttribute)funcDeclEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFuncDecl_Block()
+  {
+    return (EReference)funcDeclEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -389,9 +481,19 @@ public class GoPackageImpl extends EPackageImpl implements GoPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAnderson_Assig()
+  public EReference getAnderson_Decl()
   {
     return (EReference)andersonEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAnderson_Assig()
+  {
+    return (EReference)andersonEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -429,7 +531,7 @@ public class GoPackageImpl extends EPackageImpl implements GoPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStatement_SwitchStmt()
+  public EReference getStatement_LabeledStmt()
   {
     return (EReference)statementEClass.getEStructuralFeatures().get(0);
   }
@@ -439,9 +541,199 @@ public class GoPackageImpl extends EPackageImpl implements GoPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getStatement_ReturnStmt()
+  public EAttribute getStatement_SendStmt()
   {
     return (EAttribute)statementEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_SwitchStmt()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getStatement_ReturnStmt()
+  {
+    return (EAttribute)statementEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getStatement_BreakStmt()
+  {
+    return (EAttribute)statementEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getStatement_ContinueStmt()
+  {
+    return (EAttribute)statementEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getStatement_GotoStmt()
+  {
+    return (EAttribute)statementEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getStatement_FalltrhoughStmt()
+  {
+    return (EAttribute)statementEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getStatement_DeferStmt()
+  {
+    return (EAttribute)statementEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSelectStmt()
+  {
+    return selectStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSelectStmt_CommClause()
+  {
+    return (EReference)selectStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCommClause()
+  {
+    return commClauseEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getStatementList()
+  {
+    return statementListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatementList_Statement()
+  {
+    return (EReference)statementListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLabeledStmt()
+  {
+    return labeledStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getDecl()
+  {
+    return declEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getDecl_Name()
+  {
+    return (EAttribute)declEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getDecl_IdList()
+  {
+    return (EAttribute)declEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getDecl_Type()
+  {
+    return (EAttribute)declEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getDecl_Exp()
+  {
+    return (EAttribute)declEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getDecl_Explist()
+  {
+    return (EAttribute)declEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -535,21 +827,26 @@ public class GoPackageImpl extends EPackageImpl implements GoPackage
 
     // Create classes and their features
     modelEClass = createEClass(MODEL);
-    createEReference(modelEClass, MODEL__GREETINGS);
-
-    greetingEClass = createEClass(GREETING);
+    createEReference(modelEClass, MODEL__ELEMENTS);
 
     sourceFileEClass = createEClass(SOURCE_FILE);
     createEReference(sourceFileEClass, SOURCE_FILE__TOP_LEVEL_DECL);
 
     topLevelDeclEClass = createEClass(TOP_LEVEL_DECL);
+    createEReference(topLevelDeclEClass, TOP_LEVEL_DECL__DECL);
+    createEReference(topLevelDeclEClass, TOP_LEVEL_DECL__FUNC);
 
     forStmtEClass = createEClass(FOR_STMT);
     createEReference(forStmtEClass, FOR_STMT__BLOCK);
 
     forClauseEClass = createEClass(FOR_CLAUSE);
+    createEReference(forClauseEClass, FOR_CLAUSE__DECL);
 
     funcDeclEClass = createEClass(FUNC_DECL);
+    createEAttribute(funcDeclEClass, FUNC_DECL__RECEIVER);
+    createEAttribute(funcDeclEClass, FUNC_DECL__NAME);
+    createEAttribute(funcDeclEClass, FUNC_DECL__SIGNATURE);
+    createEReference(funcDeclEClass, FUNC_DECL__BLOCK);
 
     switchStmtEClass = createEClass(SWITCH_STMT);
 
@@ -562,14 +859,39 @@ public class GoPackageImpl extends EPackageImpl implements GoPackage
     createEReference(andersonEClass, ANDERSON__SWITCH_CASE);
     createEReference(andersonEClass, ANDERSON__BLOCK);
     createEReference(andersonEClass, ANDERSON__IF_STMT);
+    createEReference(andersonEClass, ANDERSON__DECL);
     createEReference(andersonEClass, ANDERSON__ASSIG);
 
     blockEClass = createEClass(BLOCK);
     createEReference(blockEClass, BLOCK__STATEMENT);
 
     statementEClass = createEClass(STATEMENT);
+    createEReference(statementEClass, STATEMENT__LABELED_STMT);
+    createEAttribute(statementEClass, STATEMENT__SEND_STMT);
     createEReference(statementEClass, STATEMENT__SWITCH_STMT);
     createEAttribute(statementEClass, STATEMENT__RETURN_STMT);
+    createEAttribute(statementEClass, STATEMENT__BREAK_STMT);
+    createEAttribute(statementEClass, STATEMENT__CONTINUE_STMT);
+    createEAttribute(statementEClass, STATEMENT__GOTO_STMT);
+    createEAttribute(statementEClass, STATEMENT__FALLTRHOUGH_STMT);
+    createEAttribute(statementEClass, STATEMENT__DEFER_STMT);
+
+    selectStmtEClass = createEClass(SELECT_STMT);
+    createEReference(selectStmtEClass, SELECT_STMT__COMM_CLAUSE);
+
+    commClauseEClass = createEClass(COMM_CLAUSE);
+
+    statementListEClass = createEClass(STATEMENT_LIST);
+    createEReference(statementListEClass, STATEMENT_LIST__STATEMENT);
+
+    labeledStmtEClass = createEClass(LABELED_STMT);
+
+    declEClass = createEClass(DECL);
+    createEAttribute(declEClass, DECL__NAME);
+    createEAttribute(declEClass, DECL__ID_LIST);
+    createEAttribute(declEClass, DECL__TYPE);
+    createEAttribute(declEClass, DECL__EXP);
+    createEAttribute(declEClass, DECL__EXPLIST);
 
     assigEClass = createEClass(ASSIG);
     createEAttribute(assigEClass, ASSIG__ID);
@@ -609,35 +931,40 @@ public class GoPackageImpl extends EPackageImpl implements GoPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    sourceFileEClass.getESuperTypes().add(this.getGreeting());
     forStmtEClass.getESuperTypes().add(this.getStatement());
     forClauseEClass.getESuperTypes().add(this.getForStmt());
-    funcDeclEClass.getESuperTypes().add(this.getTopLevelDecl());
     ifStmtEClass.getESuperTypes().add(this.getStatement());
     andersonEClass.getESuperTypes().add(this.getSwitchStmt());
     andersonEClass.getESuperTypes().add(this.getIfStmt());
-    blockEClass.getESuperTypes().add(this.getFuncDecl());
+    statementEClass.getESuperTypes().add(this.getLabeledStmt());
+    selectStmtEClass.getESuperTypes().add(this.getStatement());
+    statementListEClass.getESuperTypes().add(this.getCommClause());
     assigEClass.getESuperTypes().add(this.getSimpleStmt());
     simpleStmtEClass.getESuperTypes().add(this.getForClause());
     simpleStmtEClass.getESuperTypes().add(this.getStatement());
 
     // Initialize classes and features; add operations and parameters
     initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getModel_Greetings(), this.getGreeting(), null, "greetings", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(greetingEClass, Greeting.class, "Greeting", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getModel_Elements(), this.getSourceFile(), null, "elements", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(sourceFileEClass, SourceFile.class, "SourceFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSourceFile_TopLevelDecl(), this.getTopLevelDecl(), null, "TopLevelDecl", null, 0, -1, SourceFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(topLevelDeclEClass, TopLevelDecl.class, "TopLevelDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTopLevelDecl_Decl(), this.getDecl(), null, "decl", null, 0, 1, TopLevelDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTopLevelDecl_Func(), this.getFuncDecl(), null, "func", null, 0, 1, TopLevelDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(forStmtEClass, ForStmt.class, "ForStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getForStmt_Block(), this.getBlock(), null, "Block", null, 0, 1, ForStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(forClauseEClass, ForClause.class, "ForClause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getForClause_Decl(), this.getDecl(), null, "decl", null, 0, 1, ForClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(funcDeclEClass, FuncDecl.class, "FuncDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFuncDecl_Receiver(), ecorePackage.getEString(), "receiver", null, 0, 1, FuncDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getFuncDecl_Name(), ecorePackage.getEString(), "name", null, 0, 1, FuncDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getFuncDecl_Signature(), ecorePackage.getEString(), "signature", null, 0, 1, FuncDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFuncDecl_Block(), this.getBlock(), null, "block", null, 0, 1, FuncDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(switchStmtEClass, SwitchStmt.class, "SwitchStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -650,14 +977,39 @@ public class GoPackageImpl extends EPackageImpl implements GoPackage
     initEReference(getAnderson_SwitchCase(), this.getSwitchCase(), null, "SwitchCase", null, 0, -1, Anderson.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAnderson_Block(), this.getBlock(), null, "Block", null, 0, -1, Anderson.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAnderson_IfStmt(), this.getIfStmt(), null, "IfStmt", null, 0, 1, Anderson.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAnderson_Decl(), this.getDecl(), null, "decl", null, 0, 1, Anderson.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAnderson_Assig(), this.getAssig(), null, "Assig", null, 0, 1, Anderson.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(blockEClass, Block.class, "Block", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getBlock_Statement(), this.getStatement(), null, "Statement", null, 0, -1, Block.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getStatement_LabeledStmt(), this.getLabeledStmt(), null, "LabeledStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getStatement_SendStmt(), ecorePackage.getEString(), "SendStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStatement_SwitchStmt(), this.getSwitchStmt(), null, "SwitchStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getStatement_ReturnStmt(), ecorePackage.getEString(), "ReturnStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getStatement_BreakStmt(), ecorePackage.getEString(), "BreakStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getStatement_ContinueStmt(), ecorePackage.getEString(), "ContinueStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getStatement_GotoStmt(), ecorePackage.getEString(), "GotoStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getStatement_FalltrhoughStmt(), ecorePackage.getEString(), "FalltrhoughStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getStatement_DeferStmt(), ecorePackage.getEString(), "DeferStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(selectStmtEClass, SelectStmt.class, "SelectStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSelectStmt_CommClause(), this.getCommClause(), null, "CommClause", null, 0, -1, SelectStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(commClauseEClass, CommClause.class, "CommClause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(statementListEClass, StatementList.class, "StatementList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getStatementList_Statement(), this.getStatement(), null, "Statement", null, 0, -1, StatementList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(labeledStmtEClass, LabeledStmt.class, "LabeledStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(declEClass, Decl.class, "Decl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getDecl_Name(), ecorePackage.getEString(), "name", null, 0, 1, Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDecl_IdList(), ecorePackage.getEString(), "idList", null, 0, 1, Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDecl_Type(), ecorePackage.getEString(), "type", null, 0, 1, Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDecl_Exp(), ecorePackage.getEString(), "exp", null, 0, 1, Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDecl_Explist(), ecorePackage.getEString(), "explist", null, 0, 1, Decl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(assigEClass, Assig.class, "Assig", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAssig_Id(), ecorePackage.getEString(), "id", null, 0, 1, Assig.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

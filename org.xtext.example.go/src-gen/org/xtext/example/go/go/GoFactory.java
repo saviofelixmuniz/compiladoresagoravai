@@ -33,15 +33,6 @@ public interface GoFactory extends EFactory
   Model createModel();
 
   /**
-   * Returns a new object of class '<em>Greeting</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Greeting</em>'.
-   * @generated
-   */
-  Greeting createGreeting();
-
-  /**
    * Returns a new object of class '<em>Source File</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -139,6 +130,51 @@ public interface GoFactory extends EFactory
    * @generated
    */
   Statement createStatement();
+
+  /**
+   * Returns a new object of class '<em>Select Stmt</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Select Stmt</em>'.
+   * @generated
+   */
+  SelectStmt createSelectStmt();
+
+  /**
+   * Returns a new object of class '<em>Comm Clause</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Comm Clause</em>'.
+   * @generated
+   */
+  CommClause createCommClause();
+
+  /**
+   * Returns a new object of class '<em>Statement List</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Statement List</em>'.
+   * @generated
+   */
+  StatementList createStatementList();
+
+  /**
+   * Returns a new object of class '<em>Labeled Stmt</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Labeled Stmt</em>'.
+   * @generated
+   */
+  LabeledStmt createLabeledStmt();
+
+  /**
+   * Returns a new object of class '<em>Decl</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Decl</em>'.
+   * @generated
+   */
+  Decl createDecl();
 
   /**
    * Returns a new object of class '<em>Assig</em>'.

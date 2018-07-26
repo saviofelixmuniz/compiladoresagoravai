@@ -3,6 +3,15 @@
  */
 package org.xtext.example.go.validation;
 
+import java.util.HashMap;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.xtext.validation.Check;
+import org.eclipse.xtext.xbase.lib.InputOutput;
+import org.xtext.example.go.go.Decl;
+import org.xtext.example.go.go.FuncDecl;
+import org.xtext.example.go.go.GoPackage;
+import org.xtext.example.go.go.SourceFile;
+import org.xtext.example.go.go.TopLevelDecl;
 import org.xtext.example.go.validation.AbstractGoValidator;
 
 /**
@@ -12,4 +21,50 @@ import org.xtext.example.go.validation.AbstractGoValidator;
  */
 @SuppressWarnings("all")
 public class GoValidator extends AbstractGoValidator {
+  public final static String DUPLICATE_DECLARATION = "duplicateDeclaration";
+  
+  @Check
+  public void checkVarDuplicada(final SourceFile sourceFile) {
+    EList<TopLevelDecl> decls = sourceFile.getTopLevelDecl();
+    HashMap<String, Decl> map = new HashMap<String, Decl>();
+    for (final TopLevelDecl t : decls) {
+      {
+        Decl decl = t.getDecl();
+        boolean _containsKey = map.containsKey(decl.getName());
+        if (_containsKey) {
+          String _name = decl.getName();
+          String _plus = (_name + " já foi declarada");
+          this.error(_plus, 
+            GoPackage.Literals.SOURCE_FILE__TOP_LEVEL_DECL, 
+            GoValidator.DUPLICATE_DECLARATION);
+        } else {
+          map.put(decl.getName(), decl);
+          InputOutput.<HashMap<String, Decl>>println(map);
+        }
+      }
+    }
+  }
+  
+  @Check
+  public void checkFuncDuplicada(final SourceFile sourceFile) {
+    EList<TopLevelDecl> decls = sourceFile.getTopLevelDecl();
+    HashMap<String, FuncDecl> map = new HashMap<String, FuncDecl>();
+    for (final TopLevelDecl t : decls) {
+      {
+        FuncDecl decl = t.getFunc();
+        boolean _containsKey = map.containsKey(decl.getName());
+        if (_containsKey) {
+          String _name = decl.getName();
+          String _plus = ("A função " + _name);
+          String _plus_1 = (_plus + " já foi declarada");
+          this.error(_plus_1, 
+            GoPackage.Literals.SOURCE_FILE__TOP_LEVEL_DECL, 
+            GoValidator.DUPLICATE_DECLARATION);
+        } else {
+          map.put(decl.getName(), decl);
+          InputOutput.<HashMap<String, FuncDecl>>println(map);
+        }
+      }
+    }
+  }
 }

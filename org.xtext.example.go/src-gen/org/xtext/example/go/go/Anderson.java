@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.xtext.example.go.go.Anderson#getSwitchCase <em>Switch Case</em>}</li>
  *   <li>{@link org.xtext.example.go.go.Anderson#getBlock <em>Block</em>}</li>
  *   <li>{@link org.xtext.example.go.go.Anderson#getIfStmt <em>If Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.Anderson#getDecl <em>Decl</em>}</li>
  *   <li>{@link org.xtext.example.go.go.Anderson#getAssig <em>Assig</em>}</li>
  * </ul>
  *
@@ -83,6 +84,32 @@ public interface Anderson extends SwitchStmt, IfStmt
    * @generated
    */
   void setIfStmt(IfStmt value);
+
+  /**
+   * Returns the value of the '<em><b>Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Decl</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Decl</em>' containment reference.
+   * @see #setDecl(Decl)
+   * @see org.xtext.example.go.go.GoPackage#getAnderson_Decl()
+   * @model containment="true"
+   * @generated
+   */
+  Decl getDecl();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.go.go.Anderson#getDecl <em>Decl</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Decl</em>' containment reference.
+   * @see #getDecl()
+   * @generated
+   */
+  void setDecl(Decl value);
 
   /**
    * Returns the value of the '<em><b>Assig</b></em>' containment reference.

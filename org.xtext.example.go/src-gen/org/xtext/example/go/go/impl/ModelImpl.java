@@ -18,8 +18,8 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.xtext.example.go.go.GoPackage;
-import org.xtext.example.go.go.Greeting;
 import org.xtext.example.go.go.Model;
+import org.xtext.example.go.go.SourceFile;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +29,7 @@ import org.xtext.example.go.go.Model;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.xtext.example.go.go.impl.ModelImpl#getGreetings <em>Greetings</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.impl.ModelImpl#getElements <em>Elements</em>}</li>
  * </ul>
  *
  * @generated
@@ -37,14 +37,14 @@ import org.xtext.example.go.go.Model;
 public class ModelImpl extends MinimalEObjectImpl.Container implements Model
 {
   /**
-   * The cached value of the '{@link #getGreetings() <em>Greetings</em>}' containment reference list.
+   * The cached value of the '{@link #getElements() <em>Elements</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getGreetings()
+   * @see #getElements()
    * @generated
    * @ordered
    */
-  protected EList<Greeting> greetings;
+  protected EList<SourceFile> elements;
 
   /**
    * <!-- begin-user-doc -->
@@ -72,13 +72,13 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Greeting> getGreetings()
+  public EList<SourceFile> getElements()
   {
-    if (greetings == null)
+    if (elements == null)
     {
-      greetings = new EObjectContainmentEList<Greeting>(Greeting.class, this, GoPackage.MODEL__GREETINGS);
+      elements = new EObjectContainmentEList<SourceFile>(SourceFile.class, this, GoPackage.MODEL__ELEMENTS);
     }
-    return greetings;
+    return elements;
   }
 
   /**
@@ -91,8 +91,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case GoPackage.MODEL__GREETINGS:
-        return ((InternalEList<?>)getGreetings()).basicRemove(otherEnd, msgs);
+      case GoPackage.MODEL__ELEMENTS:
+        return ((InternalEList<?>)getElements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -107,8 +107,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case GoPackage.MODEL__GREETINGS:
-        return getGreetings();
+      case GoPackage.MODEL__ELEMENTS:
+        return getElements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -124,9 +124,9 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case GoPackage.MODEL__GREETINGS:
-        getGreetings().clear();
-        getGreetings().addAll((Collection<? extends Greeting>)newValue);
+      case GoPackage.MODEL__ELEMENTS:
+        getElements().clear();
+        getElements().addAll((Collection<? extends SourceFile>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -142,8 +142,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case GoPackage.MODEL__GREETINGS:
-        getGreetings().clear();
+      case GoPackage.MODEL__ELEMENTS:
+        getElements().clear();
         return;
     }
     super.eUnset(featureID);
@@ -159,8 +159,8 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
   {
     switch (featureID)
     {
-      case GoPackage.MODEL__GREETINGS:
-        return greetings != null && !greetings.isEmpty();
+      case GoPackage.MODEL__ELEMENTS:
+        return elements != null && !elements.isEmpty();
     }
     return super.eIsSet(featureID);
   }

@@ -3,7 +3,6 @@
  */
 package org.xtext.example.go.go;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,16 +13,75 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.xtext.example.go.go.Statement#getLabeledStmt <em>Labeled Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.Statement#getSendStmt <em>Send Stmt</em>}</li>
  *   <li>{@link org.xtext.example.go.go.Statement#getSwitchStmt <em>Switch Stmt</em>}</li>
  *   <li>{@link org.xtext.example.go.go.Statement#getReturnStmt <em>Return Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.Statement#getBreakStmt <em>Break Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.Statement#getContinueStmt <em>Continue Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.Statement#getGotoStmt <em>Goto Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.Statement#getFalltrhoughStmt <em>Falltrhough Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.Statement#getDeferStmt <em>Defer Stmt</em>}</li>
  * </ul>
  *
  * @see org.xtext.example.go.go.GoPackage#getStatement()
  * @model
  * @generated
  */
-public interface Statement extends EObject
+public interface Statement extends LabeledStmt
 {
+  /**
+   * Returns the value of the '<em><b>Labeled Stmt</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Labeled Stmt</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Labeled Stmt</em>' containment reference.
+   * @see #setLabeledStmt(LabeledStmt)
+   * @see org.xtext.example.go.go.GoPackage#getStatement_LabeledStmt()
+   * @model containment="true"
+   * @generated
+   */
+  LabeledStmt getLabeledStmt();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.go.go.Statement#getLabeledStmt <em>Labeled Stmt</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Labeled Stmt</em>' containment reference.
+   * @see #getLabeledStmt()
+   * @generated
+   */
+  void setLabeledStmt(LabeledStmt value);
+
+  /**
+   * Returns the value of the '<em><b>Send Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Send Stmt</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Send Stmt</em>' attribute.
+   * @see #setSendStmt(String)
+   * @see org.xtext.example.go.go.GoPackage#getStatement_SendStmt()
+   * @model
+   * @generated
+   */
+  String getSendStmt();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.go.go.Statement#getSendStmt <em>Send Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Send Stmt</em>' attribute.
+   * @see #getSendStmt()
+   * @generated
+   */
+  void setSendStmt(String value);
+
   /**
    * Returns the value of the '<em><b>Switch Stmt</b></em>' containment reference.
    * <!-- begin-user-doc -->
@@ -75,5 +133,135 @@ public interface Statement extends EObject
    * @generated
    */
   void setReturnStmt(String value);
+
+  /**
+   * Returns the value of the '<em><b>Break Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Break Stmt</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Break Stmt</em>' attribute.
+   * @see #setBreakStmt(String)
+   * @see org.xtext.example.go.go.GoPackage#getStatement_BreakStmt()
+   * @model
+   * @generated
+   */
+  String getBreakStmt();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.go.go.Statement#getBreakStmt <em>Break Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Break Stmt</em>' attribute.
+   * @see #getBreakStmt()
+   * @generated
+   */
+  void setBreakStmt(String value);
+
+  /**
+   * Returns the value of the '<em><b>Continue Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Continue Stmt</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Continue Stmt</em>' attribute.
+   * @see #setContinueStmt(String)
+   * @see org.xtext.example.go.go.GoPackage#getStatement_ContinueStmt()
+   * @model
+   * @generated
+   */
+  String getContinueStmt();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.go.go.Statement#getContinueStmt <em>Continue Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Continue Stmt</em>' attribute.
+   * @see #getContinueStmt()
+   * @generated
+   */
+  void setContinueStmt(String value);
+
+  /**
+   * Returns the value of the '<em><b>Goto Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Goto Stmt</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Goto Stmt</em>' attribute.
+   * @see #setGotoStmt(String)
+   * @see org.xtext.example.go.go.GoPackage#getStatement_GotoStmt()
+   * @model
+   * @generated
+   */
+  String getGotoStmt();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.go.go.Statement#getGotoStmt <em>Goto Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Goto Stmt</em>' attribute.
+   * @see #getGotoStmt()
+   * @generated
+   */
+  void setGotoStmt(String value);
+
+  /**
+   * Returns the value of the '<em><b>Falltrhough Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Falltrhough Stmt</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Falltrhough Stmt</em>' attribute.
+   * @see #setFalltrhoughStmt(String)
+   * @see org.xtext.example.go.go.GoPackage#getStatement_FalltrhoughStmt()
+   * @model
+   * @generated
+   */
+  String getFalltrhoughStmt();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.go.go.Statement#getFalltrhoughStmt <em>Falltrhough Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Falltrhough Stmt</em>' attribute.
+   * @see #getFalltrhoughStmt()
+   * @generated
+   */
+  void setFalltrhoughStmt(String value);
+
+  /**
+   * Returns the value of the '<em><b>Defer Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Defer Stmt</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Defer Stmt</em>' attribute.
+   * @see #setDeferStmt(String)
+   * @see org.xtext.example.go.go.GoPackage#getStatement_DeferStmt()
+   * @model
+   * @generated
+   */
+  String getDeferStmt();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.go.go.Statement#getDeferStmt <em>Defer Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Defer Stmt</em>' attribute.
+   * @see #getDeferStmt()
+   * @generated
+   */
+  void setDeferStmt(String value);
 
 } // Statement

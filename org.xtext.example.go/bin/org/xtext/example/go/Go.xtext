@@ -3,11 +3,7 @@ grammar org.xtext.example.go.Go with org.eclipse.xtext.common.Terminals
 generate go "http://www.xtext.org/example/go/Go"
 
 Model:
-	greetings+=Greeting*
-;
-	
-Greeting:
-	SourceFile
+	elements+=SourceFile*
 ;
 
 SourceFile:
@@ -15,7 +11,7 @@ SourceFile:
 ;
 
 TopLevelDecl:
-	{TopLevelDecl} Decl | FuncDecl | {TopLevelDecl} TypeDef
+	{TopLevelDecl} decl=Decl | func=FuncDecl | {TopLevelDecl} TypeDef
 ;
 
 ImportDecl:
@@ -31,11 +27,11 @@ Package:
 ;
 
 ForStmt:
-	"for" (Exp RangeClause? | ForClause) Block=Block
+	"for" (Exp RangeClause? | ForClause?) Block=Block
 ;
 
 ForClause:
-	{ForClause} (Decl)? ";" Exp? ";" SimpleStmt?
+	{ForClause} (decl=Decl)? ";" Exp? ";" SimpleStmt?
 ;
 
 RangeClause:
@@ -47,7 +43,7 @@ FunctionType:
 ;
 
 FuncDecl:
-	{FuncDecl} "func" Receiver? ID Signature Block?
+	"func" receiver=Receiver? name=ID signature=Signature block=Block?
 ;
 
 Receiver:
@@ -87,7 +83,7 @@ IfStmt:
 ;
 
 Anderson:
-	{Anderson} ((Decl | Assig=Assig | Exp) ";")?
+	{Anderson} ((decl=Decl | Assig=Assig | Exp) ";")?
 ;
 
 Block:
@@ -95,7 +91,57 @@ Block:
 ;
 
 Statement:
-	SimpleStmt | IfStmt | SwitchStmt=SwitchStmt | {Statement} ReturnStmt=ReturnStmt | ForStmt
+ 	LabeledStmt=LabeledStmt | SendStmt=SendStmt | SimpleStmt | IfStmt | SwitchStmt=SwitchStmt | ReturnStmt=ReturnStmt | ForStmt | 
+	BreakStmt=BreakStmt | ContinueStmt=ContinueStmt | GotoStmt=GotoStmt | 
+	FalltrhoughStmt=FalltrhoughStmt | DeferStmt=DeferStmt | SelectStmt
+;
+
+SelectStmt:
+	{SelectStmt} "select" "{" CommClause+=CommClause* "}"
+;
+
+CommClause:
+	CommCase ":" StatementList
+;
+
+StatementList:
+	{StatementList} (Statement+=Statement ";"?)*
+;
+
+CommCase:
+	("case" (SendStmt | RecvStmt)) | "default"
+;
+
+RecvStmt:
+	((Exp ExpList "=") | (ID IdList ":="))? Exp
+;
+
+LabeledStmt:
+	ID ":" Statement
+;
+
+SendStmt:
+	Exp "<-" Exp
+;
+
+BreakStmt:
+	"break" ID? ";"?
+;
+
+ContinueStmt:
+	"continue" ID? ";"?
+;
+
+GotoStmt:
+	"goto" ID? ";"?
+;
+
+FalltrhoughStmt:
+	"fallthrough" ";"?
+;
+
+DeferStmt:
+	"defer" Exp ";"?
 ;
 
 ReturnStmt:
@@ -103,7 +149,6 @@ ReturnStmt:
 ;
 
 TypeDef:
-	//TODO: juntar os tipos
 	"type" ID TypeName
 ;
 
@@ -116,11 +161,7 @@ FieldDecl:
 ;
 
 Decl:
-	ShortVarDecl | (("var" | "const") ID IdList TypeName ("=" Exp ExpList)?)
-;
-
-ShortVarDecl:
-	ID IdList ":=" Exp ExpList
+	(name=ID IdList ":=" Exp ExpList) | (("var" | "const") name=ID idList=IdList type=TypeName ("=" exp=Exp explist=ExpList)?)
 ;
 
 Assig :
@@ -140,7 +181,7 @@ Exp:
 ;
 
 SimpleStmt:
-	{SimpleStmt} Decl | Assig | {SimpleStmt} Exp 
+	{SimpleStmt} decl=Decl | Assig | {SimpleStmt} Exp 
 ;
 
 ExpAux:
@@ -152,7 +193,7 @@ Call:
 ;
 
 ExpJoin:
-	(OP_REL | OP_UNARY | OP_SUM | OP_MULT | "&&" | "||") Exp
+	(OP_UNARY | OP_REL | OP_SUM | OP_MULT | "&&" | "||") Exp
 ;
 
 RelExp:
@@ -172,7 +213,7 @@ And:
 ;
 
 BooleanLiteral:
-	BOOL
+	Bool
 ;
 
 AritExp:
@@ -192,23 +233,27 @@ NumberLiteral:
 ;
 
 TypeName:
-	BASIC_TYPES | QualifiedIdent | ID | Struct
+	BasicTypes | QualifiedIdent | ID | Struct
 ;
 
 QualifiedIdent:
 	ID "." ID
 ;
 
-terminal BASIC_TYPES:
+Bool:
+	"true" | "false"
+;
+
+BasicTypes:
 	"string" | "int" | "bool" 
 ;
 
 terminal OP_SUM:
-	('+'|'-')
+	("+" | "-" | "|" | "^")
 ;
 
 terminal OP_MULT:
-	('*'|'/')
+	("*" | "/" | "%" | "<<" | ">>" | "&" | "&^")
 ;
 
 terminal OP_REL:
@@ -216,9 +261,5 @@ terminal OP_REL:
 ;
 
 terminal OP_UNARY:
-	"==" | "!="	
-;
-
-terminal BOOL:
-	"true" | "false"
+	"==" | "!="	| "<-" | "&"
 ;

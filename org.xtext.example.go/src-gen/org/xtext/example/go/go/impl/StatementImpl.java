@@ -10,9 +10,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.xtext.example.go.go.GoPackage;
+import org.xtext.example.go.go.LabeledStmt;
 import org.xtext.example.go.go.Statement;
 import org.xtext.example.go.go.SwitchStmt;
 
@@ -24,14 +24,51 @@ import org.xtext.example.go.go.SwitchStmt;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.xtext.example.go.go.impl.StatementImpl#getLabeledStmt <em>Labeled Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.impl.StatementImpl#getSendStmt <em>Send Stmt</em>}</li>
  *   <li>{@link org.xtext.example.go.go.impl.StatementImpl#getSwitchStmt <em>Switch Stmt</em>}</li>
  *   <li>{@link org.xtext.example.go.go.impl.StatementImpl#getReturnStmt <em>Return Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.impl.StatementImpl#getBreakStmt <em>Break Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.impl.StatementImpl#getContinueStmt <em>Continue Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.impl.StatementImpl#getGotoStmt <em>Goto Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.impl.StatementImpl#getFalltrhoughStmt <em>Falltrhough Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.impl.StatementImpl#getDeferStmt <em>Defer Stmt</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class StatementImpl extends MinimalEObjectImpl.Container implements Statement
+public class StatementImpl extends LabeledStmtImpl implements Statement
 {
+  /**
+   * The cached value of the '{@link #getLabeledStmt() <em>Labeled Stmt</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLabeledStmt()
+   * @generated
+   * @ordered
+   */
+  protected LabeledStmt labeledStmt;
+
+  /**
+   * The default value of the '{@link #getSendStmt() <em>Send Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSendStmt()
+   * @generated
+   * @ordered
+   */
+  protected static final String SEND_STMT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getSendStmt() <em>Send Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSendStmt()
+   * @generated
+   * @ordered
+   */
+  protected String sendStmt = SEND_STMT_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getSwitchStmt() <em>Switch Stmt</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -63,6 +100,106 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   protected String returnStmt = RETURN_STMT_EDEFAULT;
 
   /**
+   * The default value of the '{@link #getBreakStmt() <em>Break Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getBreakStmt()
+   * @generated
+   * @ordered
+   */
+  protected static final String BREAK_STMT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getBreakStmt() <em>Break Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getBreakStmt()
+   * @generated
+   * @ordered
+   */
+  protected String breakStmt = BREAK_STMT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getContinueStmt() <em>Continue Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getContinueStmt()
+   * @generated
+   * @ordered
+   */
+  protected static final String CONTINUE_STMT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getContinueStmt() <em>Continue Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getContinueStmt()
+   * @generated
+   * @ordered
+   */
+  protected String continueStmt = CONTINUE_STMT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getGotoStmt() <em>Goto Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getGotoStmt()
+   * @generated
+   * @ordered
+   */
+  protected static final String GOTO_STMT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getGotoStmt() <em>Goto Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getGotoStmt()
+   * @generated
+   * @ordered
+   */
+  protected String gotoStmt = GOTO_STMT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getFalltrhoughStmt() <em>Falltrhough Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFalltrhoughStmt()
+   * @generated
+   * @ordered
+   */
+  protected static final String FALLTRHOUGH_STMT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getFalltrhoughStmt() <em>Falltrhough Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFalltrhoughStmt()
+   * @generated
+   * @ordered
+   */
+  protected String falltrhoughStmt = FALLTRHOUGH_STMT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getDeferStmt() <em>Defer Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDeferStmt()
+   * @generated
+   * @ordered
+   */
+  protected static final String DEFER_STMT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getDeferStmt() <em>Defer Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDeferStmt()
+   * @generated
+   * @ordered
+   */
+  protected String deferStmt = DEFER_STMT_EDEFAULT;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -81,6 +218,77 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   protected EClass eStaticClass()
   {
     return GoPackage.Literals.STATEMENT;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LabeledStmt getLabeledStmt()
+  {
+    return labeledStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetLabeledStmt(LabeledStmt newLabeledStmt, NotificationChain msgs)
+  {
+    LabeledStmt oldLabeledStmt = labeledStmt;
+    labeledStmt = newLabeledStmt;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GoPackage.STATEMENT__LABELED_STMT, oldLabeledStmt, newLabeledStmt);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setLabeledStmt(LabeledStmt newLabeledStmt)
+  {
+    if (newLabeledStmt != labeledStmt)
+    {
+      NotificationChain msgs = null;
+      if (labeledStmt != null)
+        msgs = ((InternalEObject)labeledStmt).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GoPackage.STATEMENT__LABELED_STMT, null, msgs);
+      if (newLabeledStmt != null)
+        msgs = ((InternalEObject)newLabeledStmt).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - GoPackage.STATEMENT__LABELED_STMT, null, msgs);
+      msgs = basicSetLabeledStmt(newLabeledStmt, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.STATEMENT__LABELED_STMT, newLabeledStmt, newLabeledStmt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getSendStmt()
+  {
+    return sendStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setSendStmt(String newSendStmt)
+  {
+    String oldSendStmt = sendStmt;
+    sendStmt = newSendStmt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.STATEMENT__SEND_STMT, oldSendStmt, sendStmt));
   }
 
   /**
@@ -159,11 +367,128 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getBreakStmt()
+  {
+    return breakStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setBreakStmt(String newBreakStmt)
+  {
+    String oldBreakStmt = breakStmt;
+    breakStmt = newBreakStmt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.STATEMENT__BREAK_STMT, oldBreakStmt, breakStmt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getContinueStmt()
+  {
+    return continueStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setContinueStmt(String newContinueStmt)
+  {
+    String oldContinueStmt = continueStmt;
+    continueStmt = newContinueStmt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.STATEMENT__CONTINUE_STMT, oldContinueStmt, continueStmt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getGotoStmt()
+  {
+    return gotoStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setGotoStmt(String newGotoStmt)
+  {
+    String oldGotoStmt = gotoStmt;
+    gotoStmt = newGotoStmt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.STATEMENT__GOTO_STMT, oldGotoStmt, gotoStmt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getFalltrhoughStmt()
+  {
+    return falltrhoughStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setFalltrhoughStmt(String newFalltrhoughStmt)
+  {
+    String oldFalltrhoughStmt = falltrhoughStmt;
+    falltrhoughStmt = newFalltrhoughStmt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.STATEMENT__FALLTRHOUGH_STMT, oldFalltrhoughStmt, falltrhoughStmt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getDeferStmt()
+  {
+    return deferStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDeferStmt(String newDeferStmt)
+  {
+    String oldDeferStmt = deferStmt;
+    deferStmt = newDeferStmt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.STATEMENT__DEFER_STMT, oldDeferStmt, deferStmt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
+      case GoPackage.STATEMENT__LABELED_STMT:
+        return basicSetLabeledStmt(null, msgs);
       case GoPackage.STATEMENT__SWITCH_STMT:
         return basicSetSwitchStmt(null, msgs);
     }
@@ -180,10 +505,24 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
+      case GoPackage.STATEMENT__LABELED_STMT:
+        return getLabeledStmt();
+      case GoPackage.STATEMENT__SEND_STMT:
+        return getSendStmt();
       case GoPackage.STATEMENT__SWITCH_STMT:
         return getSwitchStmt();
       case GoPackage.STATEMENT__RETURN_STMT:
         return getReturnStmt();
+      case GoPackage.STATEMENT__BREAK_STMT:
+        return getBreakStmt();
+      case GoPackage.STATEMENT__CONTINUE_STMT:
+        return getContinueStmt();
+      case GoPackage.STATEMENT__GOTO_STMT:
+        return getGotoStmt();
+      case GoPackage.STATEMENT__FALLTRHOUGH_STMT:
+        return getFalltrhoughStmt();
+      case GoPackage.STATEMENT__DEFER_STMT:
+        return getDeferStmt();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -198,11 +537,32 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
+      case GoPackage.STATEMENT__LABELED_STMT:
+        setLabeledStmt((LabeledStmt)newValue);
+        return;
+      case GoPackage.STATEMENT__SEND_STMT:
+        setSendStmt((String)newValue);
+        return;
       case GoPackage.STATEMENT__SWITCH_STMT:
         setSwitchStmt((SwitchStmt)newValue);
         return;
       case GoPackage.STATEMENT__RETURN_STMT:
         setReturnStmt((String)newValue);
+        return;
+      case GoPackage.STATEMENT__BREAK_STMT:
+        setBreakStmt((String)newValue);
+        return;
+      case GoPackage.STATEMENT__CONTINUE_STMT:
+        setContinueStmt((String)newValue);
+        return;
+      case GoPackage.STATEMENT__GOTO_STMT:
+        setGotoStmt((String)newValue);
+        return;
+      case GoPackage.STATEMENT__FALLTRHOUGH_STMT:
+        setFalltrhoughStmt((String)newValue);
+        return;
+      case GoPackage.STATEMENT__DEFER_STMT:
+        setDeferStmt((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -218,11 +578,32 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
+      case GoPackage.STATEMENT__LABELED_STMT:
+        setLabeledStmt((LabeledStmt)null);
+        return;
+      case GoPackage.STATEMENT__SEND_STMT:
+        setSendStmt(SEND_STMT_EDEFAULT);
+        return;
       case GoPackage.STATEMENT__SWITCH_STMT:
         setSwitchStmt((SwitchStmt)null);
         return;
       case GoPackage.STATEMENT__RETURN_STMT:
         setReturnStmt(RETURN_STMT_EDEFAULT);
+        return;
+      case GoPackage.STATEMENT__BREAK_STMT:
+        setBreakStmt(BREAK_STMT_EDEFAULT);
+        return;
+      case GoPackage.STATEMENT__CONTINUE_STMT:
+        setContinueStmt(CONTINUE_STMT_EDEFAULT);
+        return;
+      case GoPackage.STATEMENT__GOTO_STMT:
+        setGotoStmt(GOTO_STMT_EDEFAULT);
+        return;
+      case GoPackage.STATEMENT__FALLTRHOUGH_STMT:
+        setFalltrhoughStmt(FALLTRHOUGH_STMT_EDEFAULT);
+        return;
+      case GoPackage.STATEMENT__DEFER_STMT:
+        setDeferStmt(DEFER_STMT_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -238,10 +619,24 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
+      case GoPackage.STATEMENT__LABELED_STMT:
+        return labeledStmt != null;
+      case GoPackage.STATEMENT__SEND_STMT:
+        return SEND_STMT_EDEFAULT == null ? sendStmt != null : !SEND_STMT_EDEFAULT.equals(sendStmt);
       case GoPackage.STATEMENT__SWITCH_STMT:
         return switchStmt != null;
       case GoPackage.STATEMENT__RETURN_STMT:
         return RETURN_STMT_EDEFAULT == null ? returnStmt != null : !RETURN_STMT_EDEFAULT.equals(returnStmt);
+      case GoPackage.STATEMENT__BREAK_STMT:
+        return BREAK_STMT_EDEFAULT == null ? breakStmt != null : !BREAK_STMT_EDEFAULT.equals(breakStmt);
+      case GoPackage.STATEMENT__CONTINUE_STMT:
+        return CONTINUE_STMT_EDEFAULT == null ? continueStmt != null : !CONTINUE_STMT_EDEFAULT.equals(continueStmt);
+      case GoPackage.STATEMENT__GOTO_STMT:
+        return GOTO_STMT_EDEFAULT == null ? gotoStmt != null : !GOTO_STMT_EDEFAULT.equals(gotoStmt);
+      case GoPackage.STATEMENT__FALLTRHOUGH_STMT:
+        return FALLTRHOUGH_STMT_EDEFAULT == null ? falltrhoughStmt != null : !FALLTRHOUGH_STMT_EDEFAULT.equals(falltrhoughStmt);
+      case GoPackage.STATEMENT__DEFER_STMT:
+        return DEFER_STMT_EDEFAULT == null ? deferStmt != null : !DEFER_STMT_EDEFAULT.equals(deferStmt);
     }
     return super.eIsSet(featureID);
   }
@@ -257,8 +652,20 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (ReturnStmt: ");
+    result.append(" (SendStmt: ");
+    result.append(sendStmt);
+    result.append(", ReturnStmt: ");
     result.append(returnStmt);
+    result.append(", BreakStmt: ");
+    result.append(breakStmt);
+    result.append(", ContinueStmt: ");
+    result.append(continueStmt);
+    result.append(", GotoStmt: ");
+    result.append(gotoStmt);
+    result.append(", FalltrhoughStmt: ");
+    result.append(falltrhoughStmt);
+    result.append(", DeferStmt: ");
+    result.append(deferStmt);
     result.append(')');
     return result.toString();
   }

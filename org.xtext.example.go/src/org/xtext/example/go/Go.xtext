@@ -3,11 +3,7 @@ grammar org.xtext.example.go.Go with org.eclipse.xtext.common.Terminals
 generate go "http://www.xtext.org/example/go/Go"
 
 Model:
-	greetings+=Greeting*
-;
-	
-Greeting:
-	SourceFile
+	elements+=SourceFile*
 ;
 
 SourceFile:
@@ -15,7 +11,7 @@ SourceFile:
 ;
 
 TopLevelDecl:
-	{TopLevelDecl} Decl | FuncDecl | {TopLevelDecl} TypeDef
+	{TopLevelDecl} decl=Decl | func=FuncDecl | {TopLevelDecl} TypeDef
 ;
 
 ImportDecl:
@@ -35,7 +31,7 @@ ForStmt:
 ;
 
 ForClause:
-	{ForClause} (Decl)? ";" Exp? ";" SimpleStmt?
+	{ForClause} (decl=Decl)? ";" Exp? ";" SimpleStmt?
 ;
 
 RangeClause:
@@ -47,7 +43,7 @@ FunctionType:
 ;
 
 FuncDecl:
-	{FuncDecl} "func" Receiver? ID Signature Block?
+	"func" receiver=Receiver? name=ID signature=Signature block=Block?
 ;
 
 Receiver:
@@ -87,7 +83,7 @@ IfStmt:
 ;
 
 Anderson:
-	{Anderson} ((Decl | Assig=Assig | Exp) ";")?
+	{Anderson} ((decl=Decl | Assig=Assig | Exp) ";")?
 ;
 
 Block:
@@ -165,11 +161,7 @@ FieldDecl:
 ;
 
 Decl:
-	ShortVarDecl | (("var" | "const") ID IdList TypeName ("=" Exp ExpList)?)
-;
-
-ShortVarDecl:
-	ID IdList ":=" Exp ExpList
+	(name=ID IdList ":=" Exp ExpList) | (("var" | "const") name=ID idList=IdList type=TypeName ("=" exp=Exp explist=ExpList)?)
 ;
 
 Assig :
@@ -189,7 +181,7 @@ Exp:
 ;
 
 SimpleStmt:
-	{SimpleStmt} Decl | Assig | {SimpleStmt} Exp 
+	{SimpleStmt} decl=Decl | Assig | {SimpleStmt} Exp 
 ;
 
 ExpAux:
@@ -247,7 +239,6 @@ TypeName:
 QualifiedIdent:
 	ID "." ID
 ;
-
 
 Bool:
 	"true" | "false"

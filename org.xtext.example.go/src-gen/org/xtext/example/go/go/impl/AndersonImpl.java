@@ -21,8 +21,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.xtext.example.go.go.Anderson;
 import org.xtext.example.go.go.Assig;
 import org.xtext.example.go.go.Block;
+import org.xtext.example.go.go.Decl;
 import org.xtext.example.go.go.GoPackage;
 import org.xtext.example.go.go.IfStmt;
+import org.xtext.example.go.go.LabeledStmt;
 import org.xtext.example.go.go.Statement;
 import org.xtext.example.go.go.SwitchCase;
 import org.xtext.example.go.go.SwitchStmt;
@@ -35,11 +37,19 @@ import org.xtext.example.go.go.SwitchStmt;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.xtext.example.go.go.impl.AndersonImpl#getLabeledStmt <em>Labeled Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.impl.AndersonImpl#getSendStmt <em>Send Stmt</em>}</li>
  *   <li>{@link org.xtext.example.go.go.impl.AndersonImpl#getSwitchStmt <em>Switch Stmt</em>}</li>
  *   <li>{@link org.xtext.example.go.go.impl.AndersonImpl#getReturnStmt <em>Return Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.impl.AndersonImpl#getBreakStmt <em>Break Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.impl.AndersonImpl#getContinueStmt <em>Continue Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.impl.AndersonImpl#getGotoStmt <em>Goto Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.impl.AndersonImpl#getFalltrhoughStmt <em>Falltrhough Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.impl.AndersonImpl#getDeferStmt <em>Defer Stmt</em>}</li>
  *   <li>{@link org.xtext.example.go.go.impl.AndersonImpl#getSwitchCase <em>Switch Case</em>}</li>
  *   <li>{@link org.xtext.example.go.go.impl.AndersonImpl#getBlock <em>Block</em>}</li>
  *   <li>{@link org.xtext.example.go.go.impl.AndersonImpl#getIfStmt <em>If Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.impl.AndersonImpl#getDecl <em>Decl</em>}</li>
  *   <li>{@link org.xtext.example.go.go.impl.AndersonImpl#getAssig <em>Assig</em>}</li>
  * </ul>
  *
@@ -47,6 +57,36 @@ import org.xtext.example.go.go.SwitchStmt;
  */
 public class AndersonImpl extends SwitchStmtImpl implements Anderson
 {
+  /**
+   * The cached value of the '{@link #getLabeledStmt() <em>Labeled Stmt</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLabeledStmt()
+   * @generated
+   * @ordered
+   */
+  protected LabeledStmt labeledStmt;
+
+  /**
+   * The default value of the '{@link #getSendStmt() <em>Send Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSendStmt()
+   * @generated
+   * @ordered
+   */
+  protected static final String SEND_STMT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getSendStmt() <em>Send Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSendStmt()
+   * @generated
+   * @ordered
+   */
+  protected String sendStmt = SEND_STMT_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getSwitchStmt() <em>Switch Stmt</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -76,6 +116,106 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
    * @ordered
    */
   protected String returnStmt = RETURN_STMT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getBreakStmt() <em>Break Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getBreakStmt()
+   * @generated
+   * @ordered
+   */
+  protected static final String BREAK_STMT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getBreakStmt() <em>Break Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getBreakStmt()
+   * @generated
+   * @ordered
+   */
+  protected String breakStmt = BREAK_STMT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getContinueStmt() <em>Continue Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getContinueStmt()
+   * @generated
+   * @ordered
+   */
+  protected static final String CONTINUE_STMT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getContinueStmt() <em>Continue Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getContinueStmt()
+   * @generated
+   * @ordered
+   */
+  protected String continueStmt = CONTINUE_STMT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getGotoStmt() <em>Goto Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getGotoStmt()
+   * @generated
+   * @ordered
+   */
+  protected static final String GOTO_STMT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getGotoStmt() <em>Goto Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getGotoStmt()
+   * @generated
+   * @ordered
+   */
+  protected String gotoStmt = GOTO_STMT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getFalltrhoughStmt() <em>Falltrhough Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFalltrhoughStmt()
+   * @generated
+   * @ordered
+   */
+  protected static final String FALLTRHOUGH_STMT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getFalltrhoughStmt() <em>Falltrhough Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFalltrhoughStmt()
+   * @generated
+   * @ordered
+   */
+  protected String falltrhoughStmt = FALLTRHOUGH_STMT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getDeferStmt() <em>Defer Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDeferStmt()
+   * @generated
+   * @ordered
+   */
+  protected static final String DEFER_STMT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getDeferStmt() <em>Defer Stmt</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDeferStmt()
+   * @generated
+   * @ordered
+   */
+  protected String deferStmt = DEFER_STMT_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getSwitchCase() <em>Switch Case</em>}' containment reference list.
@@ -108,6 +248,16 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
   protected IfStmt ifStmt;
 
   /**
+   * The cached value of the '{@link #getDecl() <em>Decl</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDecl()
+   * @generated
+   * @ordered
+   */
+  protected Decl decl;
+
+  /**
    * The cached value of the '{@link #getAssig() <em>Assig</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -136,6 +286,77 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
   protected EClass eStaticClass()
   {
     return GoPackage.Literals.ANDERSON;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LabeledStmt getLabeledStmt()
+  {
+    return labeledStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetLabeledStmt(LabeledStmt newLabeledStmt, NotificationChain msgs)
+  {
+    LabeledStmt oldLabeledStmt = labeledStmt;
+    labeledStmt = newLabeledStmt;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GoPackage.ANDERSON__LABELED_STMT, oldLabeledStmt, newLabeledStmt);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setLabeledStmt(LabeledStmt newLabeledStmt)
+  {
+    if (newLabeledStmt != labeledStmt)
+    {
+      NotificationChain msgs = null;
+      if (labeledStmt != null)
+        msgs = ((InternalEObject)labeledStmt).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GoPackage.ANDERSON__LABELED_STMT, null, msgs);
+      if (newLabeledStmt != null)
+        msgs = ((InternalEObject)newLabeledStmt).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - GoPackage.ANDERSON__LABELED_STMT, null, msgs);
+      msgs = basicSetLabeledStmt(newLabeledStmt, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.ANDERSON__LABELED_STMT, newLabeledStmt, newLabeledStmt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getSendStmt()
+  {
+    return sendStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setSendStmt(String newSendStmt)
+  {
+    String oldSendStmt = sendStmt;
+    sendStmt = newSendStmt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.ANDERSON__SEND_STMT, oldSendStmt, sendStmt));
   }
 
   /**
@@ -207,6 +428,121 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
     returnStmt = newReturnStmt;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.ANDERSON__RETURN_STMT, oldReturnStmt, returnStmt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getBreakStmt()
+  {
+    return breakStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setBreakStmt(String newBreakStmt)
+  {
+    String oldBreakStmt = breakStmt;
+    breakStmt = newBreakStmt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.ANDERSON__BREAK_STMT, oldBreakStmt, breakStmt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getContinueStmt()
+  {
+    return continueStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setContinueStmt(String newContinueStmt)
+  {
+    String oldContinueStmt = continueStmt;
+    continueStmt = newContinueStmt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.ANDERSON__CONTINUE_STMT, oldContinueStmt, continueStmt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getGotoStmt()
+  {
+    return gotoStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setGotoStmt(String newGotoStmt)
+  {
+    String oldGotoStmt = gotoStmt;
+    gotoStmt = newGotoStmt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.ANDERSON__GOTO_STMT, oldGotoStmt, gotoStmt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getFalltrhoughStmt()
+  {
+    return falltrhoughStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setFalltrhoughStmt(String newFalltrhoughStmt)
+  {
+    String oldFalltrhoughStmt = falltrhoughStmt;
+    falltrhoughStmt = newFalltrhoughStmt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.ANDERSON__FALLTRHOUGH_STMT, oldFalltrhoughStmt, falltrhoughStmt));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getDeferStmt()
+  {
+    return deferStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDeferStmt(String newDeferStmt)
+  {
+    String oldDeferStmt = deferStmt;
+    deferStmt = newDeferStmt;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.ANDERSON__DEFER_STMT, oldDeferStmt, deferStmt));
   }
 
   /**
@@ -290,6 +626,54 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
    * <!-- end-user-doc -->
    * @generated
    */
+  public Decl getDecl()
+  {
+    return decl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetDecl(Decl newDecl, NotificationChain msgs)
+  {
+    Decl oldDecl = decl;
+    decl = newDecl;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, GoPackage.ANDERSON__DECL, oldDecl, newDecl);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDecl(Decl newDecl)
+  {
+    if (newDecl != decl)
+    {
+      NotificationChain msgs = null;
+      if (decl != null)
+        msgs = ((InternalEObject)decl).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - GoPackage.ANDERSON__DECL, null, msgs);
+      if (newDecl != null)
+        msgs = ((InternalEObject)newDecl).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - GoPackage.ANDERSON__DECL, null, msgs);
+      msgs = basicSetDecl(newDecl, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, GoPackage.ANDERSON__DECL, newDecl, newDecl));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Assig getAssig()
   {
     return assig;
@@ -343,6 +727,8 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
   {
     switch (featureID)
     {
+      case GoPackage.ANDERSON__LABELED_STMT:
+        return basicSetLabeledStmt(null, msgs);
       case GoPackage.ANDERSON__SWITCH_STMT:
         return basicSetSwitchStmt(null, msgs);
       case GoPackage.ANDERSON__SWITCH_CASE:
@@ -351,6 +737,8 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
         return ((InternalEList<?>)getBlock()).basicRemove(otherEnd, msgs);
       case GoPackage.ANDERSON__IF_STMT:
         return basicSetIfStmt(null, msgs);
+      case GoPackage.ANDERSON__DECL:
+        return basicSetDecl(null, msgs);
       case GoPackage.ANDERSON__ASSIG:
         return basicSetAssig(null, msgs);
     }
@@ -367,16 +755,32 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
   {
     switch (featureID)
     {
+      case GoPackage.ANDERSON__LABELED_STMT:
+        return getLabeledStmt();
+      case GoPackage.ANDERSON__SEND_STMT:
+        return getSendStmt();
       case GoPackage.ANDERSON__SWITCH_STMT:
         return getSwitchStmt();
       case GoPackage.ANDERSON__RETURN_STMT:
         return getReturnStmt();
+      case GoPackage.ANDERSON__BREAK_STMT:
+        return getBreakStmt();
+      case GoPackage.ANDERSON__CONTINUE_STMT:
+        return getContinueStmt();
+      case GoPackage.ANDERSON__GOTO_STMT:
+        return getGotoStmt();
+      case GoPackage.ANDERSON__FALLTRHOUGH_STMT:
+        return getFalltrhoughStmt();
+      case GoPackage.ANDERSON__DEFER_STMT:
+        return getDeferStmt();
       case GoPackage.ANDERSON__SWITCH_CASE:
         return getSwitchCase();
       case GoPackage.ANDERSON__BLOCK:
         return getBlock();
       case GoPackage.ANDERSON__IF_STMT:
         return getIfStmt();
+      case GoPackage.ANDERSON__DECL:
+        return getDecl();
       case GoPackage.ANDERSON__ASSIG:
         return getAssig();
     }
@@ -394,11 +798,32 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
   {
     switch (featureID)
     {
+      case GoPackage.ANDERSON__LABELED_STMT:
+        setLabeledStmt((LabeledStmt)newValue);
+        return;
+      case GoPackage.ANDERSON__SEND_STMT:
+        setSendStmt((String)newValue);
+        return;
       case GoPackage.ANDERSON__SWITCH_STMT:
         setSwitchStmt((SwitchStmt)newValue);
         return;
       case GoPackage.ANDERSON__RETURN_STMT:
         setReturnStmt((String)newValue);
+        return;
+      case GoPackage.ANDERSON__BREAK_STMT:
+        setBreakStmt((String)newValue);
+        return;
+      case GoPackage.ANDERSON__CONTINUE_STMT:
+        setContinueStmt((String)newValue);
+        return;
+      case GoPackage.ANDERSON__GOTO_STMT:
+        setGotoStmt((String)newValue);
+        return;
+      case GoPackage.ANDERSON__FALLTRHOUGH_STMT:
+        setFalltrhoughStmt((String)newValue);
+        return;
+      case GoPackage.ANDERSON__DEFER_STMT:
+        setDeferStmt((String)newValue);
         return;
       case GoPackage.ANDERSON__SWITCH_CASE:
         getSwitchCase().clear();
@@ -410,6 +835,9 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
         return;
       case GoPackage.ANDERSON__IF_STMT:
         setIfStmt((IfStmt)newValue);
+        return;
+      case GoPackage.ANDERSON__DECL:
+        setDecl((Decl)newValue);
         return;
       case GoPackage.ANDERSON__ASSIG:
         setAssig((Assig)newValue);
@@ -428,11 +856,32 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
   {
     switch (featureID)
     {
+      case GoPackage.ANDERSON__LABELED_STMT:
+        setLabeledStmt((LabeledStmt)null);
+        return;
+      case GoPackage.ANDERSON__SEND_STMT:
+        setSendStmt(SEND_STMT_EDEFAULT);
+        return;
       case GoPackage.ANDERSON__SWITCH_STMT:
         setSwitchStmt((SwitchStmt)null);
         return;
       case GoPackage.ANDERSON__RETURN_STMT:
         setReturnStmt(RETURN_STMT_EDEFAULT);
+        return;
+      case GoPackage.ANDERSON__BREAK_STMT:
+        setBreakStmt(BREAK_STMT_EDEFAULT);
+        return;
+      case GoPackage.ANDERSON__CONTINUE_STMT:
+        setContinueStmt(CONTINUE_STMT_EDEFAULT);
+        return;
+      case GoPackage.ANDERSON__GOTO_STMT:
+        setGotoStmt(GOTO_STMT_EDEFAULT);
+        return;
+      case GoPackage.ANDERSON__FALLTRHOUGH_STMT:
+        setFalltrhoughStmt(FALLTRHOUGH_STMT_EDEFAULT);
+        return;
+      case GoPackage.ANDERSON__DEFER_STMT:
+        setDeferStmt(DEFER_STMT_EDEFAULT);
         return;
       case GoPackage.ANDERSON__SWITCH_CASE:
         getSwitchCase().clear();
@@ -442,6 +891,9 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
         return;
       case GoPackage.ANDERSON__IF_STMT:
         setIfStmt((IfStmt)null);
+        return;
+      case GoPackage.ANDERSON__DECL:
+        setDecl((Decl)null);
         return;
       case GoPackage.ANDERSON__ASSIG:
         setAssig((Assig)null);
@@ -460,16 +912,32 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
   {
     switch (featureID)
     {
+      case GoPackage.ANDERSON__LABELED_STMT:
+        return labeledStmt != null;
+      case GoPackage.ANDERSON__SEND_STMT:
+        return SEND_STMT_EDEFAULT == null ? sendStmt != null : !SEND_STMT_EDEFAULT.equals(sendStmt);
       case GoPackage.ANDERSON__SWITCH_STMT:
         return switchStmt != null;
       case GoPackage.ANDERSON__RETURN_STMT:
         return RETURN_STMT_EDEFAULT == null ? returnStmt != null : !RETURN_STMT_EDEFAULT.equals(returnStmt);
+      case GoPackage.ANDERSON__BREAK_STMT:
+        return BREAK_STMT_EDEFAULT == null ? breakStmt != null : !BREAK_STMT_EDEFAULT.equals(breakStmt);
+      case GoPackage.ANDERSON__CONTINUE_STMT:
+        return CONTINUE_STMT_EDEFAULT == null ? continueStmt != null : !CONTINUE_STMT_EDEFAULT.equals(continueStmt);
+      case GoPackage.ANDERSON__GOTO_STMT:
+        return GOTO_STMT_EDEFAULT == null ? gotoStmt != null : !GOTO_STMT_EDEFAULT.equals(gotoStmt);
+      case GoPackage.ANDERSON__FALLTRHOUGH_STMT:
+        return FALLTRHOUGH_STMT_EDEFAULT == null ? falltrhoughStmt != null : !FALLTRHOUGH_STMT_EDEFAULT.equals(falltrhoughStmt);
+      case GoPackage.ANDERSON__DEFER_STMT:
+        return DEFER_STMT_EDEFAULT == null ? deferStmt != null : !DEFER_STMT_EDEFAULT.equals(deferStmt);
       case GoPackage.ANDERSON__SWITCH_CASE:
         return switchCase != null && !switchCase.isEmpty();
       case GoPackage.ANDERSON__BLOCK:
         return block != null && !block.isEmpty();
       case GoPackage.ANDERSON__IF_STMT:
         return ifStmt != null;
+      case GoPackage.ANDERSON__DECL:
+        return decl != null;
       case GoPackage.ANDERSON__ASSIG:
         return assig != null;
     }
@@ -484,12 +952,26 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
   @Override
   public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
   {
+    if (baseClass == LabeledStmt.class)
+    {
+      switch (derivedFeatureID)
+      {
+        default: return -1;
+      }
+    }
     if (baseClass == Statement.class)
     {
       switch (derivedFeatureID)
       {
+        case GoPackage.ANDERSON__LABELED_STMT: return GoPackage.STATEMENT__LABELED_STMT;
+        case GoPackage.ANDERSON__SEND_STMT: return GoPackage.STATEMENT__SEND_STMT;
         case GoPackage.ANDERSON__SWITCH_STMT: return GoPackage.STATEMENT__SWITCH_STMT;
         case GoPackage.ANDERSON__RETURN_STMT: return GoPackage.STATEMENT__RETURN_STMT;
+        case GoPackage.ANDERSON__BREAK_STMT: return GoPackage.STATEMENT__BREAK_STMT;
+        case GoPackage.ANDERSON__CONTINUE_STMT: return GoPackage.STATEMENT__CONTINUE_STMT;
+        case GoPackage.ANDERSON__GOTO_STMT: return GoPackage.STATEMENT__GOTO_STMT;
+        case GoPackage.ANDERSON__FALLTRHOUGH_STMT: return GoPackage.STATEMENT__FALLTRHOUGH_STMT;
+        case GoPackage.ANDERSON__DEFER_STMT: return GoPackage.STATEMENT__DEFER_STMT;
         default: return -1;
       }
     }
@@ -511,12 +993,26 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
   @Override
   public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
   {
+    if (baseClass == LabeledStmt.class)
+    {
+      switch (baseFeatureID)
+      {
+        default: return -1;
+      }
+    }
     if (baseClass == Statement.class)
     {
       switch (baseFeatureID)
       {
+        case GoPackage.STATEMENT__LABELED_STMT: return GoPackage.ANDERSON__LABELED_STMT;
+        case GoPackage.STATEMENT__SEND_STMT: return GoPackage.ANDERSON__SEND_STMT;
         case GoPackage.STATEMENT__SWITCH_STMT: return GoPackage.ANDERSON__SWITCH_STMT;
         case GoPackage.STATEMENT__RETURN_STMT: return GoPackage.ANDERSON__RETURN_STMT;
+        case GoPackage.STATEMENT__BREAK_STMT: return GoPackage.ANDERSON__BREAK_STMT;
+        case GoPackage.STATEMENT__CONTINUE_STMT: return GoPackage.ANDERSON__CONTINUE_STMT;
+        case GoPackage.STATEMENT__GOTO_STMT: return GoPackage.ANDERSON__GOTO_STMT;
+        case GoPackage.STATEMENT__FALLTRHOUGH_STMT: return GoPackage.ANDERSON__FALLTRHOUGH_STMT;
+        case GoPackage.STATEMENT__DEFER_STMT: return GoPackage.ANDERSON__DEFER_STMT;
         default: return -1;
       }
     }
@@ -541,8 +1037,20 @@ public class AndersonImpl extends SwitchStmtImpl implements Anderson
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (ReturnStmt: ");
+    result.append(" (SendStmt: ");
+    result.append(sendStmt);
+    result.append(", ReturnStmt: ");
     result.append(returnStmt);
+    result.append(", BreakStmt: ");
+    result.append(breakStmt);
+    result.append(", ContinueStmt: ");
+    result.append(continueStmt);
+    result.append(", GotoStmt: ");
+    result.append(gotoStmt);
+    result.append(", FalltrhoughStmt: ");
+    result.append(falltrhoughStmt);
+    result.append(", DeferStmt: ");
+    result.append(deferStmt);
     result.append(')');
     return result.toString();
   }

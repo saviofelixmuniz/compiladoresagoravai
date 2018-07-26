@@ -3,6 +3,15 @@
  */
 package org.xtext.example.go.validation
 
+import org.xtext.example.go.go.Decl
+import java.util.HashMap
+import org.eclipse.xtext.validation.Check
+import java.util.List
+import java.util.LinkedList
+import org.xtext.example.go.go.TopLevelDecl
+import org.xtext.example.go.go.SourceFile
+import org.xtext.example.go.go.GoPackage
+import org.xtext.example.go.go.FuncDecl
 
 /**
  * This class contains custom validation rules. 
@@ -10,6 +19,50 @@ package org.xtext.example.go.validation
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class GoValidator extends AbstractGoValidator {
+
+	public static val DUPLICATE_DECLARATION = 'duplicateDeclaration'
+	
+	@Check
+	def checkVarDuplicada(SourceFile sourceFile){
+		var decls = sourceFile.topLevelDecl
+		
+		var map = new HashMap<String, Decl>
+		
+		for (TopLevelDecl t: decls) {
+			var decl = t.decl
+			
+			if (map.containsKey(decl.name)) {
+				error(decl.name + ' já foi declarada', 
+					GoPackage.Literals.SOURCE_FILE__TOP_LEVEL_DECL,
+					DUPLICATE_DECLARATION)
+			}
+			else {
+				map.put(decl.name, decl)
+				println(map)
+			}	
+		}
+	}
+	
+	@Check
+	def checkFuncDuplicada(SourceFile sourceFile){
+		var decls = sourceFile.topLevelDecl
+		
+		var map = new HashMap<String, FuncDecl>
+		
+		for (TopLevelDecl t: decls) {
+			var decl = t.func
+			
+			if (map.containsKey(decl.name)) {
+				error('A função ' + decl.name + ' já foi declarada', 
+					GoPackage.Literals.SOURCE_FILE__TOP_LEVEL_DECL,
+					DUPLICATE_DECLARATION)
+			}
+			else {
+				map.put(decl.name, decl)
+				println(map)
+			}	
+		}
+	}
 	
 //	public static val INVALID_NAME = 'invalidName'
 //

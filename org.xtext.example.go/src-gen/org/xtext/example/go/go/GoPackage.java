@@ -68,13 +68,13 @@ public interface GoPackage extends EPackage
   int MODEL = 0;
 
   /**
-   * The feature id for the '<em><b>Greetings</b></em>' containment reference list.
+   * The feature id for the '<em><b>Elements</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODEL__GREETINGS = 0;
+  int MODEL__ELEMENTS = 0;
 
   /**
    * The number of structural features of the '<em>Model</em>' class.
@@ -86,25 +86,6 @@ public interface GoPackage extends EPackage
   int MODEL_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.xtext.example.go.go.impl.GreetingImpl <em>Greeting</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.xtext.example.go.go.impl.GreetingImpl
-   * @see org.xtext.example.go.go.impl.GoPackageImpl#getGreeting()
-   * @generated
-   */
-  int GREETING = 1;
-
-  /**
-   * The number of structural features of the '<em>Greeting</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GREETING_FEATURE_COUNT = 0;
-
-  /**
    * The meta object id for the '{@link org.xtext.example.go.go.impl.SourceFileImpl <em>Source File</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -112,7 +93,7 @@ public interface GoPackage extends EPackage
    * @see org.xtext.example.go.go.impl.GoPackageImpl#getSourceFile()
    * @generated
    */
-  int SOURCE_FILE = 2;
+  int SOURCE_FILE = 1;
 
   /**
    * The feature id for the '<em><b>Top Level Decl</b></em>' containment reference list.
@@ -121,7 +102,7 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOURCE_FILE__TOP_LEVEL_DECL = GREETING_FEATURE_COUNT + 0;
+  int SOURCE_FILE__TOP_LEVEL_DECL = 0;
 
   /**
    * The number of structural features of the '<em>Source File</em>' class.
@@ -130,7 +111,7 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOURCE_FILE_FEATURE_COUNT = GREETING_FEATURE_COUNT + 1;
+  int SOURCE_FILE_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.xtext.example.go.go.impl.TopLevelDeclImpl <em>Top Level Decl</em>}' class.
@@ -140,7 +121,25 @@ public interface GoPackage extends EPackage
    * @see org.xtext.example.go.go.impl.GoPackageImpl#getTopLevelDecl()
    * @generated
    */
-  int TOP_LEVEL_DECL = 3;
+  int TOP_LEVEL_DECL = 2;
+
+  /**
+   * The feature id for the '<em><b>Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOP_LEVEL_DECL__DECL = 0;
+
+  /**
+   * The feature id for the '<em><b>Func</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOP_LEVEL_DECL__FUNC = 1;
 
   /**
    * The number of structural features of the '<em>Top Level Decl</em>' class.
@@ -149,7 +148,26 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOP_LEVEL_DECL_FEATURE_COUNT = 0;
+  int TOP_LEVEL_DECL_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.xtext.example.go.go.impl.LabeledStmtImpl <em>Labeled Stmt</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.xtext.example.go.go.impl.LabeledStmtImpl
+   * @see org.xtext.example.go.go.impl.GoPackageImpl#getLabeledStmt()
+   * @generated
+   */
+  int LABELED_STMT = 15;
+
+  /**
+   * The number of structural features of the '<em>Labeled Stmt</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LABELED_STMT_FEATURE_COUNT = 0;
 
   /**
    * The meta object id for the '{@link org.xtext.example.go.go.impl.StatementImpl <em>Statement</em>}' class.
@@ -159,7 +177,25 @@ public interface GoPackage extends EPackage
    * @see org.xtext.example.go.go.impl.GoPackageImpl#getStatement()
    * @generated
    */
-  int STATEMENT = 12;
+  int STATEMENT = 11;
+
+  /**
+   * The feature id for the '<em><b>Labeled Stmt</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT__LABELED_STMT = LABELED_STMT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Send Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT__SEND_STMT = LABELED_STMT_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Switch Stmt</b></em>' containment reference.
@@ -168,7 +204,7 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATEMENT__SWITCH_STMT = 0;
+  int STATEMENT__SWITCH_STMT = LABELED_STMT_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Return Stmt</b></em>' attribute.
@@ -177,7 +213,52 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATEMENT__RETURN_STMT = 1;
+  int STATEMENT__RETURN_STMT = LABELED_STMT_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Break Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT__BREAK_STMT = LABELED_STMT_FEATURE_COUNT + 4;
+
+  /**
+   * The feature id for the '<em><b>Continue Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT__CONTINUE_STMT = LABELED_STMT_FEATURE_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>Goto Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT__GOTO_STMT = LABELED_STMT_FEATURE_COUNT + 6;
+
+  /**
+   * The feature id for the '<em><b>Falltrhough Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT__FALLTRHOUGH_STMT = LABELED_STMT_FEATURE_COUNT + 7;
+
+  /**
+   * The feature id for the '<em><b>Defer Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT__DEFER_STMT = LABELED_STMT_FEATURE_COUNT + 8;
 
   /**
    * The number of structural features of the '<em>Statement</em>' class.
@@ -186,7 +267,7 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATEMENT_FEATURE_COUNT = 2;
+  int STATEMENT_FEATURE_COUNT = LABELED_STMT_FEATURE_COUNT + 9;
 
   /**
    * The meta object id for the '{@link org.xtext.example.go.go.impl.ForStmtImpl <em>For Stmt</em>}' class.
@@ -196,7 +277,25 @@ public interface GoPackage extends EPackage
    * @see org.xtext.example.go.go.impl.GoPackageImpl#getForStmt()
    * @generated
    */
-  int FOR_STMT = 4;
+  int FOR_STMT = 3;
+
+  /**
+   * The feature id for the '<em><b>Labeled Stmt</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_STMT__LABELED_STMT = STATEMENT__LABELED_STMT;
+
+  /**
+   * The feature id for the '<em><b>Send Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_STMT__SEND_STMT = STATEMENT__SEND_STMT;
 
   /**
    * The feature id for the '<em><b>Switch Stmt</b></em>' containment reference.
@@ -215,6 +314,51 @@ public interface GoPackage extends EPackage
    * @ordered
    */
   int FOR_STMT__RETURN_STMT = STATEMENT__RETURN_STMT;
+
+  /**
+   * The feature id for the '<em><b>Break Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_STMT__BREAK_STMT = STATEMENT__BREAK_STMT;
+
+  /**
+   * The feature id for the '<em><b>Continue Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_STMT__CONTINUE_STMT = STATEMENT__CONTINUE_STMT;
+
+  /**
+   * The feature id for the '<em><b>Goto Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_STMT__GOTO_STMT = STATEMENT__GOTO_STMT;
+
+  /**
+   * The feature id for the '<em><b>Falltrhough Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_STMT__FALLTRHOUGH_STMT = STATEMENT__FALLTRHOUGH_STMT;
+
+  /**
+   * The feature id for the '<em><b>Defer Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_STMT__DEFER_STMT = STATEMENT__DEFER_STMT;
 
   /**
    * The feature id for the '<em><b>Block</b></em>' containment reference.
@@ -242,7 +386,25 @@ public interface GoPackage extends EPackage
    * @see org.xtext.example.go.go.impl.GoPackageImpl#getForClause()
    * @generated
    */
-  int FOR_CLAUSE = 5;
+  int FOR_CLAUSE = 4;
+
+  /**
+   * The feature id for the '<em><b>Labeled Stmt</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_CLAUSE__LABELED_STMT = FOR_STMT__LABELED_STMT;
+
+  /**
+   * The feature id for the '<em><b>Send Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_CLAUSE__SEND_STMT = FOR_STMT__SEND_STMT;
 
   /**
    * The feature id for the '<em><b>Switch Stmt</b></em>' containment reference.
@@ -263,6 +425,51 @@ public interface GoPackage extends EPackage
   int FOR_CLAUSE__RETURN_STMT = FOR_STMT__RETURN_STMT;
 
   /**
+   * The feature id for the '<em><b>Break Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_CLAUSE__BREAK_STMT = FOR_STMT__BREAK_STMT;
+
+  /**
+   * The feature id for the '<em><b>Continue Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_CLAUSE__CONTINUE_STMT = FOR_STMT__CONTINUE_STMT;
+
+  /**
+   * The feature id for the '<em><b>Goto Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_CLAUSE__GOTO_STMT = FOR_STMT__GOTO_STMT;
+
+  /**
+   * The feature id for the '<em><b>Falltrhough Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_CLAUSE__FALLTRHOUGH_STMT = FOR_STMT__FALLTRHOUGH_STMT;
+
+  /**
+   * The feature id for the '<em><b>Defer Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_CLAUSE__DEFER_STMT = FOR_STMT__DEFER_STMT;
+
+  /**
    * The feature id for the '<em><b>Block</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -272,13 +479,22 @@ public interface GoPackage extends EPackage
   int FOR_CLAUSE__BLOCK = FOR_STMT__BLOCK;
 
   /**
+   * The feature id for the '<em><b>Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FOR_CLAUSE__DECL = FOR_STMT_FEATURE_COUNT + 0;
+
+  /**
    * The number of structural features of the '<em>For Clause</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FOR_CLAUSE_FEATURE_COUNT = FOR_STMT_FEATURE_COUNT + 0;
+  int FOR_CLAUSE_FEATURE_COUNT = FOR_STMT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.xtext.example.go.go.impl.FuncDeclImpl <em>Func Decl</em>}' class.
@@ -288,7 +504,43 @@ public interface GoPackage extends EPackage
    * @see org.xtext.example.go.go.impl.GoPackageImpl#getFuncDecl()
    * @generated
    */
-  int FUNC_DECL = 6;
+  int FUNC_DECL = 5;
+
+  /**
+   * The feature id for the '<em><b>Receiver</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNC_DECL__RECEIVER = 0;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNC_DECL__NAME = 1;
+
+  /**
+   * The feature id for the '<em><b>Signature</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNC_DECL__SIGNATURE = 2;
+
+  /**
+   * The feature id for the '<em><b>Block</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNC_DECL__BLOCK = 3;
 
   /**
    * The number of structural features of the '<em>Func Decl</em>' class.
@@ -297,7 +549,7 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FUNC_DECL_FEATURE_COUNT = TOP_LEVEL_DECL_FEATURE_COUNT + 0;
+  int FUNC_DECL_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link org.xtext.example.go.go.impl.SwitchStmtImpl <em>Switch Stmt</em>}' class.
@@ -307,7 +559,7 @@ public interface GoPackage extends EPackage
    * @see org.xtext.example.go.go.impl.GoPackageImpl#getSwitchStmt()
    * @generated
    */
-  int SWITCH_STMT = 7;
+  int SWITCH_STMT = 6;
 
   /**
    * The number of structural features of the '<em>Switch Stmt</em>' class.
@@ -326,7 +578,7 @@ public interface GoPackage extends EPackage
    * @see org.xtext.example.go.go.impl.GoPackageImpl#getSwitchCase()
    * @generated
    */
-  int SWITCH_CASE = 8;
+  int SWITCH_CASE = 7;
 
   /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference list.
@@ -354,7 +606,25 @@ public interface GoPackage extends EPackage
    * @see org.xtext.example.go.go.impl.GoPackageImpl#getIfStmt()
    * @generated
    */
-  int IF_STMT = 9;
+  int IF_STMT = 8;
+
+  /**
+   * The feature id for the '<em><b>Labeled Stmt</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IF_STMT__LABELED_STMT = STATEMENT__LABELED_STMT;
+
+  /**
+   * The feature id for the '<em><b>Send Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IF_STMT__SEND_STMT = STATEMENT__SEND_STMT;
 
   /**
    * The feature id for the '<em><b>Switch Stmt</b></em>' containment reference.
@@ -375,6 +645,51 @@ public interface GoPackage extends EPackage
   int IF_STMT__RETURN_STMT = STATEMENT__RETURN_STMT;
 
   /**
+   * The feature id for the '<em><b>Break Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IF_STMT__BREAK_STMT = STATEMENT__BREAK_STMT;
+
+  /**
+   * The feature id for the '<em><b>Continue Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IF_STMT__CONTINUE_STMT = STATEMENT__CONTINUE_STMT;
+
+  /**
+   * The feature id for the '<em><b>Goto Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IF_STMT__GOTO_STMT = STATEMENT__GOTO_STMT;
+
+  /**
+   * The feature id for the '<em><b>Falltrhough Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IF_STMT__FALLTRHOUGH_STMT = STATEMENT__FALLTRHOUGH_STMT;
+
+  /**
+   * The feature id for the '<em><b>Defer Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IF_STMT__DEFER_STMT = STATEMENT__DEFER_STMT;
+
+  /**
    * The number of structural features of the '<em>If Stmt</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -391,7 +706,25 @@ public interface GoPackage extends EPackage
    * @see org.xtext.example.go.go.impl.GoPackageImpl#getAnderson()
    * @generated
    */
-  int ANDERSON = 10;
+  int ANDERSON = 9;
+
+  /**
+   * The feature id for the '<em><b>Labeled Stmt</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANDERSON__LABELED_STMT = SWITCH_STMT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Send Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANDERSON__SEND_STMT = SWITCH_STMT_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Switch Stmt</b></em>' containment reference.
@@ -400,7 +733,7 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ANDERSON__SWITCH_STMT = SWITCH_STMT_FEATURE_COUNT + 0;
+  int ANDERSON__SWITCH_STMT = SWITCH_STMT_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Return Stmt</b></em>' attribute.
@@ -409,7 +742,52 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ANDERSON__RETURN_STMT = SWITCH_STMT_FEATURE_COUNT + 1;
+  int ANDERSON__RETURN_STMT = SWITCH_STMT_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Break Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANDERSON__BREAK_STMT = SWITCH_STMT_FEATURE_COUNT + 4;
+
+  /**
+   * The feature id for the '<em><b>Continue Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANDERSON__CONTINUE_STMT = SWITCH_STMT_FEATURE_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>Goto Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANDERSON__GOTO_STMT = SWITCH_STMT_FEATURE_COUNT + 6;
+
+  /**
+   * The feature id for the '<em><b>Falltrhough Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANDERSON__FALLTRHOUGH_STMT = SWITCH_STMT_FEATURE_COUNT + 7;
+
+  /**
+   * The feature id for the '<em><b>Defer Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANDERSON__DEFER_STMT = SWITCH_STMT_FEATURE_COUNT + 8;
 
   /**
    * The feature id for the '<em><b>Switch Case</b></em>' containment reference list.
@@ -418,7 +796,7 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ANDERSON__SWITCH_CASE = SWITCH_STMT_FEATURE_COUNT + 2;
+  int ANDERSON__SWITCH_CASE = SWITCH_STMT_FEATURE_COUNT + 9;
 
   /**
    * The feature id for the '<em><b>Block</b></em>' containment reference list.
@@ -427,7 +805,7 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ANDERSON__BLOCK = SWITCH_STMT_FEATURE_COUNT + 3;
+  int ANDERSON__BLOCK = SWITCH_STMT_FEATURE_COUNT + 10;
 
   /**
    * The feature id for the '<em><b>If Stmt</b></em>' containment reference.
@@ -436,7 +814,16 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ANDERSON__IF_STMT = SWITCH_STMT_FEATURE_COUNT + 4;
+  int ANDERSON__IF_STMT = SWITCH_STMT_FEATURE_COUNT + 11;
+
+  /**
+   * The feature id for the '<em><b>Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANDERSON__DECL = SWITCH_STMT_FEATURE_COUNT + 12;
 
   /**
    * The feature id for the '<em><b>Assig</b></em>' containment reference.
@@ -445,7 +832,7 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ANDERSON__ASSIG = SWITCH_STMT_FEATURE_COUNT + 5;
+  int ANDERSON__ASSIG = SWITCH_STMT_FEATURE_COUNT + 13;
 
   /**
    * The number of structural features of the '<em>Anderson</em>' class.
@@ -454,7 +841,7 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ANDERSON_FEATURE_COUNT = SWITCH_STMT_FEATURE_COUNT + 6;
+  int ANDERSON_FEATURE_COUNT = SWITCH_STMT_FEATURE_COUNT + 14;
 
   /**
    * The meta object id for the '{@link org.xtext.example.go.go.impl.BlockImpl <em>Block</em>}' class.
@@ -464,7 +851,7 @@ public interface GoPackage extends EPackage
    * @see org.xtext.example.go.go.impl.GoPackageImpl#getBlock()
    * @generated
    */
-  int BLOCK = 11;
+  int BLOCK = 10;
 
   /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference list.
@@ -473,7 +860,7 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BLOCK__STATEMENT = FUNC_DECL_FEATURE_COUNT + 0;
+  int BLOCK__STATEMENT = 0;
 
   /**
    * The number of structural features of the '<em>Block</em>' class.
@@ -482,7 +869,227 @@ public interface GoPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BLOCK_FEATURE_COUNT = FUNC_DECL_FEATURE_COUNT + 1;
+  int BLOCK_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.xtext.example.go.go.impl.SelectStmtImpl <em>Select Stmt</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.xtext.example.go.go.impl.SelectStmtImpl
+   * @see org.xtext.example.go.go.impl.GoPackageImpl#getSelectStmt()
+   * @generated
+   */
+  int SELECT_STMT = 12;
+
+  /**
+   * The feature id for the '<em><b>Labeled Stmt</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_STMT__LABELED_STMT = STATEMENT__LABELED_STMT;
+
+  /**
+   * The feature id for the '<em><b>Send Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_STMT__SEND_STMT = STATEMENT__SEND_STMT;
+
+  /**
+   * The feature id for the '<em><b>Switch Stmt</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_STMT__SWITCH_STMT = STATEMENT__SWITCH_STMT;
+
+  /**
+   * The feature id for the '<em><b>Return Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_STMT__RETURN_STMT = STATEMENT__RETURN_STMT;
+
+  /**
+   * The feature id for the '<em><b>Break Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_STMT__BREAK_STMT = STATEMENT__BREAK_STMT;
+
+  /**
+   * The feature id for the '<em><b>Continue Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_STMT__CONTINUE_STMT = STATEMENT__CONTINUE_STMT;
+
+  /**
+   * The feature id for the '<em><b>Goto Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_STMT__GOTO_STMT = STATEMENT__GOTO_STMT;
+
+  /**
+   * The feature id for the '<em><b>Falltrhough Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_STMT__FALLTRHOUGH_STMT = STATEMENT__FALLTRHOUGH_STMT;
+
+  /**
+   * The feature id for the '<em><b>Defer Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_STMT__DEFER_STMT = STATEMENT__DEFER_STMT;
+
+  /**
+   * The feature id for the '<em><b>Comm Clause</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_STMT__COMM_CLAUSE = STATEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Select Stmt</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SELECT_STMT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.xtext.example.go.go.impl.CommClauseImpl <em>Comm Clause</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.xtext.example.go.go.impl.CommClauseImpl
+   * @see org.xtext.example.go.go.impl.GoPackageImpl#getCommClause()
+   * @generated
+   */
+  int COMM_CLAUSE = 13;
+
+  /**
+   * The number of structural features of the '<em>Comm Clause</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMM_CLAUSE_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link org.xtext.example.go.go.impl.StatementListImpl <em>Statement List</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.xtext.example.go.go.impl.StatementListImpl
+   * @see org.xtext.example.go.go.impl.GoPackageImpl#getStatementList()
+   * @generated
+   */
+  int STATEMENT_LIST = 14;
+
+  /**
+   * The feature id for the '<em><b>Statement</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT_LIST__STATEMENT = COMM_CLAUSE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Statement List</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT_LIST_FEATURE_COUNT = COMM_CLAUSE_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.xtext.example.go.go.impl.DeclImpl <em>Decl</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.xtext.example.go.go.impl.DeclImpl
+   * @see org.xtext.example.go.go.impl.GoPackageImpl#getDecl()
+   * @generated
+   */
+  int DECL = 16;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DECL__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Id List</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DECL__ID_LIST = 1;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DECL__TYPE = 2;
+
+  /**
+   * The feature id for the '<em><b>Exp</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DECL__EXP = 3;
+
+  /**
+   * The feature id for the '<em><b>Explist</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DECL__EXPLIST = 4;
+
+  /**
+   * The number of structural features of the '<em>Decl</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DECL_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link org.xtext.example.go.go.impl.SimpleStmtImpl <em>Simple Stmt</em>}' class.
@@ -492,7 +1099,25 @@ public interface GoPackage extends EPackage
    * @see org.xtext.example.go.go.impl.GoPackageImpl#getSimpleStmt()
    * @generated
    */
-  int SIMPLE_STMT = 14;
+  int SIMPLE_STMT = 18;
+
+  /**
+   * The feature id for the '<em><b>Labeled Stmt</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_STMT__LABELED_STMT = FOR_CLAUSE__LABELED_STMT;
+
+  /**
+   * The feature id for the '<em><b>Send Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_STMT__SEND_STMT = FOR_CLAUSE__SEND_STMT;
 
   /**
    * The feature id for the '<em><b>Switch Stmt</b></em>' containment reference.
@@ -513,6 +1138,51 @@ public interface GoPackage extends EPackage
   int SIMPLE_STMT__RETURN_STMT = FOR_CLAUSE__RETURN_STMT;
 
   /**
+   * The feature id for the '<em><b>Break Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_STMT__BREAK_STMT = FOR_CLAUSE__BREAK_STMT;
+
+  /**
+   * The feature id for the '<em><b>Continue Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_STMT__CONTINUE_STMT = FOR_CLAUSE__CONTINUE_STMT;
+
+  /**
+   * The feature id for the '<em><b>Goto Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_STMT__GOTO_STMT = FOR_CLAUSE__GOTO_STMT;
+
+  /**
+   * The feature id for the '<em><b>Falltrhough Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_STMT__FALLTRHOUGH_STMT = FOR_CLAUSE__FALLTRHOUGH_STMT;
+
+  /**
+   * The feature id for the '<em><b>Defer Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_STMT__DEFER_STMT = FOR_CLAUSE__DEFER_STMT;
+
+  /**
    * The feature id for the '<em><b>Block</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -520,6 +1190,15 @@ public interface GoPackage extends EPackage
    * @ordered
    */
   int SIMPLE_STMT__BLOCK = FOR_CLAUSE__BLOCK;
+
+  /**
+   * The feature id for the '<em><b>Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_STMT__DECL = FOR_CLAUSE__DECL;
 
   /**
    * The number of structural features of the '<em>Simple Stmt</em>' class.
@@ -538,7 +1217,25 @@ public interface GoPackage extends EPackage
    * @see org.xtext.example.go.go.impl.GoPackageImpl#getAssig()
    * @generated
    */
-  int ASSIG = 13;
+  int ASSIG = 17;
+
+  /**
+   * The feature id for the '<em><b>Labeled Stmt</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIG__LABELED_STMT = SIMPLE_STMT__LABELED_STMT;
+
+  /**
+   * The feature id for the '<em><b>Send Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIG__SEND_STMT = SIMPLE_STMT__SEND_STMT;
 
   /**
    * The feature id for the '<em><b>Switch Stmt</b></em>' containment reference.
@@ -559,6 +1256,51 @@ public interface GoPackage extends EPackage
   int ASSIG__RETURN_STMT = SIMPLE_STMT__RETURN_STMT;
 
   /**
+   * The feature id for the '<em><b>Break Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIG__BREAK_STMT = SIMPLE_STMT__BREAK_STMT;
+
+  /**
+   * The feature id for the '<em><b>Continue Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIG__CONTINUE_STMT = SIMPLE_STMT__CONTINUE_STMT;
+
+  /**
+   * The feature id for the '<em><b>Goto Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIG__GOTO_STMT = SIMPLE_STMT__GOTO_STMT;
+
+  /**
+   * The feature id for the '<em><b>Falltrhough Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIG__FALLTRHOUGH_STMT = SIMPLE_STMT__FALLTRHOUGH_STMT;
+
+  /**
+   * The feature id for the '<em><b>Defer Stmt</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIG__DEFER_STMT = SIMPLE_STMT__DEFER_STMT;
+
+  /**
    * The feature id for the '<em><b>Block</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -566,6 +1308,15 @@ public interface GoPackage extends EPackage
    * @ordered
    */
   int ASSIG__BLOCK = SIMPLE_STMT__BLOCK;
+
+  /**
+   * The feature id for the '<em><b>Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIG__DECL = SIMPLE_STMT__DECL;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -624,25 +1375,15 @@ public interface GoPackage extends EPackage
   EClass getModel();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.xtext.example.go.go.Model#getGreetings <em>Greetings</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.xtext.example.go.go.Model#getElements <em>Elements</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Greetings</em>'.
-   * @see org.xtext.example.go.go.Model#getGreetings()
+   * @return the meta object for the containment reference list '<em>Elements</em>'.
+   * @see org.xtext.example.go.go.Model#getElements()
    * @see #getModel()
    * @generated
    */
-  EReference getModel_Greetings();
-
-  /**
-   * Returns the meta object for class '{@link org.xtext.example.go.go.Greeting <em>Greeting</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Greeting</em>'.
-   * @see org.xtext.example.go.go.Greeting
-   * @generated
-   */
-  EClass getGreeting();
+  EReference getModel_Elements();
 
   /**
    * Returns the meta object for class '{@link org.xtext.example.go.go.SourceFile <em>Source File</em>}'.
@@ -676,6 +1417,28 @@ public interface GoPackage extends EPackage
   EClass getTopLevelDecl();
 
   /**
+   * Returns the meta object for the containment reference '{@link org.xtext.example.go.go.TopLevelDecl#getDecl <em>Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Decl</em>'.
+   * @see org.xtext.example.go.go.TopLevelDecl#getDecl()
+   * @see #getTopLevelDecl()
+   * @generated
+   */
+  EReference getTopLevelDecl_Decl();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.xtext.example.go.go.TopLevelDecl#getFunc <em>Func</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Func</em>'.
+   * @see org.xtext.example.go.go.TopLevelDecl#getFunc()
+   * @see #getTopLevelDecl()
+   * @generated
+   */
+  EReference getTopLevelDecl_Func();
+
+  /**
    * Returns the meta object for class '{@link org.xtext.example.go.go.ForStmt <em>For Stmt</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -707,6 +1470,17 @@ public interface GoPackage extends EPackage
   EClass getForClause();
 
   /**
+   * Returns the meta object for the containment reference '{@link org.xtext.example.go.go.ForClause#getDecl <em>Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Decl</em>'.
+   * @see org.xtext.example.go.go.ForClause#getDecl()
+   * @see #getForClause()
+   * @generated
+   */
+  EReference getForClause_Decl();
+
+  /**
    * Returns the meta object for class '{@link org.xtext.example.go.go.FuncDecl <em>Func Decl</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -715,6 +1489,50 @@ public interface GoPackage extends EPackage
    * @generated
    */
   EClass getFuncDecl();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.go.go.FuncDecl#getReceiver <em>Receiver</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Receiver</em>'.
+   * @see org.xtext.example.go.go.FuncDecl#getReceiver()
+   * @see #getFuncDecl()
+   * @generated
+   */
+  EAttribute getFuncDecl_Receiver();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.go.go.FuncDecl#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.xtext.example.go.go.FuncDecl#getName()
+   * @see #getFuncDecl()
+   * @generated
+   */
+  EAttribute getFuncDecl_Name();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.go.go.FuncDecl#getSignature <em>Signature</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Signature</em>'.
+   * @see org.xtext.example.go.go.FuncDecl#getSignature()
+   * @see #getFuncDecl()
+   * @generated
+   */
+  EAttribute getFuncDecl_Signature();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.xtext.example.go.go.FuncDecl#getBlock <em>Block</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Block</em>'.
+   * @see org.xtext.example.go.go.FuncDecl#getBlock()
+   * @see #getFuncDecl()
+   * @generated
+   */
+  EReference getFuncDecl_Block();
 
   /**
    * Returns the meta object for class '{@link org.xtext.example.go.go.SwitchStmt <em>Switch Stmt</em>}'.
@@ -801,6 +1619,17 @@ public interface GoPackage extends EPackage
   EReference getAnderson_IfStmt();
 
   /**
+   * Returns the meta object for the containment reference '{@link org.xtext.example.go.go.Anderson#getDecl <em>Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Decl</em>'.
+   * @see org.xtext.example.go.go.Anderson#getDecl()
+   * @see #getAnderson()
+   * @generated
+   */
+  EReference getAnderson_Decl();
+
+  /**
    * Returns the meta object for the containment reference '{@link org.xtext.example.go.go.Anderson#getAssig <em>Assig</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -843,6 +1672,28 @@ public interface GoPackage extends EPackage
   EClass getStatement();
 
   /**
+   * Returns the meta object for the containment reference '{@link org.xtext.example.go.go.Statement#getLabeledStmt <em>Labeled Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Labeled Stmt</em>'.
+   * @see org.xtext.example.go.go.Statement#getLabeledStmt()
+   * @see #getStatement()
+   * @generated
+   */
+  EReference getStatement_LabeledStmt();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.go.go.Statement#getSendStmt <em>Send Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Send Stmt</em>'.
+   * @see org.xtext.example.go.go.Statement#getSendStmt()
+   * @see #getStatement()
+   * @generated
+   */
+  EAttribute getStatement_SendStmt();
+
+  /**
    * Returns the meta object for the containment reference '{@link org.xtext.example.go.go.Statement#getSwitchStmt <em>Switch Stmt</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -863,6 +1714,188 @@ public interface GoPackage extends EPackage
    * @generated
    */
   EAttribute getStatement_ReturnStmt();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.go.go.Statement#getBreakStmt <em>Break Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Break Stmt</em>'.
+   * @see org.xtext.example.go.go.Statement#getBreakStmt()
+   * @see #getStatement()
+   * @generated
+   */
+  EAttribute getStatement_BreakStmt();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.go.go.Statement#getContinueStmt <em>Continue Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Continue Stmt</em>'.
+   * @see org.xtext.example.go.go.Statement#getContinueStmt()
+   * @see #getStatement()
+   * @generated
+   */
+  EAttribute getStatement_ContinueStmt();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.go.go.Statement#getGotoStmt <em>Goto Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Goto Stmt</em>'.
+   * @see org.xtext.example.go.go.Statement#getGotoStmt()
+   * @see #getStatement()
+   * @generated
+   */
+  EAttribute getStatement_GotoStmt();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.go.go.Statement#getFalltrhoughStmt <em>Falltrhough Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Falltrhough Stmt</em>'.
+   * @see org.xtext.example.go.go.Statement#getFalltrhoughStmt()
+   * @see #getStatement()
+   * @generated
+   */
+  EAttribute getStatement_FalltrhoughStmt();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.go.go.Statement#getDeferStmt <em>Defer Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Defer Stmt</em>'.
+   * @see org.xtext.example.go.go.Statement#getDeferStmt()
+   * @see #getStatement()
+   * @generated
+   */
+  EAttribute getStatement_DeferStmt();
+
+  /**
+   * Returns the meta object for class '{@link org.xtext.example.go.go.SelectStmt <em>Select Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Select Stmt</em>'.
+   * @see org.xtext.example.go.go.SelectStmt
+   * @generated
+   */
+  EClass getSelectStmt();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.xtext.example.go.go.SelectStmt#getCommClause <em>Comm Clause</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Comm Clause</em>'.
+   * @see org.xtext.example.go.go.SelectStmt#getCommClause()
+   * @see #getSelectStmt()
+   * @generated
+   */
+  EReference getSelectStmt_CommClause();
+
+  /**
+   * Returns the meta object for class '{@link org.xtext.example.go.go.CommClause <em>Comm Clause</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Comm Clause</em>'.
+   * @see org.xtext.example.go.go.CommClause
+   * @generated
+   */
+  EClass getCommClause();
+
+  /**
+   * Returns the meta object for class '{@link org.xtext.example.go.go.StatementList <em>Statement List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Statement List</em>'.
+   * @see org.xtext.example.go.go.StatementList
+   * @generated
+   */
+  EClass getStatementList();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.xtext.example.go.go.StatementList#getStatement <em>Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Statement</em>'.
+   * @see org.xtext.example.go.go.StatementList#getStatement()
+   * @see #getStatementList()
+   * @generated
+   */
+  EReference getStatementList_Statement();
+
+  /**
+   * Returns the meta object for class '{@link org.xtext.example.go.go.LabeledStmt <em>Labeled Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Labeled Stmt</em>'.
+   * @see org.xtext.example.go.go.LabeledStmt
+   * @generated
+   */
+  EClass getLabeledStmt();
+
+  /**
+   * Returns the meta object for class '{@link org.xtext.example.go.go.Decl <em>Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Decl</em>'.
+   * @see org.xtext.example.go.go.Decl
+   * @generated
+   */
+  EClass getDecl();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.go.go.Decl#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.xtext.example.go.go.Decl#getName()
+   * @see #getDecl()
+   * @generated
+   */
+  EAttribute getDecl_Name();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.go.go.Decl#getIdList <em>Id List</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Id List</em>'.
+   * @see org.xtext.example.go.go.Decl#getIdList()
+   * @see #getDecl()
+   * @generated
+   */
+  EAttribute getDecl_IdList();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.go.go.Decl#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Type</em>'.
+   * @see org.xtext.example.go.go.Decl#getType()
+   * @see #getDecl()
+   * @generated
+   */
+  EAttribute getDecl_Type();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.go.go.Decl#getExp <em>Exp</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Exp</em>'.
+   * @see org.xtext.example.go.go.Decl#getExp()
+   * @see #getDecl()
+   * @generated
+   */
+  EAttribute getDecl_Exp();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.go.go.Decl#getExplist <em>Explist</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Explist</em>'.
+   * @see org.xtext.example.go.go.Decl#getExplist()
+   * @see #getDecl()
+   * @generated
+   */
+  EAttribute getDecl_Explist();
 
   /**
    * Returns the meta object for class '{@link org.xtext.example.go.go.Assig <em>Assig</em>}'.
@@ -962,22 +1995,12 @@ public interface GoPackage extends EPackage
     EClass MODEL = eINSTANCE.getModel();
 
     /**
-     * The meta object literal for the '<em><b>Greetings</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MODEL__GREETINGS = eINSTANCE.getModel_Greetings();
-
-    /**
-     * The meta object literal for the '{@link org.xtext.example.go.go.impl.GreetingImpl <em>Greeting</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.xtext.example.go.go.impl.GreetingImpl
-     * @see org.xtext.example.go.go.impl.GoPackageImpl#getGreeting()
-     * @generated
-     */
-    EClass GREETING = eINSTANCE.getGreeting();
+    EReference MODEL__ELEMENTS = eINSTANCE.getModel_Elements();
 
     /**
      * The meta object literal for the '{@link org.xtext.example.go.go.impl.SourceFileImpl <em>Source File</em>}' class.
@@ -1008,6 +2031,22 @@ public interface GoPackage extends EPackage
     EClass TOP_LEVEL_DECL = eINSTANCE.getTopLevelDecl();
 
     /**
+     * The meta object literal for the '<em><b>Decl</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TOP_LEVEL_DECL__DECL = eINSTANCE.getTopLevelDecl_Decl();
+
+    /**
+     * The meta object literal for the '<em><b>Func</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TOP_LEVEL_DECL__FUNC = eINSTANCE.getTopLevelDecl_Func();
+
+    /**
      * The meta object literal for the '{@link org.xtext.example.go.go.impl.ForStmtImpl <em>For Stmt</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1036,6 +2075,14 @@ public interface GoPackage extends EPackage
     EClass FOR_CLAUSE = eINSTANCE.getForClause();
 
     /**
+     * The meta object literal for the '<em><b>Decl</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FOR_CLAUSE__DECL = eINSTANCE.getForClause_Decl();
+
+    /**
      * The meta object literal for the '{@link org.xtext.example.go.go.impl.FuncDeclImpl <em>Func Decl</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1044,6 +2091,38 @@ public interface GoPackage extends EPackage
      * @generated
      */
     EClass FUNC_DECL = eINSTANCE.getFuncDecl();
+
+    /**
+     * The meta object literal for the '<em><b>Receiver</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FUNC_DECL__RECEIVER = eINSTANCE.getFuncDecl_Receiver();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FUNC_DECL__NAME = eINSTANCE.getFuncDecl_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Signature</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FUNC_DECL__SIGNATURE = eINSTANCE.getFuncDecl_Signature();
+
+    /**
+     * The meta object literal for the '<em><b>Block</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FUNC_DECL__BLOCK = eINSTANCE.getFuncDecl_Block();
 
     /**
      * The meta object literal for the '{@link org.xtext.example.go.go.impl.SwitchStmtImpl <em>Switch Stmt</em>}' class.
@@ -1118,6 +2197,14 @@ public interface GoPackage extends EPackage
     EReference ANDERSON__IF_STMT = eINSTANCE.getAnderson_IfStmt();
 
     /**
+     * The meta object literal for the '<em><b>Decl</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ANDERSON__DECL = eINSTANCE.getAnderson_Decl();
+
+    /**
      * The meta object literal for the '<em><b>Assig</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1154,6 +2241,22 @@ public interface GoPackage extends EPackage
     EClass STATEMENT = eINSTANCE.getStatement();
 
     /**
+     * The meta object literal for the '<em><b>Labeled Stmt</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATEMENT__LABELED_STMT = eINSTANCE.getStatement_LabeledStmt();
+
+    /**
+     * The meta object literal for the '<em><b>Send Stmt</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute STATEMENT__SEND_STMT = eINSTANCE.getStatement_SendStmt();
+
+    /**
      * The meta object literal for the '<em><b>Switch Stmt</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1168,6 +2271,152 @@ public interface GoPackage extends EPackage
      * @generated
      */
     EAttribute STATEMENT__RETURN_STMT = eINSTANCE.getStatement_ReturnStmt();
+
+    /**
+     * The meta object literal for the '<em><b>Break Stmt</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute STATEMENT__BREAK_STMT = eINSTANCE.getStatement_BreakStmt();
+
+    /**
+     * The meta object literal for the '<em><b>Continue Stmt</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute STATEMENT__CONTINUE_STMT = eINSTANCE.getStatement_ContinueStmt();
+
+    /**
+     * The meta object literal for the '<em><b>Goto Stmt</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute STATEMENT__GOTO_STMT = eINSTANCE.getStatement_GotoStmt();
+
+    /**
+     * The meta object literal for the '<em><b>Falltrhough Stmt</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute STATEMENT__FALLTRHOUGH_STMT = eINSTANCE.getStatement_FalltrhoughStmt();
+
+    /**
+     * The meta object literal for the '<em><b>Defer Stmt</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute STATEMENT__DEFER_STMT = eINSTANCE.getStatement_DeferStmt();
+
+    /**
+     * The meta object literal for the '{@link org.xtext.example.go.go.impl.SelectStmtImpl <em>Select Stmt</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.xtext.example.go.go.impl.SelectStmtImpl
+     * @see org.xtext.example.go.go.impl.GoPackageImpl#getSelectStmt()
+     * @generated
+     */
+    EClass SELECT_STMT = eINSTANCE.getSelectStmt();
+
+    /**
+     * The meta object literal for the '<em><b>Comm Clause</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SELECT_STMT__COMM_CLAUSE = eINSTANCE.getSelectStmt_CommClause();
+
+    /**
+     * The meta object literal for the '{@link org.xtext.example.go.go.impl.CommClauseImpl <em>Comm Clause</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.xtext.example.go.go.impl.CommClauseImpl
+     * @see org.xtext.example.go.go.impl.GoPackageImpl#getCommClause()
+     * @generated
+     */
+    EClass COMM_CLAUSE = eINSTANCE.getCommClause();
+
+    /**
+     * The meta object literal for the '{@link org.xtext.example.go.go.impl.StatementListImpl <em>Statement List</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.xtext.example.go.go.impl.StatementListImpl
+     * @see org.xtext.example.go.go.impl.GoPackageImpl#getStatementList()
+     * @generated
+     */
+    EClass STATEMENT_LIST = eINSTANCE.getStatementList();
+
+    /**
+     * The meta object literal for the '<em><b>Statement</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATEMENT_LIST__STATEMENT = eINSTANCE.getStatementList_Statement();
+
+    /**
+     * The meta object literal for the '{@link org.xtext.example.go.go.impl.LabeledStmtImpl <em>Labeled Stmt</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.xtext.example.go.go.impl.LabeledStmtImpl
+     * @see org.xtext.example.go.go.impl.GoPackageImpl#getLabeledStmt()
+     * @generated
+     */
+    EClass LABELED_STMT = eINSTANCE.getLabeledStmt();
+
+    /**
+     * The meta object literal for the '{@link org.xtext.example.go.go.impl.DeclImpl <em>Decl</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.xtext.example.go.go.impl.DeclImpl
+     * @see org.xtext.example.go.go.impl.GoPackageImpl#getDecl()
+     * @generated
+     */
+    EClass DECL = eINSTANCE.getDecl();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DECL__NAME = eINSTANCE.getDecl_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Id List</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DECL__ID_LIST = eINSTANCE.getDecl_IdList();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DECL__TYPE = eINSTANCE.getDecl_Type();
+
+    /**
+     * The meta object literal for the '<em><b>Exp</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DECL__EXP = eINSTANCE.getDecl_Exp();
+
+    /**
+     * The meta object literal for the '<em><b>Explist</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DECL__EXPLIST = eINSTANCE.getDecl_Explist();
 
     /**
      * The meta object literal for the '{@link org.xtext.example.go.go.impl.AssigImpl <em>Assig</em>}' class.

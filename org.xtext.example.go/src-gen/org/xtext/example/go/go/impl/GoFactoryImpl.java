@@ -66,7 +66,6 @@ public class GoFactoryImpl extends EFactoryImpl implements GoFactory
     switch (eClass.getClassifierID())
     {
       case GoPackage.MODEL: return createModel();
-      case GoPackage.GREETING: return createGreeting();
       case GoPackage.SOURCE_FILE: return createSourceFile();
       case GoPackage.TOP_LEVEL_DECL: return createTopLevelDecl();
       case GoPackage.FOR_STMT: return createForStmt();
@@ -78,6 +77,11 @@ public class GoFactoryImpl extends EFactoryImpl implements GoFactory
       case GoPackage.ANDERSON: return createAnderson();
       case GoPackage.BLOCK: return createBlock();
       case GoPackage.STATEMENT: return createStatement();
+      case GoPackage.SELECT_STMT: return createSelectStmt();
+      case GoPackage.COMM_CLAUSE: return createCommClause();
+      case GoPackage.STATEMENT_LIST: return createStatementList();
+      case GoPackage.LABELED_STMT: return createLabeledStmt();
+      case GoPackage.DECL: return createDecl();
       case GoPackage.ASSIG: return createAssig();
       case GoPackage.SIMPLE_STMT: return createSimpleStmt();
       default:
@@ -94,17 +98,6 @@ public class GoFactoryImpl extends EFactoryImpl implements GoFactory
   {
     ModelImpl model = new ModelImpl();
     return model;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Greeting createGreeting()
-  {
-    GreetingImpl greeting = new GreetingImpl();
-    return greeting;
   }
 
   /**
@@ -226,6 +219,61 @@ public class GoFactoryImpl extends EFactoryImpl implements GoFactory
   {
     StatementImpl statement = new StatementImpl();
     return statement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SelectStmt createSelectStmt()
+  {
+    SelectStmtImpl selectStmt = new SelectStmtImpl();
+    return selectStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CommClause createCommClause()
+  {
+    CommClauseImpl commClause = new CommClauseImpl();
+    return commClause;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public StatementList createStatementList()
+  {
+    StatementListImpl statementList = new StatementListImpl();
+    return statementList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LabeledStmt createLabeledStmt()
+  {
+    LabeledStmtImpl labeledStmt = new LabeledStmtImpl();
+    return labeledStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Decl createDecl()
+  {
+    DeclImpl decl = new DeclImpl();
+    return decl;
   }
 
   /**

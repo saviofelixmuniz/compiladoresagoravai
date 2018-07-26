@@ -81,11 +81,6 @@ public class GoAdapterFactory extends AdapterFactoryImpl
         return createModelAdapter();
       }
       @Override
-      public Adapter caseGreeting(Greeting object)
-      {
-        return createGreetingAdapter();
-      }
-      @Override
       public Adapter caseSourceFile(SourceFile object)
       {
         return createSourceFileAdapter();
@@ -141,6 +136,31 @@ public class GoAdapterFactory extends AdapterFactoryImpl
         return createStatementAdapter();
       }
       @Override
+      public Adapter caseSelectStmt(SelectStmt object)
+      {
+        return createSelectStmtAdapter();
+      }
+      @Override
+      public Adapter caseCommClause(CommClause object)
+      {
+        return createCommClauseAdapter();
+      }
+      @Override
+      public Adapter caseStatementList(StatementList object)
+      {
+        return createStatementListAdapter();
+      }
+      @Override
+      public Adapter caseLabeledStmt(LabeledStmt object)
+      {
+        return createLabeledStmtAdapter();
+      }
+      @Override
+      public Adapter caseDecl(Decl object)
+      {
+        return createDeclAdapter();
+      }
+      @Override
       public Adapter caseAssig(Assig object)
       {
         return createAssigAdapter();
@@ -183,21 +203,6 @@ public class GoAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createModelAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.go.go.Greeting <em>Greeting</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.go.go.Greeting
-   * @generated
-   */
-  public Adapter createGreetingAdapter()
   {
     return null;
   }
@@ -363,6 +368,81 @@ public class GoAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createStatementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.go.go.SelectStmt <em>Select Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.go.go.SelectStmt
+   * @generated
+   */
+  public Adapter createSelectStmtAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.go.go.CommClause <em>Comm Clause</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.go.go.CommClause
+   * @generated
+   */
+  public Adapter createCommClauseAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.go.go.StatementList <em>Statement List</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.go.go.StatementList
+   * @generated
+   */
+  public Adapter createStatementListAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.go.go.LabeledStmt <em>Labeled Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.go.go.LabeledStmt
+   * @generated
+   */
+  public Adapter createLabeledStmtAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.go.go.Decl <em>Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.go.go.Decl
+   * @generated
+   */
+  public Adapter createDeclAdapter()
   {
     return null;
   }

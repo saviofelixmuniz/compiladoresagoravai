@@ -22,80 +22,74 @@ import org.xtext.example.go.services.GoGrammarAccess;
 public class GoSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected GoGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_Anderson_____DeclParserRuleCall_1_0_0_or_ExpParserRuleCall_1_0_2___SemicolonKeyword_1_1__q;
+	protected AbstractElementAlias match_Anderson___ExpParserRuleCall_1_0_2_SemicolonKeyword_1_1__q;
 	protected AbstractElementAlias match_Assig_AsteriskEqualsSignKeyword_1_2_0_2_or_HyphenMinusEqualsSignKeyword_1_2_0_1_or_PlusSignEqualsSignKeyword_1_2_0_0_or_SolidusEqualsSignKeyword_1_2_0_3;
 	protected AbstractElementAlias match_Assig_HyphenMinusHyphenMinusKeyword_1_1_1_or_PlusSignPlusSignKeyword_1_1_0;
 	protected AbstractElementAlias match_Block_SemicolonKeyword_2_1_q;
-	protected AbstractElementAlias match_Block___LeftCurlyBracketKeyword_1_RightCurlyBracketKeyword_3__q;
-	protected AbstractElementAlias match_ForClause_DeclParserRuleCall_1_q;
+	protected AbstractElementAlias match_Decl_ConstKeyword_1_0_1_or_VarKeyword_1_0_0;
 	protected AbstractElementAlias match_ForClause_ExpParserRuleCall_3_q;
-	protected AbstractElementAlias match_ForStmt_RangeClauseParserRuleCall_1_0_1_q;
-	protected AbstractElementAlias match_FuncDecl_ReceiverParserRuleCall_2_q;
-	protected AbstractElementAlias match_SimpleStmt_DeclParserRuleCall_0_1_or_ExpParserRuleCall_2_1;
-	protected AbstractElementAlias match_SimpleStmt___DeclParserRuleCall_0_1_or_ExpParserRuleCall_2_1__q;
+	protected AbstractElementAlias match_ForStmt___ExpParserRuleCall_1_0_0_RangeClauseParserRuleCall_1_0_1_q__q;
+	protected AbstractElementAlias match_SimpleStmt_ExpParserRuleCall_2_1_q;
 	protected AbstractElementAlias match_SourceFile_SemicolonKeyword_2_q;
 	protected AbstractElementAlias match_SourceFile_SemicolonKeyword_4_1_q;
 	protected AbstractElementAlias match_SourceFile___ImportDeclParserRuleCall_3_0_SemicolonKeyword_3_1_q__a;
+	protected AbstractElementAlias match_StatementList_SemicolonKeyword_1_1_q;
 	protected AbstractElementAlias match_SwitchCase_SemicolonKeyword_2_1_q;
 	protected AbstractElementAlias match_SwitchStmt_DefaultKeyword_4_1_0_q;
 	protected AbstractElementAlias match_SwitchStmt_IDTerminalRuleCall_2_q;
-	protected AbstractElementAlias match_TopLevelDecl_DeclParserRuleCall_0_1_or_TypeDefParserRuleCall_2_1;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (GoGrammarAccess) access;
-		match_Anderson_____DeclParserRuleCall_1_0_0_or_ExpParserRuleCall_1_0_2___SemicolonKeyword_1_1__q = new GroupAlias(false, true, new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getAndersonAccess().getDeclParserRuleCall_1_0_0()), new TokenAlias(false, false, grammarAccess.getAndersonAccess().getExpParserRuleCall_1_0_2())), new TokenAlias(false, false, grammarAccess.getAndersonAccess().getSemicolonKeyword_1_1()));
+		match_Anderson___ExpParserRuleCall_1_0_2_SemicolonKeyword_1_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAndersonAccess().getExpParserRuleCall_1_0_2()), new TokenAlias(false, false, grammarAccess.getAndersonAccess().getSemicolonKeyword_1_1()));
 		match_Assig_AsteriskEqualsSignKeyword_1_2_0_2_or_HyphenMinusEqualsSignKeyword_1_2_0_1_or_PlusSignEqualsSignKeyword_1_2_0_0_or_SolidusEqualsSignKeyword_1_2_0_3 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getAssigAccess().getAsteriskEqualsSignKeyword_1_2_0_2()), new TokenAlias(false, false, grammarAccess.getAssigAccess().getHyphenMinusEqualsSignKeyword_1_2_0_1()), new TokenAlias(false, false, grammarAccess.getAssigAccess().getPlusSignEqualsSignKeyword_1_2_0_0()), new TokenAlias(false, false, grammarAccess.getAssigAccess().getSolidusEqualsSignKeyword_1_2_0_3()));
 		match_Assig_HyphenMinusHyphenMinusKeyword_1_1_1_or_PlusSignPlusSignKeyword_1_1_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getAssigAccess().getHyphenMinusHyphenMinusKeyword_1_1_1()), new TokenAlias(false, false, grammarAccess.getAssigAccess().getPlusSignPlusSignKeyword_1_1_0()));
 		match_Block_SemicolonKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getBlockAccess().getSemicolonKeyword_2_1());
-		match_Block___LeftCurlyBracketKeyword_1_RightCurlyBracketKeyword_3__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getBlockAccess().getLeftCurlyBracketKeyword_1()), new TokenAlias(false, false, grammarAccess.getBlockAccess().getRightCurlyBracketKeyword_3()));
-		match_ForClause_DeclParserRuleCall_1_q = new TokenAlias(false, true, grammarAccess.getForClauseAccess().getDeclParserRuleCall_1());
+		match_Decl_ConstKeyword_1_0_1_or_VarKeyword_1_0_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getDeclAccess().getConstKeyword_1_0_1()), new TokenAlias(false, false, grammarAccess.getDeclAccess().getVarKeyword_1_0_0()));
 		match_ForClause_ExpParserRuleCall_3_q = new TokenAlias(false, true, grammarAccess.getForClauseAccess().getExpParserRuleCall_3());
-		match_ForStmt_RangeClauseParserRuleCall_1_0_1_q = new TokenAlias(false, true, grammarAccess.getForStmtAccess().getRangeClauseParserRuleCall_1_0_1());
-		match_FuncDecl_ReceiverParserRuleCall_2_q = new TokenAlias(false, true, grammarAccess.getFuncDeclAccess().getReceiverParserRuleCall_2());
-		match_SimpleStmt_DeclParserRuleCall_0_1_or_ExpParserRuleCall_2_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getSimpleStmtAccess().getDeclParserRuleCall_0_1()), new TokenAlias(false, false, grammarAccess.getSimpleStmtAccess().getExpParserRuleCall_2_1()));
-		match_SimpleStmt___DeclParserRuleCall_0_1_or_ExpParserRuleCall_2_1__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getSimpleStmtAccess().getDeclParserRuleCall_0_1()), new TokenAlias(false, false, grammarAccess.getSimpleStmtAccess().getExpParserRuleCall_2_1()));
+		match_ForStmt___ExpParserRuleCall_1_0_0_RangeClauseParserRuleCall_1_0_1_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getForStmtAccess().getExpParserRuleCall_1_0_0()), new TokenAlias(false, true, grammarAccess.getForStmtAccess().getRangeClauseParserRuleCall_1_0_1()));
+		match_SimpleStmt_ExpParserRuleCall_2_1_q = new TokenAlias(false, true, grammarAccess.getSimpleStmtAccess().getExpParserRuleCall_2_1());
 		match_SourceFile_SemicolonKeyword_2_q = new TokenAlias(false, true, grammarAccess.getSourceFileAccess().getSemicolonKeyword_2());
 		match_SourceFile_SemicolonKeyword_4_1_q = new TokenAlias(false, true, grammarAccess.getSourceFileAccess().getSemicolonKeyword_4_1());
 		match_SourceFile___ImportDeclParserRuleCall_3_0_SemicolonKeyword_3_1_q__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getSourceFileAccess().getImportDeclParserRuleCall_3_0()), new TokenAlias(false, true, grammarAccess.getSourceFileAccess().getSemicolonKeyword_3_1()));
+		match_StatementList_SemicolonKeyword_1_1_q = new TokenAlias(false, true, grammarAccess.getStatementListAccess().getSemicolonKeyword_1_1());
 		match_SwitchCase_SemicolonKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getSwitchCaseAccess().getSemicolonKeyword_2_1());
 		match_SwitchStmt_DefaultKeyword_4_1_0_q = new TokenAlias(false, true, grammarAccess.getSwitchStmtAccess().getDefaultKeyword_4_1_0());
 		match_SwitchStmt_IDTerminalRuleCall_2_q = new TokenAlias(false, true, grammarAccess.getSwitchStmtAccess().getIDTerminalRuleCall_2());
-		match_TopLevelDecl_DeclParserRuleCall_0_1_or_TypeDefParserRuleCall_2_1 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getTopLevelDeclAccess().getDeclParserRuleCall_0_1()), new TokenAlias(false, false, grammarAccess.getTopLevelDeclAccess().getTypeDefParserRuleCall_2_1()));
 	}
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (ruleCall.getRule() == grammarAccess.getDeclRule())
-			return getDeclToken(semanticObject, ruleCall, node);
+		if (ruleCall.getRule() == grammarAccess.getCommCaseRule())
+			return getCommCaseToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getExpRule())
 			return getExpToken(semanticObject, ruleCall, node);
+		else if (ruleCall.getRule() == grammarAccess.getExpListRule())
+			return getExpListToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getIDRule())
 			return getIDToken(semanticObject, ruleCall, node);
+		else if (ruleCall.getRule() == grammarAccess.getIdListRule())
+			return getIdListToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getImportDeclRule())
 			return getImportDeclToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getPackageRule())
 			return getPackageToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getRangeClauseRule())
 			return getRangeClauseToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getReceiverRule())
-			return getReceiverToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getSignatureRule())
-			return getSignatureToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getTypeDefRule())
 			return getTypeDefToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
 	/**
-	 * Decl:
-	 * 	ShortVarDecl | (("var" | "const") ID IdList TypeName ("=" Exp ExpList)?)
+	 * CommCase:
+	 * 	("case" (SendStmt | RecvStmt)) | "default"
 	 * ;
 	 */
-	protected String getDeclToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	protected String getCommCaseToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return ":=()";
+		return "case()<-";
 	}
 	
 	/**
@@ -110,9 +104,31 @@ public class GoSyntacticSequencer extends AbstractSyntacticSequencer {
 	}
 	
 	/**
+	 * ExpList:
+	 * 	("," Exp)*
+	 * ;
+	 */
+	protected String getExpListToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "";
+	}
+	
+	/**
 	 * terminal ID: '^'?('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 	 */
 	protected String getIDToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "";
+	}
+	
+	/**
+	 * IdList:
+	 * 	("," ID)*	
+	 * ;
+	 */
+	protected String getIdListToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
 		return "";
@@ -152,30 +168,8 @@ public class GoSyntacticSequencer extends AbstractSyntacticSequencer {
 	}
 	
 	/**
-	 * Receiver:
-	 * 	Parameters
-	 * ;
-	 */
-	protected String getReceiverToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "()";
-	}
-	
-	/**
-	 * Signature:
-	 * 	Parameters Result?
-	 * ;
-	 */
-	protected String getSignatureToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "()";
-	}
-	
-	/**
 	 * TypeDef:
-	 * 		"type" ID TypeName
+	 * 	"type" ID TypeName
 	 * ;
 	 */
 	protected String getTypeDefToken(EObject semanticObject, RuleCall ruleCall, INode node) {
@@ -190,49 +184,43 @@ public class GoSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_Anderson_____DeclParserRuleCall_1_0_0_or_ExpParserRuleCall_1_0_2___SemicolonKeyword_1_1__q.equals(syntax))
-				emit_Anderson_____DeclParserRuleCall_1_0_0_or_ExpParserRuleCall_1_0_2___SemicolonKeyword_1_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_Anderson___ExpParserRuleCall_1_0_2_SemicolonKeyword_1_1__q.equals(syntax))
+				emit_Anderson___ExpParserRuleCall_1_0_2_SemicolonKeyword_1_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Assig_AsteriskEqualsSignKeyword_1_2_0_2_or_HyphenMinusEqualsSignKeyword_1_2_0_1_or_PlusSignEqualsSignKeyword_1_2_0_0_or_SolidusEqualsSignKeyword_1_2_0_3.equals(syntax))
 				emit_Assig_AsteriskEqualsSignKeyword_1_2_0_2_or_HyphenMinusEqualsSignKeyword_1_2_0_1_or_PlusSignEqualsSignKeyword_1_2_0_0_or_SolidusEqualsSignKeyword_1_2_0_3(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Assig_HyphenMinusHyphenMinusKeyword_1_1_1_or_PlusSignPlusSignKeyword_1_1_0.equals(syntax))
 				emit_Assig_HyphenMinusHyphenMinusKeyword_1_1_1_or_PlusSignPlusSignKeyword_1_1_0(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Block_SemicolonKeyword_2_1_q.equals(syntax))
 				emit_Block_SemicolonKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_Block___LeftCurlyBracketKeyword_1_RightCurlyBracketKeyword_3__q.equals(syntax))
-				emit_Block___LeftCurlyBracketKeyword_1_RightCurlyBracketKeyword_3__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ForClause_DeclParserRuleCall_1_q.equals(syntax))
-				emit_ForClause_DeclParserRuleCall_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Decl_ConstKeyword_1_0_1_or_VarKeyword_1_0_0.equals(syntax))
+				emit_Decl_ConstKeyword_1_0_1_or_VarKeyword_1_0_0(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ForClause_ExpParserRuleCall_3_q.equals(syntax))
 				emit_ForClause_ExpParserRuleCall_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ForStmt_RangeClauseParserRuleCall_1_0_1_q.equals(syntax))
-				emit_ForStmt_RangeClauseParserRuleCall_1_0_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_FuncDecl_ReceiverParserRuleCall_2_q.equals(syntax))
-				emit_FuncDecl_ReceiverParserRuleCall_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_SimpleStmt_DeclParserRuleCall_0_1_or_ExpParserRuleCall_2_1.equals(syntax))
-				emit_SimpleStmt_DeclParserRuleCall_0_1_or_ExpParserRuleCall_2_1(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_SimpleStmt___DeclParserRuleCall_0_1_or_ExpParserRuleCall_2_1__q.equals(syntax))
-				emit_SimpleStmt___DeclParserRuleCall_0_1_or_ExpParserRuleCall_2_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ForStmt___ExpParserRuleCall_1_0_0_RangeClauseParserRuleCall_1_0_1_q__q.equals(syntax))
+				emit_ForStmt___ExpParserRuleCall_1_0_0_RangeClauseParserRuleCall_1_0_1_q__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_SimpleStmt_ExpParserRuleCall_2_1_q.equals(syntax))
+				emit_SimpleStmt_ExpParserRuleCall_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SourceFile_SemicolonKeyword_2_q.equals(syntax))
 				emit_SourceFile_SemicolonKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SourceFile_SemicolonKeyword_4_1_q.equals(syntax))
 				emit_SourceFile_SemicolonKeyword_4_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SourceFile___ImportDeclParserRuleCall_3_0_SemicolonKeyword_3_1_q__a.equals(syntax))
 				emit_SourceFile___ImportDeclParserRuleCall_3_0_SemicolonKeyword_3_1_q__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_StatementList_SemicolonKeyword_1_1_q.equals(syntax))
+				emit_StatementList_SemicolonKeyword_1_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SwitchCase_SemicolonKeyword_2_1_q.equals(syntax))
 				emit_SwitchCase_SemicolonKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SwitchStmt_DefaultKeyword_4_1_0_q.equals(syntax))
 				emit_SwitchStmt_DefaultKeyword_4_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_SwitchStmt_IDTerminalRuleCall_2_q.equals(syntax))
 				emit_SwitchStmt_IDTerminalRuleCall_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_TopLevelDecl_DeclParserRuleCall_0_1_or_TypeDefParserRuleCall_2_1.equals(syntax))
-				emit_TopLevelDecl_DeclParserRuleCall_0_1_or_TypeDefParserRuleCall_2_1(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
 	/**
 	 * Ambiguous syntax:
-	 *     ((Decl | Exp) ';')?
+	 *     (Exp ';')?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) 'if' (ambiguity) Exp Block+=Block
@@ -240,8 +228,9 @@ public class GoSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     (rule start) 'switch' (ambiguity) ID? '{' 'default' SwitchCase+=SwitchCase
 	 *     (rule start) 'switch' (ambiguity) ID? '{' 'default'? '}' (rule start)
 	 *     (rule start) (ambiguity) (rule start)
+	 *     (rule start) ID ':' 'if' (ambiguity) Exp Block+=Block
 	 */
-	protected void emit_Anderson_____DeclParserRuleCall_1_0_0_or_ExpParserRuleCall_1_0_2___SemicolonKeyword_1_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Anderson___ExpParserRuleCall_1_0_2_SemicolonKeyword_1_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -282,26 +271,12 @@ public class GoSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Ambiguous syntax:
-	 *     ('{' '}')?
+	 *     'var' | 'const'
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'func' Receiver? ID Signature (ambiguity) (rule start)
+	 *     (rule start) (ambiguity) name=ID
 	 */
-	protected void emit_Block___LeftCurlyBracketKeyword_1_RightCurlyBracketKeyword_3__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     Decl?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'for' (ambiguity) ';' Exp? ';' Block=Block
-	 *     (rule start) 'for' (ambiguity) ';' Exp? ';' id=ID
-	 *     (rule start) (ambiguity) ';' Exp? ';' (Decl | Exp)? (rule start)
-	 *     (rule start) (ambiguity) ';' Exp? ';' id=ID
-	 */
-	protected void emit_ForClause_DeclParserRuleCall_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_Decl_ConstKeyword_1_0_1_or_VarKeyword_1_0_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -310,10 +285,17 @@ public class GoSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     Exp?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'for' Decl? ';' (ambiguity) ';' Block=Block
-	 *     (rule start) 'for' Decl? ';' (ambiguity) ';' id=ID
-	 *     (rule start) Decl? ';' (ambiguity) ';' (Decl | Exp)? (rule start)
-	 *     (rule start) Decl? ';' (ambiguity) ';' id=ID
+	 *     (rule start) ';' (ambiguity) ';' Exp? (rule start)
+	 *     (rule start) ';' (ambiguity) ';' decl=Decl
+	 *     (rule start) ';' (ambiguity) ';' id=ID
+	 *     (rule start) 'for' ';' (ambiguity) ';' Block=Block
+	 *     (rule start) 'for' ';' (ambiguity) ';' id=ID
+	 *     (rule start) ID ':' 'for' ';' (ambiguity) ';' Block=Block
+	 *     (rule start) ID ':' 'for' ';' (ambiguity) ';' id=ID
+	 *     decl=Decl ';' (ambiguity) ';' Block=Block
+	 *     decl=Decl ';' (ambiguity) ';' Exp? (rule end)
+	 *     decl=Decl ';' (ambiguity) ';' decl=Decl
+	 *     decl=Decl ';' (ambiguity) ';' id=ID
 	 */
 	protected void emit_ForClause_ExpParserRuleCall_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -321,47 +303,25 @@ public class GoSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	/**
 	 * Ambiguous syntax:
-	 *     RangeClause?
+	 *     (Exp RangeClause?)?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'for' Exp (ambiguity) Block=Block
+	 *     (rule start) 'for' (ambiguity) Block=Block
+	 *     (rule start) ID ':' 'for' (ambiguity) Block=Block
 	 */
-	protected void emit_ForStmt_RangeClauseParserRuleCall_1_0_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ForStmt___ExpParserRuleCall_1_0_0_RangeClauseParserRuleCall_1_0_1_q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
 	/**
 	 * Ambiguous syntax:
-	 *     Receiver?
+	 *     Exp?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'func' (ambiguity) ID Signature '{' Statement+=Statement
-	 *     (rule start) 'func' (ambiguity) ID Signature ('{' '}')? (rule start)
-	 *     (rule start) 'func' (ambiguity) ID Signature (rule start)
+	 *     (rule start) ';' Exp? ';' (ambiguity) (rule start)
+	 *     decl=Decl ';' Exp? ';' (ambiguity) (rule end)
 	 */
-	protected void emit_FuncDecl_ReceiverParserRuleCall_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     Decl | Exp
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) (rule start)
-	 */
-	protected void emit_SimpleStmt_DeclParserRuleCall_0_1_or_ExpParserRuleCall_2_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     (Decl | Exp)?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) Decl? ';' Exp? ';' (ambiguity) (rule start)
-	 */
-	protected void emit_SimpleStmt___DeclParserRuleCall_0_1_or_ExpParserRuleCall_2_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_SimpleStmt_ExpParserRuleCall_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -409,6 +369,18 @@ public class GoSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     Statement+=Statement (ambiguity) (rule end)
 	 *     Statement+=Statement (ambiguity) Statement+=Statement
 	 */
+	protected void emit_StatementList_SemicolonKeyword_1_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ';'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     Statement+=Statement (ambiguity) (rule end)
+	 *     Statement+=Statement (ambiguity) Statement+=Statement
+	 */
 	protected void emit_SwitchCase_SemicolonKeyword_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
@@ -418,9 +390,10 @@ public class GoSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     'default'?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'switch' ((Decl | Exp) ';')? ID? '{' (ambiguity) '}' (rule start)
+	 *     (rule start) 'switch' (Exp ';')? ID? '{' (ambiguity) '}' (rule start)
 	 *     Assig=Assig ';' ID? '{' (ambiguity) '}' (rule end)
 	 *     SwitchCase+=SwitchCase (ambiguity) '}' (rule end)
+	 *     decl=Decl ';' ID? '{' (ambiguity) '}' (rule end)
 	 */
 	protected void emit_SwitchStmt_DefaultKeyword_4_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -431,25 +404,17 @@ public class GoSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *     ID?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) 'switch' ((Decl | Exp) ';')? (ambiguity) '{' 'case' Exp SwitchCase+=SwitchCase
-	 *     (rule start) 'switch' ((Decl | Exp) ';')? (ambiguity) '{' 'default' SwitchCase+=SwitchCase
-	 *     (rule start) 'switch' ((Decl | Exp) ';')? (ambiguity) '{' 'default'? '}' (rule start)
+	 *     (rule start) 'switch' (Exp ';')? (ambiguity) '{' 'case' Exp SwitchCase+=SwitchCase
+	 *     (rule start) 'switch' (Exp ';')? (ambiguity) '{' 'default' SwitchCase+=SwitchCase
+	 *     (rule start) 'switch' (Exp ';')? (ambiguity) '{' 'default'? '}' (rule start)
 	 *     Assig=Assig ';' (ambiguity) '{' 'case' Exp SwitchCase+=SwitchCase
 	 *     Assig=Assig ';' (ambiguity) '{' 'default' SwitchCase+=SwitchCase
 	 *     Assig=Assig ';' (ambiguity) '{' 'default'? '}' (rule end)
+	 *     decl=Decl ';' (ambiguity) '{' 'case' Exp SwitchCase+=SwitchCase
+	 *     decl=Decl ';' (ambiguity) '{' 'default' SwitchCase+=SwitchCase
+	 *     decl=Decl ';' (ambiguity) '{' 'default'? '}' (rule end)
 	 */
 	protected void emit_SwitchStmt_IDTerminalRuleCall_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     Decl | TypeDef
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) (rule start)
-	 */
-	protected void emit_TopLevelDecl_DeclParserRuleCall_0_1_or_TypeDefParserRuleCall_2_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

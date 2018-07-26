@@ -10,6 +10,13 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Top Level Decl</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link org.xtext.example.go.go.TopLevelDecl#getDecl <em>Decl</em>}</li>
+ *   <li>{@link org.xtext.example.go.go.TopLevelDecl#getFunc <em>Func</em>}</li>
+ * </ul>
  *
  * @see org.xtext.example.go.go.GoPackage#getTopLevelDecl()
  * @model
@@ -17,4 +24,56 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface TopLevelDecl extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Decl</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Decl</em>' containment reference.
+   * @see #setDecl(Decl)
+   * @see org.xtext.example.go.go.GoPackage#getTopLevelDecl_Decl()
+   * @model containment="true"
+   * @generated
+   */
+  Decl getDecl();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.go.go.TopLevelDecl#getDecl <em>Decl</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Decl</em>' containment reference.
+   * @see #getDecl()
+   * @generated
+   */
+  void setDecl(Decl value);
+
+  /**
+   * Returns the value of the '<em><b>Func</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Func</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Func</em>' containment reference.
+   * @see #setFunc(FuncDecl)
+   * @see org.xtext.example.go.go.GoPackage#getTopLevelDecl_Func()
+   * @model containment="true"
+   * @generated
+   */
+  FuncDecl getFunc();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.go.go.TopLevelDecl#getFunc <em>Func</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Func</em>' containment reference.
+   * @see #getFunc()
+   * @generated
+   */
+  void setFunc(FuncDecl value);
+
 } // TopLevelDecl
