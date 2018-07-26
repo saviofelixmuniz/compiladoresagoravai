@@ -3,7 +3,7 @@ grammar org.xtext.example.go.Go with org.eclipse.xtext.common.Terminals
 generate go "http://www.xtext.org/example/go/Go"
 
 Model:
-	elements+=SourceFile*
+	element=SourceFile
 ;
 
 SourceFile:
@@ -27,15 +27,15 @@ Package:
 ;
 
 ForStmt:
-	"for" (Exp RangeClause? | ForClause?) Block=Block
+	"for" (Exp range=RangeClause? | ForClause?) Block=Block
 ;
 
 ForClause:
-	{ForClause} (decl=Decl)? ";" Exp? ";" SimpleStmt?
+	{ForClause} (forDecl=Decl)? ";" forExp=Exp? ";" stmt=SimpleStmt?
 ;
 
 RangeClause:
-	(ExpList (":="|"="))? "range" Exp
+	(ExpList (":="|"="))? "range" rangeExp=Exp
 ;
 
 FunctionType:
@@ -51,7 +51,7 @@ Receiver:
 ;
 
 Signature:
-	Parameters Result?
+	params=Parameters result=Result?
 ;
 
 Result:
@@ -59,19 +59,19 @@ Result:
 ;
 
 Parameters:
-	"(" (ParameterList ","?)? ")"
+	{Parameters} "(" (paramList=ParameterList ","?)? ")"
 ; 
 
 ParameterList:
-	ParameterDecl ("," ParameterDecl)*
+	firstparam=ParameterDecl ("," params+=ParameterDecl)*
 ;
 
 ParameterDecl:
-	(ID IdList)? "..."? TypeName
+	(name=ID IdList)? "..."? type=TypeName
 ;
 
 SwitchStmt:
-	"switch" Anderson ID? "{" (("case" Exp SwitchCase+=SwitchCase)*  ("default" SwitchCase+=SwitchCase* )?) "}"
+	"switch" Anderson ID? "{" (("case" exp+=Exp SwitchCase+=SwitchCase)*  ("default" SwitchCase+=SwitchCase* )?) "}"
 ;
 
 SwitchCase:
@@ -79,19 +79,19 @@ SwitchCase:
 ;
 
 IfStmt:
-	"if" Anderson Exp Block+=Block ("else" (IfStmt=IfStmt | Block+=Block))?
+	"if" anderson=Anderson ifRelExp=Exp ifBlock=Block ("else" (ifStmt=IfStmt | elseBlock=Block))?
 ;
 
 Anderson:
-	{Anderson} ((decl=Decl | Assig=Assig | Exp) ";")?
+	{Anderson} ((decl=Decl | Assig=Assig | andersonExp=Exp) ";")?
 ;
 
 Block:
-	{Block} "{" (Statement+=Statement ";"? )* "}"
+	{Block} "{" (statements+=Statement ";"? )* "}"
 ;
 
 Statement:
- 	LabeledStmt=LabeledStmt | SendStmt=SendStmt | SimpleStmt | IfStmt | SwitchStmt=SwitchStmt | ReturnStmt=ReturnStmt | ForStmt | 
+ 	LabeledStmt=LabeledStmt | SendStmt=SendStmt | SimpleStmt | ifstmt=IfStmt | SwitchStmt=SwitchStmt | ReturnStmt=ReturnStmt | ForStmt | 
 	BreakStmt=BreakStmt | ContinueStmt=ContinueStmt | GotoStmt=GotoStmt | 
 	FalltrhoughStmt=FalltrhoughStmt | DeferStmt=DeferStmt | SelectStmt
 ;
@@ -101,7 +101,7 @@ SelectStmt:
 ;
 
 CommClause:
-	CommCase ":" StatementList
+	CommCase ":" stmList=StatementList
 ;
 
 StatementList:
@@ -113,7 +113,7 @@ CommCase:
 ;
 
 RecvStmt:
-	((Exp ExpList "=") | (ID IdList ":="))? Exp
+	((exp=Exp list=ExpList "=") | (ID IdList ":="))? exp=Exp
 ;
 
 LabeledStmt:
@@ -121,7 +121,7 @@ LabeledStmt:
 ;
 
 SendStmt:
-	Exp "<-" Exp
+	exp=Exp "<-" otherExp=Exp
 ;
 
 BreakStmt:
@@ -161,7 +161,7 @@ FieldDecl:
 ;
 
 Decl:
-	(name=ID IdList ":=" Exp ExpList) | (("var" | "const") name=ID idList=IdList type=TypeName ("=" exp=Exp explist=ExpList)?)
+	(name=ID IdList ":=" exp=Exp list=ExpList) | (("var" | "const") name=ID idList=IdList type=TypeName ("=" exp=Exp explist=ExpList)?)
 ;
 
 Assig :
@@ -173,28 +173,29 @@ IdList:
 ;
 
 ExpList:
-	("," Exp)*
+	{ExpList} ("," exps+=Exp)*
 ;
 
 Exp: 
-	Call | ExpAux | BooleanExp ExpJoin? | AritExp ExpJoin? | STRING | RelExp | ID ExpJoin?
-;
-
-SimpleStmt:
-	{SimpleStmt} decl=Decl | Assig | {SimpleStmt} Exp 
-;
-
-ExpAux:
-	"!"? "(" Exp ")" (ExpJoin)? 
-;
-
-Call:
-	ID ("." ID)* "(" (Exp ExpList)? ")"
+	call=Call | aux=ExpAux | boolean=BooleanExp join=ExpJoin? | rel=RelExp | arit=AritExp join=ExpJoin? | literalString=STRING | name=ID join=ExpJoin?
 ;
 
 ExpJoin:
-	(OP_UNARY | OP_REL | OP_SUM | OP_MULT | "&&" | "||") Exp
+	operator=(OP_UNARY | OP_REL | OP_SUM | OP_MULT | "&&" | "||") exp=Exp
 ;
+
+SimpleStmt:
+	decl=Decl | Assig | exp=Exp 
+;
+
+ExpAux:
+	"!"? "(" exp=Exp ")" (join=ExpJoin)? 
+;
+
+Call:
+	name=ID ("." ID)* "(" (exp=Exp explist=ExpList)? ")"
+;
+
 
 RelExp:
 	NumberLiteral (OP_REL | OP_UNARY) NumberLiteral | BooleanLiteral OP_UNARY BooleanLiteral
