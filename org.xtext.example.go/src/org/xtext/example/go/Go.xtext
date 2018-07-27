@@ -75,7 +75,7 @@ SwitchStmt:
 ;
 
 SwitchCase:
-	{SwitchCase} ":" (Statement+=Statement ";"? )*
+	{SwitchCase} ":" (statement+=Statement ";"? )*
 ;
 
 IfStmt:
@@ -105,7 +105,7 @@ CommClause:
 ;
 
 StatementList:
-	{StatementList} (Statement+=Statement ";"?)*
+	{StatementList} (statement+=Statement ";"?)*
 ;
 
 CommCase:
@@ -185,7 +185,7 @@ ExpJoin:
 ;
 
 SimpleStmt:
-	decl=Decl | Assig | exp=Exp 
+	decl=Decl | assig=Assig | exp=Exp 
 ;
 
 ExpAux:
@@ -193,9 +193,12 @@ ExpAux:
 ;
 
 Call:
-	name=ID ("." ID)* "(" (exp=Exp explist=ExpList)? ")"
+    name=ID sub=SubProp? "(" (exp=Exp explist=ExpList)? ")"
 ;
 
+SubProp:
+    "." name=ID
+;
 
 RelExp:
 	leftNumber=NumberLiteral (OP_REL | OP_UNARY) rightNumber=NumberLiteral | {RelExp} leftBool=BooleanLiteral OP_UNARY rightBool=BooleanLiteral
