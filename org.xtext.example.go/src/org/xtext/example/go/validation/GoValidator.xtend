@@ -16,6 +16,11 @@ import org.xtext.example.go.go.Exp
 import org.xtext.example.go.go.ParameterDecl
 import org.xtext.example.go.go.Block
 import org.xtext.example.go.go.Statement
+import org.xtext.example.go.go.Var
+import org.xtext.example.go.go.ShortVar
+import org.xtext.example.go.go.FieldDecl
+import org.xtext.example.go.go.Struct
+import org.xtext.example.go.go.ParameterList
 
 /**
  * This class contains custom validation rules. 
@@ -26,6 +31,7 @@ class GoValidator extends AbstractGoValidator {
 
 	public static val DUPLICATE_DECLARATION = 'duplicateDeclaration'
 	public static val FUNCTION_404 = 'functionNotFound'
+	public static val VAR_404 = 'varNotFound'
 	public static val PARAMETERS_ERROR = 'parametersError'
 	public static val MISMATCHED_TYPE = 'mismatchedType'
 	val intOps = #['+', '-', '*', '/', '%', '<=', '<', '>', '>=']
@@ -33,10 +39,143 @@ class GoValidator extends AbstractGoValidator {
 	val eqOps = #['==', '!=']
 
 	var Model model
+	var HashMap<String, String> ids = new HashMap<String, String>
+	var HashMap<String, HashMap<String, String>> funcs = new HashMap<String, HashMap<String, String>>
+	var HashMap<String, HashMap<String, String>> structs = new HashMap<String, HashMap<String, String>>
 	
 	@Check 
 	def updateModel(Model model) {
+		var HashMap<String, String> localIds = new HashMap<String, String>
+		var HashMap<String, HashMap<String, String>> localFuncs = new HashMap<String, HashMap<String, String>>
+		var HashMap<String, HashMap<String, String>> localStructs = new HashMap<String, HashMap<String, String>>
 		this.model = model
+		var globais = model.element.topLevelDecl
+		
+		for (TopLevelDecl topster : globais) {
+			if (topster.decl !== null) {
+				var decl = topster.decl
+				if (decl instanceof Var) {
+					var typeDecl = decl as Var
+					localIds.put(decl.name, typeDecl.type.basic)
+				} else {
+					var type = getTypeFromShortVarDecl(decl as ShortVar, localIds)
+					localIds.put(decl.name, type)
+				}
+			} else if (topster.typeDef !== null && topster.typeDef.typeName.struct !== null) {
+				var typeDef = topster.typeDef
+				var struct = typeDef.typeName.struct
+				if (!localStructs.containsKey(typeDef.name)) {
+					var structMap = getStructIds(struct)
+					localStructs.put(typeDef.name, structMap)
+				} else {
+					error(typeDef.name + ' já foi declarado',
+					typeDef, 
+					GoPackage.Literals.TYPE_DEF__NAME)
+				}
+			} else if (topster.func !== null) {
+				var func = topster.func
+				checkMethodReceiver(func)
+				if (!localFuncs.containsKey(func.name)) {
+					var funcMap = getFuncIds(func)
+					localFuncs.put(func.name, funcMap)
+				} else {
+					error(func.name + ' já foi declarada',
+					func, 
+					GoPackage.Literals.FUNC_DECL__NAME)
+				}
+			}
+		}
+		
+		ids = localIds
+		funcs = localFuncs
+		structs = localStructs
+		println(ids)
+		println(funcs)
+		println(structs)
+	}
+	
+	def void checkMethodReceiver(FuncDecl func) {
+		var receiver = func.receiver
+		if (receiver === null) return;
+		
+		var paramList = receiver.params.paramList
+		
+		if (paramList.firstparam.type.id !== null) {
+			if (!structs.containsKey(paramList.firstparam.type.id)) {
+				error('O tipo ' + paramList.firstparam.type.id + ' não existe', 
+				paramList.firstparam.type,
+				GoPackage.Literals.TYPE_NAME__STRUCT)
+			}
+		}
+		for (ParameterDecl pDecl : func.receiver.params.paramList.params) {
+			if (pDecl.type.id !== null) {
+				if (!structs.containsKey(pDecl.type.id)) {
+					error('O tipo ' + pDecl.type.id + ' não existe', 
+					pDecl.type,
+					GoPackage.Literals.TYPE_NAME__STRUCT)
+				}
+			}
+		}
+	}
+	
+	def HashMap<String, String> getFuncIds(FuncDecl func) {
+		var HashMap<String, String> funcIds = new HashMap<String, String>
+		for (Statement stmt : func.block.statements) {
+			if (stmt.simpleStmt !== null && stmt.simpleStmt.decl !== null) {
+				var decl = stmt.simpleStmt.decl
+				if (funcIds.containsKey(decl.name)) {
+					error(decl.name + ' já foi declarada', 
+					decl,
+					GoPackage.Literals.DECL__NAME)
+				}
+				if (decl instanceof Var) {
+					var typeDecl = decl as Var
+					funcIds.put(decl.name, typeDecl.type.basic)
+				} else {
+					var type = getTypeFromShortVarDecl(decl as ShortVar, funcIds)
+					funcIds.put(decl.name, type)
+				}
+			}
+		}
+		return funcIds
+	}
+	
+	def HashMap<String, String> getStructIds(Struct struct) {
+		var HashMap<String, String> structIds = new HashMap<String, String>
+		for (FieldDecl decl : struct.fieldDecls) {
+			if (structIds.containsKey(decl.name)) {
+				error(decl.name + ' já foi declarado', 
+				decl,
+				GoPackage.Literals.FIELD_DECL__NAME)
+			} else {
+				structIds.put(decl.name, decl.type.basic)
+			}
+
+		}
+		return structIds
+	}
+
+	def String getTypeFromShortVarDecl(ShortVar shortVar, HashMap<String, String> map) {
+		var exp = shortVar.exp
+		if (exp.arit !== null) return 'int'
+		if (exp.boolean !== null) return 'bool'
+		if (exp.name !== null) {
+			if (map.containsKey(exp.name)) {
+				return map.get(exp.name)
+			} else if (ids.containsKey(exp.name)) {
+				return ids.get(exp.name)
+			} else {
+				error(exp.name + ' não foi declarada',
+					exp, 
+					GoPackage.Literals.EXP__NAME)
+			}
+		}
+		if (exp.literalString !== null) {
+			return 'string'
+		}
+		
+		
+		return ''
 	}
 	
 	@Check
@@ -50,12 +189,11 @@ class GoValidator extends AbstractGoValidator {
 			
 			if (map.containsKey(decl.name)) {
 				error(decl.name + ' já foi declarada', 
-					GoPackage.Literals.SOURCE_FILE__TOP_LEVEL_DECL,
+					GoPackage.Literals.TOP_LEVEL_DECL__DECL,
 					DUPLICATE_DECLARATION)
 			}
 			else {
 				map.put(decl.name, decl)
-				println(map)
 			}	
 		}
 	}
@@ -77,7 +215,6 @@ class GoValidator extends AbstractGoValidator {
 			else {
 				if (decl.name !== null) {
 					map.put(decl.name, decl)
-					println(map)
 				}					
 			}	
 		}
@@ -228,7 +365,7 @@ class GoValidator extends AbstractGoValidator {
 			if (currentExp.aux.exp.arit !== null || (currentExp.aux.join.exp.arit !== null )) {
 				map.put(aux, 'int');
 			} else if (currentExp.aux.exp.arit !== null || (currentExp.aux.join.exp.boolean !== null )) {
-				map.put(aux, 'boolean');
+				map.put(aux, 'bool');
 			}
 			return
 		}
@@ -259,7 +396,7 @@ class GoValidator extends AbstractGoValidator {
 		if (currentExp.arit !== null) {
 			map.put(aux, 'int')
 		} else if (currentExp.boolean !== null) {
-			map.put(aux, 'boolean')
+			map.put(aux, 'bool')
 		}
 	}
 	
@@ -284,7 +421,7 @@ class GoValidator extends AbstractGoValidator {
 				}
 				if (currentJoin.exp.aux !== null && currentExp.aux !== null) {
 					if (boolOps.contains(currentJoin.operator)) {
-						if(expMap.get(currentExp) !== 'boolean' || expMap.get(currentJoin.exp) !== 'boolean') {
+						if(expMap.get(currentExp) !== 'bool' || expMap.get(currentJoin.exp) !== 'bool') {
 							error('Operação inválida.', 
 							GoPackage.Literals.EXP__AUX,
 							MISMATCHED_TYPE)
@@ -298,7 +435,7 @@ class GoValidator extends AbstractGoValidator {
 					}
 				} else if (currentJoin.exp.aux !== null && currentExp.aux === null) {
 					if ((boolOps.contains(currentJoin.operator) && 
-						(expMap.get(currentJoin.exp) !== 'boolean' || currentExp.boolean === null)) ||
+						(expMap.get(currentJoin.exp) !== 'bool' || currentExp.boolean === null)) ||
 						(intOps.contains(currentJoin.operator) && 
 						(expMap.get(currentJoin.exp) !== 'int' || currentExp.arit === null))
 					) {
@@ -308,7 +445,7 @@ class GoValidator extends AbstractGoValidator {
 					}
 				} else {
 					if ((boolOps.contains(currentJoin.operator) && 
-						(expMap.get(currentExp) !== 'boolean' || currentJoin.exp.boolean === null)) ||
+						(expMap.get(currentExp) !== 'bool' || currentJoin.exp.boolean === null)) ||
 						(intOps.contains(currentJoin.operator) && 
 						(expMap.get(currentExp) !== 'int' || currentJoin.exp.arit === null))
 					) {
@@ -326,6 +463,12 @@ class GoValidator extends AbstractGoValidator {
 			}
 		}
 	}
+	
+	@Check
+	def checkDecl(Decl decls) {
+		
+	}
+	
 	
 //	public static val INVALID_NAME = 'invalidName'
 //

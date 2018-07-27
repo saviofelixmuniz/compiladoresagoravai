@@ -11,7 +11,7 @@ SourceFile:
 ;
 
 TopLevelDecl:
-	{TopLevelDecl} decl=Decl | func=FuncDecl | {TopLevelDecl} TypeDef
+	{TopLevelDecl} (decl=Decl | func=FuncDecl | typeDef=TypeDef)
 ;
 
 ImportDecl:
@@ -47,7 +47,7 @@ FuncDecl:
 ;
 
 Receiver:
-	Parameters
+	params=Parameters
 ;
 
 Signature:
@@ -91,7 +91,7 @@ Block:
 ;
 
 Statement:
- 	LabeledStmt=LabeledStmt | SendStmt=SendStmt | SimpleStmt | ifstmt=IfStmt | SwitchStmt=SwitchStmt | ReturnStmt=ReturnStmt | ForStmt | 
+ 	LabeledStmt=LabeledStmt | SendStmt=SendStmt | simpleStmt=SimpleStmt | ifstmt=IfStmt | SwitchStmt=SwitchStmt | ReturnStmt=ReturnStmt | ForStmt | 
 	BreakStmt=BreakStmt | ContinueStmt=ContinueStmt | GotoStmt=GotoStmt | 
 	FalltrhoughStmt=FalltrhoughStmt | DeferStmt=DeferStmt | SelectStmt
 ;
@@ -149,19 +149,19 @@ ReturnStmt:
 ;
 
 TypeDef:
-	"type" ID TypeName
+	"type" name=ID typeName=TypeName
 ;
 
 Struct:
-	"struct" "{" (FieldDecl ";"?)* "}"
+	{Struct} "struct" "{" (fieldDecls+=FieldDecl ";"?)* "}"
 ;
 
 FieldDecl:
-	IdList TypeName
+	name=ID type=TypeName
 ;
 
 Decl:
-	(name=ID IdList ":=" exp=Exp list=ExpList) | (("var" | "const") name=ID idList=IdList type=TypeName ("=" exp=Exp explist=ExpList)?)
+	{ShortVar} (name=ID IdList ":=" exp=Exp list=ExpList) | {Var} (("var" | "const") name=ID idList=IdList type=TypeName ("=" exp=Exp explist=ExpList)?)
 ;
 
 Assig :
@@ -169,7 +169,7 @@ Assig :
 ;
 
 IdList:
-	("," ID)*	
+	("," ID)*
 ;
 
 ExpList:
@@ -218,7 +218,7 @@ BooleanLiteral:
 ;
 
 AritExp:
-	Addition	
+	Addition
 ;
 
 Addition:
@@ -234,7 +234,7 @@ NumberLiteral:
 ;
 
 TypeName:
-	BasicTypes | QualifiedIdent | ID | Struct
+	{TypeName} (basic=BasicTypes | qualified=QualifiedIdent | id=ID | struct=Struct)
 ;
 
 QualifiedIdent:
@@ -246,7 +246,7 @@ Bool:
 ;
 
 BasicTypes:
-	"string" | "int" | "bool" 
+	"string" | "int" | "bool"
 ;
 
 terminal OP_SUM:
