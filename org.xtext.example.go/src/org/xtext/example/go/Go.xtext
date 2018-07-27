@@ -79,7 +79,7 @@ SwitchCase:
 ;
 
 IfStmt:
-	"if" anderson=Anderson ifRelExp=Exp ifBlock=Block ("else" (ifStmt=IfStmt | elseBlock=Block))?
+    "if" anderson=Anderson ifRelExp=Exp ifBlock=Block ("else" (ifStmt+=IfStmt*|elseBlock=Block))?
 ;
 
 Anderson:

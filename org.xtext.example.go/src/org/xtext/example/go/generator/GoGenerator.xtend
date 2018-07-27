@@ -11,9 +11,15 @@ import org.xtext.example.go.go.SourceFile
 import org.xtext.example.go.go.Exp
 import org.xtext.example.go.go.AritExp
 import org.xtext.example.go.go.Multiplication
-import java.util.List
 import org.xtext.example.go.go.BooleanExp
 import org.xtext.example.go.go.And
+import org.xtext.example.go.go.FuncDecl
+import org.xtext.example.go.go.Decl
+import org.xtext.example.go.go.Call
+import org.xtext.example.go.go.Block
+import java.util.HashMap
+import org.xtext.example.go.go.Assig
+import org.xtext.example.go.go.IfStmt
 
 /**
  * Generates code from your model files on save.
@@ -23,9 +29,16 @@ import org.xtext.example.go.go.And
 class GoGenerator extends AbstractGenerator {
 	
 	Integer variable;
+	SourceFile source;
+	Integer line;
+	HashMap<String, Block> funcBodies
+	HashMap<String, Integer> funcLines
 
 	override void doGenerate(Resource input, IFileSystemAccess2 fsa, IGeneratorContext contex) {
 		variable = 0;
+		line = 8
+		funcBodies = new HashMap
+		funcLines = new HashMap
 		
 		for(e: input.allContents.toIterable.filter(SourceFile))
 		{
@@ -34,45 +47,232 @@ class GoGenerator extends AbstractGenerator {
 	}
 	
 	def genApi(SourceFile s) '''
-		«FOR d : s.topLevelDecl»
-			«IF d.decl.exp.arit !== null»
-				«generateAritExp(d.decl.exp.arit, d.decl.name)»
-			«ELSEIF d.decl.exp.boolean !== null»
-				«generateBooleanExp(d.decl.exp.boolean, d.decl.name)»
-			«ELSEIF d.decl.exp.name !== null»
-				«generateIdExp(d.decl.exp)»
-			«ENDIF»						
+		«setSource(s)»«FOR d : s.topLevelDecl»
+			«resolveDecl(d.decl)»
 		«ENDFOR»
+		
+		«main(s)»
 	'''
 	
-	def generateIdExp(Exp e) '''
-	'''
+	def void setSource(SourceFile s) {
+		source = s
+		return;
+	}
+	
+def resolveDecl (Decl decl) {
+        if (decl === null) return '';
+        return
+	
+	resolveAux(decl.exp, decl.name)
+	
+    }
+    
+ 
+    def resolveAux(Exp exp, String name)
+'''
+«IF exp.arit !== null»
+   	«generateAritExp(exp.arit, name)»
+«ELSEIF exp.boolean !== null»
+   	«generateBooleanExp(exp.boolean, name)»
+«ELSEIF exp.name !== null»
+   	«generateIdExp(exp, name)»
+«ENDIF»   
+''' 
+    
+    def resolveAssig (Assig assig) {
+        if (assig === null) return '';
+        return
+'''
+«IF assig.expression !== null»
+	«resolveAux(assig.expression, assig.id)» 
+«ELSEIF assig.inc !== null» 
+	«generateInc(assig.inc, assig.id)»
+«ENDIF»
+'''
+    }    
+    
+    def generateInc(String inc, String name)'''
+    	«line()»LD R«variable», «name» 
+    	«line()»«getOp(inc)» R«variable», R«variable», 1 «increment()»
+    	«line()»ST «name», R«variable-1»
+    ''' 
+    
+    def generateIncEq(Exp exp, String name)'''
+«IF exp.arit !== null»
+   	«generateAritExp(exp.arit, name)»
+«ELSEIF exp.boolean !== null»
+   	«generateBooleanExp(exp.boolean, name)»
+«ELSEIF exp.name !== null»
+   	«generateIdExp(exp, name)»
+«ENDIF»
+    '''    
+	
+	def main(SourceFile s) {
+		var out = ''
+		for (tp : s.topLevelDecl) {
+			if (tp.func !== null) {
+				funcLines.put(tp.func.name, line)
+				out += resolveFunc(tp.func)
+			}
+		}
+		return out	
+	}
+	
+	def resolveFunc (FuncDecl func) {
+		var out = '' 
+		for (stmt : func.block.statements) {
+			if (stmt.simpleStmt !== null) {
+				if (stmt.simpleStmt.decl !== null) {
+					out = out + resolveDecl(stmt.simpleStmt.decl)
+				} else if (stmt.simpleStmt.exp !== null) {
+					if (stmt.simpleStmt.exp.call !== null) {
+						out = out + resolveCall(stmt.simpleStmt.exp.call, func.name)	
+					}					
+				} else if(stmt.simpleStmt.assig !== null) {
+					out = out + resolveAssig(stmt.simpleStmt.assig)
+				} 
+			}
+			else if(stmt.ifstmt !== null){
+				out = out + resolveIfElse(stmt.ifstmt, func.name)
+			}
+		}
+		
+		if (func.name == 'main')
+			out += 
+'''
+«line()»HALT
+'''
+		else
+			out += 
+'''
+«line()»BR *0(SP)
+'''
+		
+		return out
+	}
+	
+	def resolveIfElse(IfStmt f, String funcname) {	
+		var out = ''
+		if(f.ifRelExp.boolean !== null){
+			out += generateBooleanExp(f.ifRelExp.boolean, null)			
+		}
+		else if(f.ifRelExp.name !== null){
+			out += generateIdExp(f.ifRelExp, null)	
+		}
+		
+		out += 
+'''
+«line()»BNEZ R«variable-1», (#ifblocksize*8 + «line»)
+«resolveBlock(f.ifBlock, funcname)»
+'''	
+	if(f.ifStmt !== null){
+		for(i : f.ifStmt){
+			out += resolveIfElse(i, funcname)
+		}		
+	}
+	
+	
+	if(f.elseBlock !== null){
+		out +=
+'''
+«line()»BR (#elseblocksize*8 + «line»)
+'''
+		out += resolveBlock(f.elseBlock, funcname)
+	}
+
+	return out
+	
+	}
+	
+	
+	def resolveBlock (Block b, String funcName) {
+		var out = ''
+		for (stmt : b.statements) {
+			if (stmt.simpleStmt !== null) {
+				if (stmt.simpleStmt.decl !== null) {
+					out = out + resolveDecl(stmt.simpleStmt.decl)
+				} else if (stmt.simpleStmt.exp !== null) {
+					if (stmt.simpleStmt.exp.call !== null) {
+						out = out + resolveCall(stmt.simpleStmt.exp.call, funcName)	
+					}					
+				} else if(stmt.simpleStmt.assig !== null) {
+					out = out + resolveAssig(stmt.simpleStmt.assig)
+				}  
+			}
+		}
+		return out
+	}	
+	
+	def resolveCall(Call call, String callee) {
+		var funcName = call.name
+		var funcBody = null
+		for (tp: source.topLevelDecl) { 
+			if (tp.func !== null && tp.func.name == funcName) {
+				println(funcLines)
+				return
+'''
+«line()»ADD SP, SP, //«callee»size
+«line()»ST *SP, «line + 16»
+«line()»BR «funcLines.get(funcName)»
+«line()»SUB SP, SP, //«callee»size 
+'''
+			}
+				
+		}
+	}
+	
+	def generateIdExp(Exp e, String varName) {
+		var formerVar = variable
+		if (e.join !== null) {
+			if (e.join.exp.arit !== null) {
+				return 
+'''
+«line()»LD R«variable», «e.name» «increment()»
+«generateAritExp(e.join.exp.arit, null)»
+«line()»«getOp(e.join.operator)» R«formerVar», R«formerVar», R«variable-1»
+«line()»ST «varName», R«formerVar»
+'''
+			}
+			else if (e.join.exp.boolean !== null) {
+				return 
+'''
+«line()»LD R«variable», «e.name» «increment()»
+«generateBooleanExp(e.join.exp.boolean, null)»
+«line()»«getOp(e.join.operator)» R«formerVar», R«formerVar», R«variable-1»
+«line()»ST «varName», R«formerVar»
+'''
+			}
+		}
+	}
 	
 	def generateAritExp(AritExp arit, String name) '''
 		«FOR a : arit.addition.rightAdd»
 			«generateMult(a.mult)»
 			«IF a.sumOp !== null»				
-				«getOp(a.sumOp)» R«variable», R«variable», R«variable-1»
+				«line()»«getOp(a.sumOp)» R«variable», R«variable», R«variable-1»
 			«ENDIF» «increment()»
 		«ENDFOR»
-		ST «name», R«variable-1»
-		
+		«IF name !== null»	
+			«line()»ST «name», R«variable-1»
+		«ENDIF»		
 	'''
 
 	def generateBooleanExp(BooleanExp bool, String name) '''
 		«generateAnd(bool.or.leftAnd)» «increment()»
 		«FOR b : bool.or.andList»
 			«generateAnd(b)»
-			OR R«variable», R«variable», R«variable-1» «increment()»
+			«line()»OR R«variable», R«variable», R«variable-1» «increment()»
 		«ENDFOR»
-		ST «name», R«variable-1»
+		«IF name !== null»	
+			«line()»ST «name», R«variable-1»
+		«ENDIF»
 	'''
 	
 	def generateAnd(And a)'''
-		LD R«variable», «parseBool(a.leftBool.bool, a.leftBool.neg)»
+		«line()»LD R«variable», «parseBool(a.leftBool.bool, a.leftBool.neg)»
 		
 		«FOR b : a.listBool»
-			AND R«variable», R«variable», «parseBool(b.bool, b.neg)»
+			«line()»AND R«variable», R«variable», «parseBool(b.bool, b.neg)»
 		«ENDFOR»
 	'''
 	
@@ -87,10 +287,10 @@ class GoGenerator extends AbstractGenerator {
 	}
 	
 	def generateMult(Multiplication mult) '''
-		LD R«variable», «mult.number.INT»
+		«line()»LD R«variable», «mult.number.INT»
 		
 		«FOR right :mult.rightMost»
-			«getOp(right.op)» R«variable», R«variable», «right.number.INT»
+			«line()»«getOp(right.op)» R«variable», R«variable», «right.number.INT»
 		«ENDFOR»
 	'''
 			
@@ -99,12 +299,19 @@ class GoGenerator extends AbstractGenerator {
 		variable++;
 	}
 	
-	def String getOp(String op) {
-		println(op)
-		if(op == '-') return 'SUB'
-		if(op == '+') return 'ADD'
-		if(op == '/') return 'DIV'
-		if(op == '*') return 'MUL'
-		
+	def String line() {
+		var formerLine = line
+		line = line + 8
+		return formerLine + ": "
 	}
+	
+    def String getOp(String op) {
+        println(op)
+        if(op == '-' || op == '-' || op == '-=') return 'SUB'
+        if(op == '+' || op == '++' || op == '+=') return 'ADD'
+        if(op == '/' || op == '/=') return 'DIV'
+        if(op == '*' || op == '*=') return 'MUL'
+        if(op == '&&') return 'AND'
+        if(op == '||') return 'OR'      
+    }
 }
