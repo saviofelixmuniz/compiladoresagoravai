@@ -7,6 +7,13 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import org.xtext.example.go.go.SourceFile
+import org.xtext.example.go.go.Exp
+import org.xtext.example.go.go.AritExp
+import org.xtext.example.go.go.Multiplication
+import java.util.List
+import org.xtext.example.go.go.BooleanExp
+import org.xtext.example.go.go.And
 
 /**
  * Generates code from your model files on save.
@@ -14,12 +21,90 @@ import org.eclipse.xtext.generator.IGeneratorContext
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
 class GoGenerator extends AbstractGenerator {
+	
+	Integer variable;
 
-	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
-//		fsa.generateFile('greetings.txt', 'People to greet: ' + 
-//			resource.allContents
-//				.filter(Greeting)
-//				.map[name]
-//				.join(', '))
+	override void doGenerate(Resource input, IFileSystemAccess2 fsa, IGeneratorContext contex) {
+		variable = 0;
+		
+		for(e: input.allContents.toIterable.filter(SourceFile))
+		{
+			fsa.generateFile('go.txt', e.genApi)
+		}
+	}
+	
+	def genApi(SourceFile s) '''
+		«FOR d : s.topLevelDecl»
+			«IF d.decl.exp.arit !== null»
+				«generateAritExp(d.decl.exp.arit, d.decl.name)»
+			«ELSEIF d.decl.exp.boolean !== null»
+				«generateBooleanExp(d.decl.exp.boolean, d.decl.name)»
+			«ELSEIF d.decl.exp.name !== null»
+				«generateIdExp(d.decl.exp)»
+			«ENDIF»						
+		«ENDFOR»
+	'''
+	
+	def generateIdExp(Exp e) '''
+	'''
+	
+	def generateAritExp(AritExp arit, String name) '''
+		«FOR a : arit.addition.rightAdd»
+			«generateMult(a.mult)»
+			«IF a.sumOp !== null»				
+				«getOp(a.sumOp)» R«variable», R«variable», R«variable-1»
+			«ENDIF» «increment()»
+		«ENDFOR»
+		ST «name», R«variable-1»
+		
+	'''
+
+	def generateBooleanExp(BooleanExp bool, String name) '''
+		«generateAnd(bool.or.leftAnd)» «increment()»
+		«FOR b : bool.or.andList»
+			«generateAnd(b)»
+			OR R«variable», R«variable», R«variable-1» «increment()»
+		«ENDFOR»
+		ST «name», R«variable-1»
+	'''
+	
+	def generateAnd(And a)'''
+		LD R«variable», «parseBool(a.leftBool.bool, a.leftBool.neg)»
+		
+		«FOR b : a.listBool»
+			AND R«variable», R«variable», «parseBool(b.bool, b.neg)»
+		«ENDFOR»
+	'''
+	
+	def int parseBool(String bool, String neg) {
+		var boolvalue = bool == "true"
+		if(neg !== null && neg == "!"){	
+			boolvalue = !boolvalue
+		}
+				
+		if(boolvalue) return 1
+		else return 0		
+	}
+	
+	def generateMult(Multiplication mult) '''
+		LD R«variable», «mult.number.INT»
+		
+		«FOR right :mult.rightMost»
+			«getOp(right.op)» R«variable», R«variable», «right.number.INT»
+		«ENDFOR»
+	'''
+			
+	def void increment()
+	{
+		variable++;
+	}
+	
+	def String getOp(String op) {
+		println(op)
+		if(op == '-') return 'SUB'
+		if(op == '+') return 'ADD'
+		if(op == '/') return 'DIV'
+		if(op == '*') return 'MUL'
+		
 	}
 }
