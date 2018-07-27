@@ -6,16 +6,13 @@ package org.xtext.example.go.validation
 import org.xtext.example.go.go.Decl
 import java.util.HashMap
 import org.eclipse.xtext.validation.Check
+import java.util.List
+import java.util.LinkedList
 import org.xtext.example.go.go.TopLevelDecl
 import org.xtext.example.go.go.SourceFile
 import org.xtext.example.go.go.GoPackage
 import org.xtext.example.go.go.FuncDecl
-import org.xtext.example.go.go.Call
-import org.xtext.example.go.go.Model
 import org.xtext.example.go.go.Exp
-import org.xtext.example.go.go.ParameterDecl
-import org.xtext.example.go.go.Block
-import org.xtext.example.go.go.Statement
 
 /**
  * This class contains custom validation rules. 
@@ -25,15 +22,10 @@ import org.xtext.example.go.go.Statement
 class GoValidator extends AbstractGoValidator {
 
 	public static val DUPLICATE_DECLARATION = 'duplicateDeclaration'
-	public static val FUNCTION_404 = 'functionNotFound'
-	public static val PARAMETERS_ERROR = 'parametersError'
-
-	var Model model
-	
-	@Check 
-	def updateModel(Model model) {
-		this.model = model
-	}
+	public static val MISMATCHED_TYPE = 'mismatchedType'
+	val intOps = #['+', '-', '*', '/', '%', '<=', '<', '>', '>=']
+	val boolOps = #['&&', '||', '!']
+	val eqOps = #['==', '!=']
 	
 	@Check
 	def checkVarDuplicada(SourceFile sourceFile){
@@ -51,7 +43,6 @@ class GoValidator extends AbstractGoValidator {
 			}
 			else {
 				map.put(decl.name, decl)
-				println(map)
 			}	
 		}
 	}
@@ -71,96 +62,171 @@ class GoValidator extends AbstractGoValidator {
 					DUPLICATE_DECLARATION)
 			}
 			else {
-				if (decl.name !== null) {
-					map.put(decl.name, decl)
-					println(map)
-				}					
+				map.put(decl.name, decl)
 			}	
 		}
 	}
-	
+
 	@Check
-	def checkFuncCall(Call call){
-		var funcName = call.name
-		
-		var topLevel = model.element.topLevelDecl
-		
-		var found = false
-		for (TopLevelDecl t: topLevel) {
-			var itFunc = t.func
+	def checkExpTypes(Exp exp){
+		var expMap = new HashMap<Exp, String>
+
+		var currentExp = exp
+		var currentJoin = currentExp.join
+		if (currentExp.aux !== null) {
+			currentJoin = currentExp.aux.join
+		}
+		while (currentExp !== null) {
+			if (currentExp.aux !== null) {
+				evaluate(currentExp.aux.exp, currentExp, expMap)
+				if (currentJoin === null || currentJoin.exp === null || currentJoin.exp.join === null) {
+					evaluateAux(exp, expMap)
+				}
+			} else {
+				if (currentJoin.exp.aux === null) {
+					noAuxEvaluate(currentExp)
+				}
+			}
 			
-			if (itFunc.name == funcName) {
-				found = true
-				var callParams = 0
-				if (call.exp !== null)
-					callParams++
-				
-				for (Exp exp: call.explist.exps)
-					callParams++
-				
-				var funcParams = 0
-				if (itFunc.signature.params.paramList !== null) {
-					funcParams++;
-					if (itFunc.signature.params.paramList.params !== null) {
-						for (ParameterDecl param: itFunc.signature.params.paramList.params) {
-							funcParams++
+			if (currentJoin === null) {
+				return
+			}
+			currentExp = currentJoin.exp
+			currentJoin = currentExp.join
+			if (currentExp.aux !== null) {
+				currentJoin = currentExp.aux.join
+			}
+		}
+	}
+	
+	def void noAuxEvaluate(Exp exp) {
+		if (exp.arit !== null && ((intOps.contains(exp.join.operator) && (exp.join.exp.boolean !== null ||
+			exp.join.exp.literalString !== null || exp.join.exp.rel !== null)) || boolOps.contains(exp.join.operator))
+		) {
+			error('Operação inválida.', 
+				GoPackage.Literals.EXP__JOIN,
+				MISMATCHED_TYPE)
+		}
+		if (exp.boolean !== null && ((boolOps.contains(exp.join.operator) && (exp.join.exp.arit !== null ||
+			exp.join.exp.literalString !== null || exp.join.exp.rel !== null)) || 
+			intOps.contains(exp.join.operator))
+		) {
+			error('Operação inválida.', 
+				GoPackage.Literals.EXP__JOIN,
+				MISMATCHED_TYPE)
+		}
+	}
+	
+	def void evaluate(Exp exp, Exp aux, HashMap<Exp, String> map) {
+		var currentExp = exp
+		var currentJoin = currentExp.join
+		if (currentExp.aux !== null) {
+			currentJoin = currentExp.aux.join
+		}
+
+		if (currentExp.aux !== null) {
+			evaluate(currentExp.aux.exp, currentExp, map)
+			if (currentExp.aux.exp.arit !== null || (currentExp.aux.join.exp.arit !== null )) {
+				map.put(aux, 'int');
+			} else if (currentExp.aux.exp.arit !== null || (currentExp.aux.join.exp.boolean !== null )) {
+				map.put(aux, 'boolean');
+			}
+			return
+		}
+		
+		while (currentJoin !== null) {
+			if (currentExp.arit !== null && ((intOps.contains(currentJoin.operator) && (currentJoin.exp.boolean !== null ||
+				currentJoin.exp.literalString !== null || currentJoin.exp.rel !== null)) || boolOps.contains(currentJoin.operator))
+			) {
+				error('Operação inválida.', 
+					GoPackage.Literals.EXP__JOIN,
+					MISMATCHED_TYPE)
+			}
+			if (currentExp.boolean !== null && ((boolOps.contains(currentJoin.operator) && (currentJoin.exp.arit !== null ||
+				currentJoin.exp.literalString !== null || currentJoin.exp.rel !== null)) || 
+				intOps.contains(currentJoin.operator))
+			) {
+				error('Operação inválida.', 
+					GoPackage.Literals.EXP__JOIN,
+					MISMATCHED_TYPE)
+			}
+			currentExp = currentJoin.exp
+			currentJoin = currentExp.join
+			if (currentExp.aux !== null) {
+				currentJoin = currentExp.aux.join
+			}
+		}
+		
+		if (currentExp.arit !== null) {
+			map.put(aux, 'int')
+		} else if (currentExp.boolean !== null) {
+			map.put(aux, 'boolean')
+		}
+	}
+	
+	def evaluateAux(Exp exp, HashMap<Exp, String> expMap) {
+		var intOps = #['+', '-', '*', '/', '%', '<=', '<', '>', '>=']
+		var boolOps = #['&&', '||', '!']
+		var currentExp = exp
+		var currentJoin = currentExp.join		
+		if (currentExp.aux !== null) {
+			currentJoin = currentExp.aux.join
+		}
+		while (currentExp !== null && currentJoin !== null) {
+			println(currentExp)
+			println(currentJoin.operator)
+			println(currentJoin.exp)
+			if (currentJoin.exp.aux !== null || currentExp.aux !== null) {
+				if (currentExp.aux !== null && !expMap.containsKey(currentExp)) {
+					evaluate(currentExp.aux.exp, currentExp, expMap);
+				}
+				if (currentJoin.exp.aux !== null && !expMap.containsKey(currentJoin.exp)) {
+					evaluate(currentJoin.exp.aux.exp, currentJoin.exp, expMap);
+				}
+				if (currentJoin.exp.aux !== null && currentExp.aux !== null) {
+					if (boolOps.contains(currentJoin.operator)) {
+						if(expMap.get(currentExp) !== 'boolean' || expMap.get(currentJoin.exp) !== 'boolean') {
+							error('Operação inválida.', 
+							GoPackage.Literals.EXP__AUX,
+							MISMATCHED_TYPE)
+						}
+					} else if (intOps.contains(currentJoin.operator)) {
+						if(expMap.get(currentExp) !== 'int' || expMap.get(currentJoin.exp) !== 'int') {
+							error('Operação inválida.', 
+							GoPackage.Literals.EXP__AUX,
+							MISMATCHED_TYPE)
 						}
 					}
-				} 				
-				
-				if (callParams !== funcParams)
-					error('A função ' + funcName + ' tem ' + funcParams + ' parametros', 
-						GoPackage.Literals.CALL__NAME,
-						PARAMETERS_ERROR)
+				} else if (currentJoin.exp.aux !== null && currentExp.aux === null) {
+					if ((boolOps.contains(currentJoin.operator) && 
+						(expMap.get(currentJoin.exp) !== 'boolean' || currentExp.boolean === null)) ||
+						(intOps.contains(currentJoin.operator) && 
+						(expMap.get(currentJoin.exp) !== 'int' || currentExp.arit === null))
+					) {
+						error('Operação inválida.', 
+							GoPackage.Literals.EXP__AUX,
+							MISMATCHED_TYPE)
+					}
+				} else {
+					if ((boolOps.contains(currentJoin.operator) && 
+						(expMap.get(currentExp) !== 'boolean' || currentJoin.exp.boolean === null)) ||
+						(intOps.contains(currentJoin.operator) && 
+						(expMap.get(currentExp) !== 'int' || currentJoin.exp.arit === null))
+					) {
+						error('Operação inválida.', 
+							GoPackage.Literals.EXP__AUX,
+							MISMATCHED_TYPE)
+					}
+				}
+			}
+			//println('op: ' + currentJoin.operator);
+			currentExp = currentJoin.exp
+			currentJoin = currentExp.join
+			if (currentExp.aux !== null) {
+				currentJoin = currentExp.aux.join
 			}
 		}
-		
-		if (!found)
-			error('A função ' + funcName + ' não existe', 
-							GoPackage.Literals.CALL__NAME,
-							FUNCTION_404)
 	}
-	 					
-	@Check
-	def checkIfElse (Block block) {
-		var stmts = block.statements;
-		
-		for (Statement stmt: stmts) {
-			var ifRelExp = stmt.ifstmt.ifRelExp
-			var result = false
-			if (ifRelExp.aux !== null) {
-				result = evaluateRelExp(ifRelExp.aux.exp)
-					
-			}
-			
-			else {
-				result = evaluateRelExp(ifRelExp)
-			}
-	
-			if(!result)
-				error('A expressão deve retornar tipo bool', 
- 						GoPackage.Literals.BLOCK__STATEMENTS,
- 						FUNCTION_404)
-		}			
-	}
-	
-	def evaluateRelExp (Exp exp) {
-		if (exp.join !== null && exp.name !== null) {
-				if (exp.join.operator != ">" && 
-					exp.join.operator != "<" &&
-					exp.join.operator != "!=" &&
-					exp.join.operator != "=="
- 				) {
- 					return false
- 				}
-			}
-			
-		else if (exp.boolean === null && exp.rel === null) {
-			return false
-		}
-		
-		return true
-	} 
 	
 //	public static val INVALID_NAME = 'invalidName'
 //
