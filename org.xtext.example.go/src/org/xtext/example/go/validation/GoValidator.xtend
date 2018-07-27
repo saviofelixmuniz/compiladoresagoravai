@@ -36,7 +36,7 @@ class GoValidator extends AbstractGoValidator {
 	public static val MISMATCHED_TYPE = 'mismatchedType'
 	val intOps = #['+', '-', '*', '/', '%', '<=', '<', '>', '>=']
 	val boolOps = #['&&', '||', '!']
-	val eqOps = #['==', '!=']
+	val eqOps = #['==', '!=', '<=', '<', '>', '>=']
 
 	var Model model
 	var HashMap<String, String> ids = new HashMap<String, String>
@@ -56,9 +56,14 @@ class GoValidator extends AbstractGoValidator {
 				var decl = topster.decl
 				if (decl instanceof Var) {
 					var typeDecl = decl as Var
+					if (typeDecl.type.basic != checkExpTypes(typeDecl.exp, null, localIds, localFuncs)) {
+						error('Expressão deve ser do tipo ' + typeDecl.type.basic + '.',
+						typeDecl, 
+						GoPackage.Literals.DECL__EXP)						
+					}
 					localIds.put(decl.name, typeDecl.type.basic)
 				} else {
-					var type = getTypeFromShortVarDecl(decl as ShortVar, localIds)
+					var type = getTypeFromShortVarDecl(decl as ShortVar, localIds, null)
 					localIds.put(decl.name, type)
 				}
 			} else if (topster.typeDef !== null && topster.typeDef.typeName.struct !== null) {
@@ -74,9 +79,9 @@ class GoValidator extends AbstractGoValidator {
 				}
 			} else if (topster.func !== null) {
 				var func = topster.func
-				checkMethodReceiver(func)
+				checkMethodReceiver(func, localStructs)
 				if (!localFuncs.containsKey(func.name)) {
-					var funcMap = getFuncIds(func)
+					var funcMap = getFuncIds(func, localIds, localFuncs)
 					localFuncs.put(func.name, funcMap)
 				} else {
 					error(func.name + ' já foi declarada',
@@ -94,7 +99,7 @@ class GoValidator extends AbstractGoValidator {
 		println(structs)
 	}
 	
-	def void checkMethodReceiver(FuncDecl func) {
+	def void checkMethodReceiver(FuncDecl func, HashMap<String, HashMap<String, String>> structs) {
 		var receiver = func.receiver
 		if (receiver === null) return;
 		
@@ -118,7 +123,7 @@ class GoValidator extends AbstractGoValidator {
 		}
 	}
 	
-	def HashMap<String, String> getFuncIds(FuncDecl func) {
+	def HashMap<String, String> getFuncIds(FuncDecl func, HashMap<String, String> ids, HashMap<String, HashMap<String, String>> funcs) {
 		var HashMap<String, String> funcIds = new HashMap<String, String>
 		for (Statement stmt : func.block.statements) {
 			if (stmt.simpleStmt !== null && stmt.simpleStmt.decl !== null) {
@@ -130,10 +135,51 @@ class GoValidator extends AbstractGoValidator {
 				}
 				if (decl instanceof Var) {
 					var typeDecl = decl as Var
+					if (typeDecl.exp !== null) {
+						if (typeDecl.type.basic != checkExpTypes(typeDecl.exp, func, ids, funcs)) {
+							error('Expressão deve ser do tipo ' + typeDecl.type.basic + '.',
+							typeDecl, 
+							GoPackage.Literals.DECL__EXP)						
+						}
+					}
 					funcIds.put(decl.name, typeDecl.type.basic)
 				} else {
-					var type = getTypeFromShortVarDecl(decl as ShortVar, funcIds)
+					var type = getTypeFromShortVarDecl(decl as ShortVar, ids, funcIds)
 					funcIds.put(decl.name, type)
+				}
+			} else if (stmt.simpleStmt !== null && stmt.simpleStmt.assig !== null) {
+				var assig = stmt.simpleStmt.assig
+				if (!ids.containsKey(assig.id) && !funcIds.containsKey(assig.id)) {
+					error(assig.id + ' não foi declarada.',
+					assig, 
+					GoPackage.Literals.ASSIG__ID)
+				} else {
+					var type = ''
+					if (ids.containsKey(assig.id)) {
+						type =  ids.get(assig.id)
+					} else {
+						type =  funcIds.get(assig.id)
+					}
+					if (type != checkExpTypes(assig.expression, null, ids, funcs)) {
+						error(assig.id + ' deve ser do tipo ' + type + '.',
+						assig,
+						GoPackage.Literals.ASSIG__ID)
+					}
+				}
+			} else if (stmt.simpleStmt !== null && stmt.simpleStmt.exp !== null) {
+				var exp = stmt.simpleStmt.exp;
+				if (exp.call !== null) {
+					var name = ''
+					if (exp.call.sub !== null) {
+						name = exp.call.sub.name
+					} else {
+						name = exp.call.name
+					}
+					if (!funcs.containsKey(name)) {
+						error(name + ' não foi declarado.',
+						exp,
+						GoPackage.Literals.EXP__CALL)
+					}
 				}
 			}
 		}
@@ -155,15 +201,15 @@ class GoValidator extends AbstractGoValidator {
 		return structIds
 	}
 
-	def String getTypeFromShortVarDecl(ShortVar shortVar, HashMap<String, String> map) {
+	def String getTypeFromShortVarDecl(ShortVar shortVar, HashMap<String, String> ids, HashMap<String, String> funcIds) {
 		var exp = shortVar.exp
 		if (exp.arit !== null) return 'int'
 		if (exp.boolean !== null) return 'bool'
 		if (exp.name !== null) {
-			if (map.containsKey(exp.name)) {
-				return map.get(exp.name)
-			} else if (ids.containsKey(exp.name)) {
+			if (ids.containsKey(exp.name)) {
 				return ids.get(exp.name)
+			} else if (funcIds.containsKey(exp.name)) {
+				return funcIds.get(exp.name)
 			} else {
 				error(exp.name + ' não foi declarada',
 					exp, 
@@ -189,8 +235,8 @@ class GoValidator extends AbstractGoValidator {
 			
 			if (map.containsKey(decl.name)) {
 				error(decl.name + ' já foi declarada', 
-					GoPackage.Literals.TOP_LEVEL_DECL__DECL,
-					DUPLICATE_DECLARATION)
+					decl,
+					GoPackage.Literals.DECL__NAME)
 			}
 			else {
 				map.put(decl.name, decl)
@@ -303,35 +349,61 @@ class GoValidator extends AbstractGoValidator {
 		return true
 	}
 	
-	@Check
-	def checkExpTypes(Exp exp){
+	
+	def String checkExpTypes(Exp exp, FuncDecl func, HashMap<String, String> ids, HashMap<String, HashMap<String, String>> funcs){
 		var expMap = new HashMap<Exp, String>
+		
+		if (exp.name !== null && func === null) {
+			return ids.get(exp.name);
+		} else if (exp.name !== null && func !== null) {
+			if (funcs.get(func.name) !== null && funcs.get(func.name).containsKey(exp.name)) {
+				return funcs.get(func.name).get(exp.name);
+			} else return ids.get(exp.name);
+		}
 
 		var currentExp = exp
 		var currentJoin = currentExp.join
 		if (currentExp.aux !== null) {
 			currentJoin = currentExp.aux.join
 		}
-		while (currentExp !== null) {
+		var break = false
+		while (currentExp !== null && !break) {
 			if (currentExp.aux !== null) {
 				evaluate(currentExp.aux.exp, currentExp, expMap)
 				if (currentJoin === null || currentJoin.exp === null || currentJoin.exp.join === null) {
 					evaluateAux(exp, expMap)
 				}
 			} else {
-				if (currentJoin.exp.aux === null) {
-					noAuxEvaluate(currentExp)
+				if (currentJoin === null) {
+					break = true;
+				} else {
+					if (currentJoin.exp.aux === null) {
+						noAuxEvaluate(currentExp)
+					}
 				}
 			}
 			
 			if (currentJoin === null) {
-				return
+				break = true;
+			} else {
+				currentExp = currentJoin.exp
+				currentJoin = currentExp.join
+				if (currentExp.aux !== null) {
+					currentJoin = currentExp.aux.join
+				}
 			}
-			currentExp = currentJoin.exp
-			currentJoin = currentExp.join
-			if (currentExp.aux !== null) {
-				currentJoin = currentExp.aux.join
-			}
+		}
+		
+		if (exp.aux !== null) {
+			return expMap.get(exp)
+		} else if (exp.join !== null) {
+			if (eqOps.contains(exp.join.operator)) { 
+				return 'bool'
+			} else return 'int'
+		} else {
+			if (exp.arit !== null) return 'int'
+			else if (exp.boolean !== null) return 'bool'
+			else return 'string'
 		}
 	}
 	
@@ -423,14 +495,14 @@ class GoValidator extends AbstractGoValidator {
 					if (boolOps.contains(currentJoin.operator)) {
 						if(expMap.get(currentExp) !== 'bool' || expMap.get(currentJoin.exp) !== 'bool') {
 							error('Operação inválida.', 
-							GoPackage.Literals.EXP__AUX,
-							MISMATCHED_TYPE)
+							currentExp,
+							GoPackage.Literals.EXP__JOIN)
 						}
 					} else if (intOps.contains(currentJoin.operator)) {
 						if(expMap.get(currentExp) !== 'int' || expMap.get(currentJoin.exp) !== 'int') {
 							error('Operação inválida.', 
-							GoPackage.Literals.EXP__AUX,
-							MISMATCHED_TYPE)
+							currentExp,
+							GoPackage.Literals.EXP__JOIN)
 						}
 					}
 				} else if (currentJoin.exp.aux !== null && currentExp.aux === null) {
@@ -440,8 +512,8 @@ class GoValidator extends AbstractGoValidator {
 						(expMap.get(currentJoin.exp) !== 'int' || currentExp.arit === null))
 					) {
 						error('Operação inválida.', 
-							GoPackage.Literals.EXP__AUX,
-							MISMATCHED_TYPE)
+							currentExp,
+							GoPackage.Literals.EXP__JOIN)
 					}
 				} else {
 					if ((boolOps.contains(currentJoin.operator) && 
@@ -450,8 +522,8 @@ class GoValidator extends AbstractGoValidator {
 						(expMap.get(currentExp) !== 'int' || currentJoin.exp.arit === null))
 					) {
 						error('Operação inválida.', 
-							GoPackage.Literals.EXP__AUX,
-							MISMATCHED_TYPE)
+							currentExp,
+							GoPackage.Literals.EXP__JOIN)
 					}
 				}
 			}
