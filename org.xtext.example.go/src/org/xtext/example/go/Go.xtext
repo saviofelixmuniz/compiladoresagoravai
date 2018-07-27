@@ -7,7 +7,7 @@ Model:
 ;
 
 SourceFile:
-	{SourceFile} Package ";"? (ImportDecl ";"?)* (TopLevelDecl+=TopLevelDecl ";"?)*
+	{SourceFile} package=Package ";"? (importDecl+=ImportDecl ";"?)* (TopLevelDecl+=TopLevelDecl ";"?)*
 ;
 
 TopLevelDecl:
@@ -198,39 +198,48 @@ Call:
 
 
 RelExp:
-	NumberLiteral (OP_REL | OP_UNARY) NumberLiteral | BooleanLiteral OP_UNARY BooleanLiteral
+	leftNumber=NumberLiteral (OP_REL | OP_UNARY) rightNumber=NumberLiteral | {RelExp} leftBool=BooleanLiteral OP_UNARY rightBool=BooleanLiteral
 ;
+
 
 BooleanExp:
-	 Or	
+     {BooleanExp} or=Or
 ;
-
+ 
 Or:
-	"!"? And ('||' And)*
+    {Or}  leftAnd=And ('||' andList+=And)*
 ;
-
+ 
 And:
-	BooleanLiteral ('&&' BooleanLiteral)*
+    {And} leftBool=BooleanLiteral ('&&' listBool+=BooleanLiteral)*
 ;
-
+ 
 BooleanLiteral:
-	Bool
+    {BooleanLiteral} neg="!"? bool=Bool
 ;
-
+ 
 AritExp:
-	Addition
+    {AritExp} addition=Addition
 ;
-
+ 
 Addition:
-	(OP_SUM? Multiplication)+
+    {Addition} rightAdd+=RightAdd+
 ;
-
+ 
+RightAdd:
+    (sumOp=OP_SUM? mult=Multiplication)
+;
+ 
 Multiplication:
-	NumberLiteral (OP_MULT? NumberLiteral)*
+    number=NumberLiteral rightMost+=(RightMult)*
 ;
-
+ 
+RightMult:
+    op=OP_MULT? number=NumberLiteral
+;
+ 
 NumberLiteral:
-	INT
+    {NumberLiteral} INT=INT
 ;
 
 TypeName:
