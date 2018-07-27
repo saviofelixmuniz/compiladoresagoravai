@@ -6,13 +6,16 @@ package org.xtext.example.go.validation
 import org.xtext.example.go.go.Decl
 import java.util.HashMap
 import org.eclipse.xtext.validation.Check
-import java.util.List
-import java.util.LinkedList
 import org.xtext.example.go.go.TopLevelDecl
 import org.xtext.example.go.go.SourceFile
 import org.xtext.example.go.go.GoPackage
 import org.xtext.example.go.go.FuncDecl
+import org.xtext.example.go.go.Call
+import org.xtext.example.go.go.Model
 import org.xtext.example.go.go.Exp
+import org.xtext.example.go.go.ParameterDecl
+import org.xtext.example.go.go.Block
+import org.xtext.example.go.go.Statement
 
 /**
  * This class contains custom validation rules. 
@@ -22,10 +25,19 @@ import org.xtext.example.go.go.Exp
 class GoValidator extends AbstractGoValidator {
 
 	public static val DUPLICATE_DECLARATION = 'duplicateDeclaration'
+	public static val FUNCTION_404 = 'functionNotFound'
+	public static val PARAMETERS_ERROR = 'parametersError'
 	public static val MISMATCHED_TYPE = 'mismatchedType'
 	val intOps = #['+', '-', '*', '/', '%', '<=', '<', '>', '>=']
 	val boolOps = #['&&', '||', '!']
 	val eqOps = #['==', '!=']
+
+	var Model model
+	
+	@Check 
+	def updateModel(Model model) {
+		this.model = model
+	}
 	
 	@Check
 	def checkVarDuplicada(SourceFile sourceFile){
@@ -43,6 +55,7 @@ class GoValidator extends AbstractGoValidator {
 			}
 			else {
 				map.put(decl.name, decl)
+				println(map)
 			}	
 		}
 	}
@@ -62,11 +75,97 @@ class GoValidator extends AbstractGoValidator {
 					DUPLICATE_DECLARATION)
 			}
 			else {
-				map.put(decl.name, decl)
+				if (decl.name !== null) {
+					map.put(decl.name, decl)
+					println(map)
+				}					
 			}	
 		}
 	}
-
+	
+	@Check
+	def checkFuncCall(Call call){
+		var funcName = call.name
+		
+		var topLevel = model.element.topLevelDecl
+		
+		var found = false
+		for (TopLevelDecl t: topLevel) {
+			var itFunc = t.func
+			
+			if (itFunc.name == funcName) {
+				found = true
+				var callParams = 0
+				if (call.exp !== null)
+					callParams++
+				
+				for (Exp exp: call.explist.exps)
+					callParams++
+				
+				var funcParams = 0
+				if (itFunc.signature.params.paramList !== null) {
+					funcParams++;
+					if (itFunc.signature.params.paramList.params !== null) {
+						for (ParameterDecl param: itFunc.signature.params.paramList.params) {
+							funcParams++
+						}
+					}
+				} 				
+				
+				if (callParams !== funcParams)
+					error('A função ' + funcName + ' tem ' + funcParams + ' parametros', 
+						GoPackage.Literals.CALL__NAME,
+						PARAMETERS_ERROR)
+			}
+		}
+		
+		if (!found)
+			error('A função ' + funcName + ' não existe', 
+							GoPackage.Literals.CALL__NAME,
+							FUNCTION_404)
+	}
+	 					
+	@Check
+	def checkIfElse (Block block) {
+		var stmts = block.statements;
+		
+		for (Statement stmt: stmts) {
+			var ifRelExp = stmt.ifstmt.ifRelExp
+			var result = false
+			if (ifRelExp.aux !== null) {
+				result = evaluateRelExp(ifRelExp.aux.exp)
+					
+			}
+			
+			else {
+				result = evaluateRelExp(ifRelExp)
+			}
+	
+			if(!result)
+				error('A expressão deve retornar tipo bool', 
+ 						GoPackage.Literals.BLOCK__STATEMENTS,
+ 						FUNCTION_404)
+		}			
+	}
+	
+	def evaluateRelExp (Exp exp) {
+		if (exp.join !== null && exp.name !== null) {
+				if (exp.join.operator != ">" && 
+					exp.join.operator != "<" &&
+					exp.join.operator != "!=" &&
+					exp.join.operator != "=="
+ 				) {
+ 					return false
+ 				}
+			}
+			
+		else if (exp.boolean === null && exp.rel === null) {
+			return false
+		}
+		
+		return true
+	}
+	
 	@Check
 	def checkExpTypes(Exp exp){
 		var expMap = new HashMap<Exp, String>
